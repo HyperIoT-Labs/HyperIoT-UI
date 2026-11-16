@@ -335,7 +335,7 @@
               text-align: right;
 
               hyt-button {
-                button.mat-raised-button {
+                button.mat-mdc-raised-button {
                   background-color: $primary-color-dark-unsaturated;
                   color: #fff;
                   font-family: "Exo";
@@ -353,20 +353,6 @@
                     cursor: not-allowed;
                   }
                 }
-              }
-            }
-
-            span {
-              &.mat-form-field-label-wrapper {
-                label {
-                  font-family: "Exo";
-                }
-              }
-            }
-
-            mat-error {
-              &.mat-error.ng-star-inserted {
-                font-family: "Exo";
               }
             }
 

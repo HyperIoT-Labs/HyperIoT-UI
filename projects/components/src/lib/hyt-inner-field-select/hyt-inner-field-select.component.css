@@ -9,6 +9,6 @@
     list-style-type: none;
 }
 
-mat-option.mat-option {
+mat-option.mat-mdc-option {
     display: none;
 }

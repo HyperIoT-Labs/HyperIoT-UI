@@ -14,7 +14,8 @@ import { PacketSelectComponent } from '../packet-select/packet-select.component'
     selector: 'hyperiot-time-chart-settings',
     templateUrl: './time-chart-settings.component.html',
     styleUrls: ['./time-chart-settings.component.scss'],
-    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
+    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+    standalone: false
 })
 export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges {
     @ViewChild(PacketSelectComponent, { static: true }) packetSelect: PacketSelectComponent;
@@ -28,7 +29,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     selectedFields = [];
     selectedPackets = [];
 
-    thresholds: any = {};
+    thresholds: { [key: string]: Rule[] } = {};
     filteredThresholds: any = {};
     thresholdsIds: number[] = [];
     thresholdActive: boolean = false;
@@ -348,7 +349,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         return tempSplitted.length > 1 ? tempSplitted[1].toLowerCase() : "";
     }
 
-    getSelectedThresholdName(id: string): string {
+    getSelectedThresholdName(id: number): string {
         for (const group of Object.keys(this.thresholds)) {
             const rule = this.thresholds[group].find(rule => rule.id === id);
             if (rule) return rule.name;
@@ -384,7 +385,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         return `${parts[0]}=>${parts.slice(1).join('.')}`;
     }
 
-    onThresholdSelected(selectedId: string, replaceThreshold: boolean) {
+    onThresholdSelected(selectedId: number, replaceThreshold: boolean) {
         const singleRule: boolean = this.findThresholdRule(selectedId)?.ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim()).length === 1;
         const selectedThresholdIndex = this.thresholdsForm.controls.findIndex(thresholdGroup => {
             return thresholdGroup.get('id')?.value === selectedId;
@@ -426,7 +427,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     filterThresholds() {
         const selectedThresholdIds = this.thresholdsForm.controls
             .map(thresholdGroup => thresholdGroup.get('id')?.value)
-            .filter((id): id is string => id !== undefined); // Ensure we only keep defined IDs
+            .filter((id): id is number => id !== undefined); // Ensure we only keep defined IDs
 
         if (selectedThresholdIds.length === 0) {
             this.filteredThresholds = { ...this.thresholds };
@@ -453,7 +454,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         }
     }
 
-    findThresholdRule(id: string) {
+    findThresholdRule(id: number) {
         for (const group of Object.keys(this.thresholds)) {
             const rule = this.thresholds[group].find(rule => rule.id === id);
             if (rule) return rule;

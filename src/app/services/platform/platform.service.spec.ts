@@ -6,7 +6,7 @@ describe('PlatformService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: PlatformService = TestBed.get(PlatformService);
+    const service: PlatformService = TestBed.inject(PlatformService);
     expect(service).toBeTruthy();
   });
 });

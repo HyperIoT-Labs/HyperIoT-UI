@@ -16,14 +16,15 @@
     </header-widget>
 
     <content-widget class="content-widget">
-        <div *ngIf="!isConfigured; else configured" class="configure-notice">
+        @if (!isConfigured) {
+        <div class="configure-notice">
             <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
         </div>
-        <ng-template #configured (resized)="onResized($event)">
-            <hyperiot-loader
-                *ngIf="!graph ||!graph?.data || graph?.data.length === 0; else loadingFinished">
+        } @else {
+            @if (!graph ||!graph?.data || graph?.data.length === 0) {
+            <hyperiot-loader>
             </hyperiot-loader>
-            <ng-template #loadingFinished>
+            } @else {
                 <plotly-plot
                 divId="widget-{{widget.id}}{{isToolbarVisible}}"
                 [data]="graph?.data"
@@ -31,7 +32,7 @@
                 [config]="graph?.config"
                 (initialized)="subscribeAndInit()">
             </plotly-plot>
-            </ng-template>
-        </ng-template>
+            }
+        }
     </content-widget>
 </hyperiot-base-widget-template>

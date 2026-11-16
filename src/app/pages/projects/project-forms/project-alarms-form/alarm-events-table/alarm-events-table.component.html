@@ -11,7 +11,7 @@
     <ng-container matColumnDef="severity">
       <th mat-header-cell *matHeaderCellDef i18n="@@HYT_alarm_severity_severity"> Severity </th>
       <td mat-cell *matCellDef="let eventAlarm"> 
-                <mat-chip [selectable]="false" [removable]="false"  class="severity-{{eventAlarm?.severity}}" >
+                <mat-chip class="severity-{{eventAlarm?.severity}}" >
                     {{getSeverityLabel(eventAlarm?.severity)}}
                 </mat-chip>
      </td>

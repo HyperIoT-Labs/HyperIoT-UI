@@ -1,9 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'hyt-hexagon',
-  templateUrl: './hyt-hexagon.component.html',
-  styleUrls: ['./hyt-hexagon.component.css']
+    selector: 'hyt-hexagon',
+    templateUrl: './hyt-hexagon.component.html',
+    styleUrls: ['./hyt-hexagon.component.css'],
+    standalone: false
 })
 export class HytHexagonComponent {
 

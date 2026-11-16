@@ -4,8 +4,13 @@
     height: auto;
     .recording {
 
+        // disable fixed height for toolbar buttons
+        .mat-mdc-button {
+            height: auto;
+        }
+
         &:not(.inLoading) {
-            .mat-button {
+            .mat-mdc-button {
                 &:hover {
                     color: #008aff;
                 }

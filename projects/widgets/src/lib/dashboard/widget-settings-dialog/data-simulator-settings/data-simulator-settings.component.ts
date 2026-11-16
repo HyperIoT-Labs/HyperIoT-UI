@@ -15,11 +15,12 @@ import { DataSimulatorSettings } from "./data-simulator.models";
 import { ControlContainer, NgForm } from "@angular/forms";
 
 @Component({
-  selector: "hyperiot-data-simulator-settings",
-  templateUrl: "./data-simulator-settings.component.html",
-  styleUrls: ["./data-simulator-settings.component.scss"],
-  encapsulation: ViewEncapsulation.None,
-  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+    selector: "hyperiot-data-simulator-settings",
+    templateUrl: "./data-simulator-settings.component.html",
+    styleUrls: ["./data-simulator-settings.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+    standalone: false
 })
 export class DataSimulatorSettingsComponent implements OnInit {
   @Input() widget: WidgetConfig;

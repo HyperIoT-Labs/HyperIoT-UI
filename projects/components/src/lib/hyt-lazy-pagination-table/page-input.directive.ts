@@ -1,7 +1,8 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 
 @Directive({
-  selector: '[hytPageInput]'
+    selector: '[hytPageInput]',
+    standalone: false
 })
 export class PageInputDirective implements OnChanges {
 

@@ -6,7 +6,7 @@ describe('RealtimeDataService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: RealtimeDataService = TestBed.get(RealtimeDataService);
+    const service: RealtimeDataService = TestBed.inject(RealtimeDataService);
     expect(service).toBeTruthy();
   });
 });

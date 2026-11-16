@@ -11,14 +11,15 @@ import { TagStatus } from '../packet-enrichment-form/asset-tag/asset-tag.compone
 import { UntypedFormControl } from '@angular/forms';
 import { EventComponentContainerComponent } from './event-component-container/event-component-container.component';
 import { EventComponentType } from './event-component-type.enum';
-import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {MatChipInputEvent} from '@angular/material/chips';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 
 @Component({
-  selector: 'hyt-project-events-form',
-  templateUrl: './project-events-form.component.html',
-  styleUrls: ['./project-events-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-project-events-form',
+    templateUrl: './project-events-form.component.html',
+    styleUrls: ['./project-events-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ProjectEventsFormComponent extends ProjectFormEntity implements OnInit, OnChanges, OnDestroy {
 

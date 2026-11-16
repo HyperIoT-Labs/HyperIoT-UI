@@ -9,7 +9,7 @@ describe('HttpErrorHandlerService', () => {
   }));
 
   it('should be created', () => {
-    const service: HttpErrorHandlerService = TestBed.get(HttpErrorHandlerService);
+    const service: HttpErrorHandlerService = TestBed.inject(HttpErrorHandlerService);
     expect(service).toBeTruthy();
   });
 });

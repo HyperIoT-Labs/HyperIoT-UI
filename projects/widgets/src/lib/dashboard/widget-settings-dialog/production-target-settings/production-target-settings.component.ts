@@ -7,10 +7,11 @@ import { FieldAliases, WidgetConfig } from '../../../base/base-widget/model/widg
 import { ProductionTargetSettings } from './production-target.model';
 
 @Component({
-  selector: 'hyperiot-production-target-settings',
-  templateUrl: './production-target-settings.component.html',
-  styleUrls: ['./production-target-settings.component.scss'],
-  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
+    selector: 'hyperiot-production-target-settings',
+    templateUrl: './production-target-settings.component.html',
+    styleUrls: ['./production-target-settings.component.scss'],
+    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+    standalone: false
 })
 export class ProductionTargetSettingsComponent implements OnInit {
   @Input() widget: WidgetConfig;

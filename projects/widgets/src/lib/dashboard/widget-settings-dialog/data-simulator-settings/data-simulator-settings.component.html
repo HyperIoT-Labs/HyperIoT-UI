@@ -1,6 +1,7 @@
 <div id="data-simulator-settings" class="padding-6 d-flex flex-row justify-content-stretch">
 
-    <div *ngIf="widget.config && !(widget.config?.dataSimulatorSettings?.packetInfo?.packetId && !selectedPacket)" id="packet-selection" class="d-flex flex-column">
+    @if (widget.config && !(widget.config?.dataSimulatorSettings?.packetInfo?.packetId && !selectedPacket)) {
+    <div id="packet-selection" class="d-flex flex-column">
 
         <hyt-select
             [name]="'packetSelect'"
@@ -20,8 +21,10 @@
         <input name="hidden-packet-id" [(ngModel)]="selectedPacket" style="display: none;" required>
 
     </div>
+    }
 
-    <div *ngIf="selectedPacket != null" id="field-selection" class=
+    @if (selectedPacket != null) {
+    <div id="field-selection" class=
     "d-flex flex-column">
 
         <hyt-inner-field-select
@@ -34,8 +37,10 @@
         <input name="hidden-fields" [(ngModel)]="selectedFieldsValidation" style="display: none;" required>
 
     </div>
+    }
 
-    <div id="box-fields-customization" *ngIf="selectedFields && selectedFields.length > 0">
+    @if (selectedFields && selectedFields.length > 0) {
+    <div id="box-fields-customization">
 
         <div class="source-info">
             <mat-form-field>
@@ -54,7 +59,8 @@
         </div>
         
         <mat-accordion>
-            <mat-expansion-panel *ngFor="let field of selectedFields">
+            @for (field of selectedFields; track field) {
+            <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <span class="customization-field-title">{{ getFullFieldName(field.id) }}</span>
@@ -84,11 +90,12 @@
                             <hyt-info i18n-text="@@HYT_outliers_description" text="The outlier value is a specific value emitted when the user presses the 'outlier' button."></hyt-info>
                         </div>
                         <div class="field-outliner-settings">
-                            <mat-form-field *ngIf="!fieldType || fieldType[field.id] != 'BOOLEAN'; else booleanSwitch">
+                            @if (!fieldType || fieldType[field.id] != 'BOOLEAN') {
+                            <mat-form-field>
                                 <mat-label i18n="@@HYT_value">Value</mat-label>
                                 <input matInput [name]="'outlier-' + field.id" [(ngModel)]="fieldOutliers[field.id]">
                             </mat-form-field>
-                            <ng-template #booleanSwitch>
+                            } @else {
                                 <div class="simulator-switch-container">
                                     <span class="falseTrueLabel {{!fieldOutliers[field.id] && 'focusedSwitch'}}">False</span>
                                     <label class="simulator-switch">
@@ -101,14 +108,16 @@
                                     </label>
                                     <span class="falseTrueLabel {{fieldOutliers[field.id] && 'focusedSwitch'}}">True</span>
                                 </div>
-                            </ng-template>
+                            }
                         </div>
                     </div>
                 </div>
 
             </mat-expansion-panel>
+            }
         </mat-accordion>
 
     </div>
+    }
 
 </div>

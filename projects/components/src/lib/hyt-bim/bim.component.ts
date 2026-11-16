@@ -21,10 +21,11 @@ import {Area, Logger, LoggerService} from "core";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'hyt-bim',
-  templateUrl: './bim.component.html',
-  styleUrls: ['./bim.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-bim',
+    templateUrl: './bim.component.html',
+    styleUrls: ['./bim.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
 

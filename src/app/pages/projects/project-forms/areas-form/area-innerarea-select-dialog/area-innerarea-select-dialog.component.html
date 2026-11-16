@@ -2,12 +2,14 @@
     <h3 class="ml-3 mr-3" i18n="@@HYT_area_map_select_area">Select area</h3>
 
     <mat-list role="list" class="flex-grow-1">
-        <mat-list-item *ngFor="let area of data.areas" role="listitem">
+        @for (area of data.areas; track area) {
+        <mat-list-item role="listitem">
             <button mat-button
                 [disabled]="area.mapInfo"
                 [ngClass]="{ selected: area === selectedArea }"
                 (click)="close(area)">{{ area.name }}</button>
         </mat-list-item>
+        }
     </mat-list>
 
     <div id="buttons-container" class="ml-3 mr-3 d-flex flex-row justify-content-end">

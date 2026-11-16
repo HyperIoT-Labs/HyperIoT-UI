@@ -2,9 +2,7 @@
 
 HyperIoT Front End Angular Application is a project that includes all tools necessary to manage IoT and BigData projects through hyperiot platform and to access realtime and offline data through a dashboard.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.13.
-
-Node v16 and Angular CLI are required to run this project.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli).
 
 ## Getting Started
 

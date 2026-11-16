@@ -6,10 +6,11 @@ import { Store } from '@ngrx/store';
 import { Observable, map, tap } from 'rxjs';
 
 @Component({
-  selector: 'hyt-draggable-item',
-  templateUrl: './draggable-item.component.html',
-  styleUrls: ['./draggable-item.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-draggable-item',
+    templateUrl: './draggable-item.component.html',
+    styleUrls: ['./draggable-item.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class DraggableItemComponent {
   openClicked = new EventEmitter<MapItemAction>();

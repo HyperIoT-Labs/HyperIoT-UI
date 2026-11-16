@@ -1,5 +1,6 @@
 <div id="container-areas-form">
-    <div *ngIf="!editMode" class="content">
+    @if (!editMode) {
+    <div class="content">
 
         <div class="actions">
             <hyt-button
@@ -17,21 +18,28 @@
         </hyt-areas-list>
 
     </div>
+    }
 
     <!-- Area detail form -->
     <div [ngClass]="{ hidden: !editMode }" class="content">
 
         <div class="current-path">
             <a [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas'] } } ]" i18n="@@HYT_area_path_main">Main</a>
-            <span *ngFor="let area of areaPath; let i = index; let c = count">
+            @for (area of areaPath; track area; let i = $index; let c = $count) {
+            <span>
                 &nbsp;&raquo;&nbsp;
-                <a *ngIf="i < c - 1" [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]">{{area.name}}</a>
-                <span *ngIf="i === c - 1"><strong>{{area.name}}</strong></span>
+                @if (i < c - 1) {
+                <a [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]">{{area.name}}</a>
+                }
+                @if (i === c - 1) {
+                <span><strong>{{area.name}}</strong></span>
+                }
             </span>
+            }
         </div>
 
       <!-- START TAB -->
-        <mat-tab-group #tabGroup  [(selectedIndex)]="currentSection" (selectedTabChange)="onTabChange($event)">
+        <mat-tab-group #tabGroup [(selectedIndex)]="currentSection" (selectedTabChange)="onTabChange($event)" [mat-stretch-tabs]="false">
 
             <mat-tab label="Info" i18n-label="@@HYT_area_section_info" aria-label="INFO">
                 <form [formGroup]="form" enctype="multipart/form-data" class="mt-4 d-flex flex-column justify-content-center">
@@ -83,7 +91,8 @@
                 </form>
             </mat-tab>
 
-            <mat-tab *ngIf="areaId > 0 && entity.areaViewType !== 'BIM_XKT'" label="Sub-areas ({{ areaList.length }})" i18n-label="@@HYT_area_section_inner" aria-label="SUB-AREA">
+            @if (areaId > 0 && entity.areaViewType !== 'BIM_XKT') {
+            <mat-tab label="Sub-areas ({{ areaList.length }})" i18n-label="@@HYT_area_section_inner" aria-label="SUB-AREA">
                 <div class="actions">
                     <hyt-button [color]="'hyt-base-default-white'" mat-mini-fab (clickFn)="onAddInnerAreaClick($event)">
                         <span i18n="@@HYT_area_inner_add">Add sub-area</span>
@@ -98,9 +107,10 @@
                 >
                 </hyt-areas-list>
             </mat-tab>
+            }
 
+            @if (areaId > 0 && entity.areaViewType === 'IMAGE') {
             <mat-tab
-              *ngIf="areaId > 0 && entity.areaViewType === 'IMAGE'"
               label="Image"
               i18n-label="@@HYT_area_section_static_image"
               aria-label="IMAGE"
@@ -127,8 +137,10 @@
                 </div>
                 <hyt-area-map #map [editMode]="true"></hyt-area-map>
             </mat-tab>
+            }
 
-            <mat-tab *ngIf="areaId > 0 && (entity.areaViewType === 'BIM_XKT' || entity.areaViewType === 'BIM_IFC')" label="BIM" aria-label="BIM_XKT">
+            @if (areaId > 0 && (entity.areaViewType === 'BIM_XKT' || entity.areaViewType === 'BIM_IFC')) {
+            <mat-tab label="BIM" aria-label="BIM_XKT">
 
               <div id="bimTabProject" class="mt-4 mb-2 d-flex flex-row justify-content-center">
                 <hyt-button [color]="'hyt-base-default-white'">
@@ -145,29 +157,28 @@
                 >
               </div>
               <div id="container-bim-viewer">
-                <ng-container *ngIf="isBimLoading; else bimLoaded">
+                @if (isBimLoading) {
                   <div id="bimLoading">
-                    <ng-container *ngIf="!isEmptyBim; else emptyBim">
+                    @if (!isEmptyBim) {
                       <span i18n="@@HYT_area_loading_bim_model">BIM Model Loading...</span>
-                    </ng-container>
-                    <ng-template #emptyBim>
+                    } @else {
                       <span i18n="@@HYT_area_empty_bim_model">No Model</span>
-                    </ng-template>
+                    }
                   </div>
-                </ng-container>
-                <ng-template #bimLoaded>
+                } @else {
                   <hyt-bim
                     [pathBim]="pathBim"
                     [currentAreaConfiguration]="entity.areaConfiguration"
                     [projectId]="projectId"
                     [areaId]="areaId"
                   ></hyt-bim>
-                </ng-template>
+                }
               </div>
             </mat-tab>
+            }
 
+            @if (areaId > 0 && entity.areaViewType === 'MAP') {
             <mat-tab
-              *ngIf="areaId > 0 && entity.areaViewType === 'MAP'"
               label="MAP"
               i18n-label="@@HYT_area_section_map"
               aria-label="MAP"
@@ -184,6 +195,7 @@
               </hyt-map>
             </ng-template>
             </mat-tab>
+            }
 
         </mat-tab-group>
       <!-- END TAB -->
@@ -195,15 +207,19 @@
         consider making a component out of it
     -->
 
-    <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
+    @if (loadingStatus !== LoadingStatus.Ready) {
+    <div class="overlay d-flex flex-column align-items-center justify-content-center">
 
-        <div *ngIf="loadingStatus === LoadingStatus.Loading">
+        @if (loadingStatus === LoadingStatus.Loading) {
+        <div>
 
             <h4 i18n="@@HYT_loading_data">Loading data...</h4>
 
         </div>
+        }
 
-        <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
+        @if (loadingStatus === LoadingStatus.Error) {
+        <div class="error-overlay d-flex flex-column justify-content-center">
             <p class="error-message" i18n="@@HYT_error_occurred">An unexpected error has occurred</p>
             <hyt-button
                 [color]="'hyt-base-total-blue'"
@@ -211,14 +227,19 @@
                 <span i18n="@@HYT_return_area_project">Return to project areas</span> <span class="icon-hyt_cancelC"></span>
             </hyt-button>
         </div>
+        }
 
-        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">Saving data...</h4>
+        @if (loadingStatus === LoadingStatus.Saving) {
+        <h4 i18n="@@HYT_saving_data">Saving data...</h4>
+        }
 
+        @if (loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving) {
         <mat-progress-bar
-            *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
             mode="indeterminate"
         ></mat-progress-bar>
+        }
 
     </div>
+    }
 
 </div>

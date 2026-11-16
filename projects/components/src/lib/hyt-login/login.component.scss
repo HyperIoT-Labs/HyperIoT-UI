@@ -113,16 +113,8 @@
             }
 
             label {
-              &.mat-form-field-label {
+              &.mdc-floating-label {
                 font-size: .9em;
-                font-family: "Exo";
-              }
-
-              &.mat-checkbox-layout {
-                span.mat-checkbox-label {
-                  font-size: .78em;
-                  font-family: "Exo";
-                }
               }
             }
 
@@ -323,11 +315,9 @@
               }
 
               mat-form-field {
-                .mat-form-field-wrapper {
-                  .mat-form-field-subscript-wrapper {
-                    top: unset;
-                    font-size: 70%;
-                  }
+                .mat-mdc-form-field-subscript-wrapper {
+                  top: unset;
+                  font-size: 70%;
                 }
               }
 

@@ -4,9 +4,10 @@ import { ServiceType } from '../../service/model/service-type';
 import { PacketData } from 'core';
 
 @Component({
-  selector: 'hyt-widget-fullscreen-dialog',
-  templateUrl: './widget-fullscreen-dialog.component.html',
-  styleUrls: ['./widget-fullscreen-dialog.component.scss']
+    selector: 'hyt-widget-fullscreen-dialog',
+    templateUrl: './widget-fullscreen-dialog.component.html',
+    styleUrls: ['./widget-fullscreen-dialog.component.scss'],
+    standalone: false
 })
 export class WidgetFullscreenDialogComponent implements OnInit {
 

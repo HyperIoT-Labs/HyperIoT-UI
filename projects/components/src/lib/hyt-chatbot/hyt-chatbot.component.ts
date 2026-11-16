@@ -8,10 +8,11 @@ import { CatClient } from 'ccat-api'
 import moment from 'moment';
 
 @Component({
-  selector: "hyt-chatbot",
-  templateUrl: "./hyt-chatbot.component.html",
-  styleUrls: ["./hyt-chatbot.component.scss"],
-  encapsulation: ViewEncapsulation.None,
+    selector: "hyt-chatbot",
+    templateUrl: "./hyt-chatbot.component.html",
+    styleUrls: ["./hyt-chatbot.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 
 export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {

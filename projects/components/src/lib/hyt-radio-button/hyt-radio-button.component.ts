@@ -47,11 +47,12 @@ export const CUSTOM_RADIO_CONTROL_VALUE_ACCESSOR: any = {
  * Wrapper for the radio buttons.
  */
 @Component({
-  selector: "hyt-radio-button",
-  templateUrl: "./hyt-radio-button.component.html",
-  styleUrls: ["./hyt-radio-button.component.scss"],
-  providers: [CUSTOM_RADIO_CONTROL_VALUE_ACCESSOR],
-  encapsulation: ViewEncapsulation.None,
+    selector: "hyt-radio-button",
+    templateUrl: "./hyt-radio-button.component.html",
+    styleUrls: ["./hyt-radio-button.component.scss"],
+    providers: [CUSTOM_RADIO_CONTROL_VALUE_ACCESSOR],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytRadioButtonComponent implements OnInit, ControlValueAccessor {
   /** The internal data */

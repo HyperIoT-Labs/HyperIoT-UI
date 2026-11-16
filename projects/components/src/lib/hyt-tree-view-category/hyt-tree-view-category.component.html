@@ -1,15 +1,20 @@
-<div *ngIf="treeData.length == 0" class="empty-message">
+@if (treeData.length == 0) {
+<div class="empty-message">
   <b>There are no categories for this Project.<br>Please add one.</b>
 </div>
+}
 
-<mat-tree *ngIf="treeData.length!=0" [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+@if (treeData.length!=0) {
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
 
   <mat-tree-node class="hyt-tree-node spaced-node" *matTreeNodeDef="let node" matTreeNodeToggle>
     <li class="mat-tree-node spaced-node">
       <!-- use a disabled button to provide padding for tree leaf -->
       <div>
         <button mat-icon-button disabled></button>
-        <hyt-checkbox *ngIf="mode === 'packet'" [(ngModel)]="node.active" (changeFn)="cbChanged(node)"></hyt-checkbox>
+        @if (mode === 'packet') {
+        <hyt-checkbox [(ngModel)]="node.active" (changeFn)="cbChanged(node)"></hyt-checkbox>
+        }
         <span (click)="editNode(node)">{{node.label}}</span>
       </div>
       <div class="btn-container">
@@ -28,7 +33,9 @@
               {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
           </button>
-          <hyt-tri-checkbox *ngIf="mode === 'packet'" [(ngModel)]="node.active" (changeFn)="cbChanged(node)"></hyt-tri-checkbox>
+          @if (mode === 'packet') {
+          <hyt-tri-checkbox [(ngModel)]="node.active" (changeFn)="cbChanged(node)"></hyt-tri-checkbox>
+          }
           <span (click)="editNode(node)">{{node.label}}</span>
         </div>
         <div class="btn-container">
@@ -43,6 +50,7 @@
   </mat-nested-tree-node>
 
 </mat-tree>
+}
 
 <hyt-button 
   [color]="'hyt-base-total-white'" 

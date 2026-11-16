@@ -1,6 +1,7 @@
 <div id="container-notify" #containerNotify [ngClass]="{'isVisible': (notifications && notifications.length > 0), 'isNotVisible': (notifications && notifications.length <= 0) }">
-  <ng-container *ngIf="notifications && notifications.length >0">
-    <div id="hyt-notify-container" class="{{notifyPosition}}" *ngFor="let item of notifications">
+  @if (notifications && notifications.length >0) {
+    @for (item of notifications; track item) {
+    <div id="hyt-notify-container" class="{{notifyPosition}}">
         <div class="notify {{ setCssClass(item) }}" aria-live="polite" style="display: block;">
             <button type="button" class="notify-close-button" role="button" (click)="removeNotification(item)">
                 <span class="hyt-icon icon-hyt_cancelC"></span>
@@ -13,6 +14,7 @@
             </div>
         </div>
     </div>
-  </ng-container>
+    }
+  }
 </div>
 

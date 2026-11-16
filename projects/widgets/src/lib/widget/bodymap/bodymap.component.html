@@ -18,18 +18,18 @@
   <content-widget>
     <!-- <ng-container #contentWidget></ng-container> -->
 
+      @if (!isConfigured) {
     <!-- <div *ngIf="!isConfigured; else configured"> -->
-      <div *ngIf="!isConfigured; else configured" class="configure-notice">
+      <div class="configure-notice">
         <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
       </div>
     <!-- </div> -->
-
-    <ng-template #configured>
+      } @else {
       <div id="modalAnchor"></div>
       <div #bodyMap id="bodyMap" [inlineSVG]="svgImage"></div>
       <div #target>
       </div>
-    </ng-template>
+      }
 
   </content-widget>
 

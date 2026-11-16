@@ -3,9 +3,10 @@ import { LoggerService, Logger } from 'core';
 import { PlatformService } from '../../services/platform/platform.service'
 
 @Component({
-  selector: 'hyt-notificationbar',
-  templateUrl: './notificationbar.component.html',
-  styleUrls: ['./notificationbar.component.scss']
+    selector: 'hyt-notificationbar',
+    templateUrl: './notificationbar.component.html',
+    styleUrls: ['./notificationbar.component.scss'],
+    standalone: false
 })
 export class NotificationbarComponent implements OnInit {
 

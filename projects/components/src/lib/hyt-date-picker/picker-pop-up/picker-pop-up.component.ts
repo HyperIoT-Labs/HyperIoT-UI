@@ -24,9 +24,10 @@ interface CalendarContext {
 }
 
 @Component({
-  selector: 'hyt-picker-pop-up',
-  templateUrl: './picker-pop-up.component.html',
-  styleUrls: ['./picker-pop-up.component.css']
+    selector: 'hyt-picker-pop-up',
+    templateUrl: './picker-pop-up.component.html',
+    styleUrls: ['./picker-pop-up.component.css'],
+    standalone: false
 })
 export class PickerPopUpComponent implements OnInit, OnChanges {
 

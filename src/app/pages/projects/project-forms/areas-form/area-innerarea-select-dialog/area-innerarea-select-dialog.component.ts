@@ -3,9 +3,10 @@ import { Area, Area_Service } from 'core';
 import { DialogRef, DIALOG_DATA } from 'components';
 
 @Component({
-  selector: 'hyt-area-innerarea-select-dialog',
-  templateUrl: './area-innerarea-select-dialog.component.html',
-  styleUrls: ['./area-innerarea-select-dialog.component.scss']
+    selector: 'hyt-area-innerarea-select-dialog',
+    templateUrl: './area-innerarea-select-dialog.component.html',
+    styleUrls: ['./area-innerarea-select-dialog.component.scss'],
+    standalone: false
 })
 export class AreaInnerareaSelectDialogComponent implements OnInit {
 

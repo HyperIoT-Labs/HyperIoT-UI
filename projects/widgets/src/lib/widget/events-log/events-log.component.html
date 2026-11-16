@@ -17,8 +17,9 @@
 
     <content-widget>
 
-        <div *ngIf="logMessages.length != 0" class="event-log grid">
-            <ng-container *ngFor="let log of logMessages">
+        @if (logMessages.length != 0) {
+        <div class="event-log grid">
+            @for (log of logMessages; track log) {
                 <div class="time">
                     {{log.timestamp.toLocaleTimeString()}}
                 </div>
@@ -28,13 +29,16 @@
                 <div class="extra">
                     {{log.extra}}
                 </div>
-            </ng-container>
+            }
         </div>
+        }
 
-        <div *ngIf="logMessages.length === 0" class="log-no-messages">
+        @if (logMessages.length === 0) {
+        <div class="log-no-messages">
             <!-- We have no messages to show!! -->
             Waiting for events...
         </div>
+        }
 
     </content-widget>
 

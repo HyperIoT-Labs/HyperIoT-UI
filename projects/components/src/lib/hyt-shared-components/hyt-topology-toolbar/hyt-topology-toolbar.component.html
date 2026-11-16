@@ -11,12 +11,14 @@
             </div>
         </button>
 
-        <button mat-button *ngIf="dataRecordingIsOn" (click)="openReloadRecordingModal()" [disabled]="recordStateInLoading">
+        @if (dataRecordingIsOn) {
+        <button mat-button (click)="openReloadRecordingModal()" [disabled]="recordStateInLoading">
             <div id="reload-btn">
                 <span class="hyt-icon icon-hyt_reload {{(!recordReloading)?'notReloading':''}}"></span>
                 <span class="button-label" i18n="@@HYT_reload">Reload</span>
             </div>
         </button>
+        }
 
     </div>
 

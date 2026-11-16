@@ -1,18 +1,27 @@
-<div id="production-target-settings" *ngIf="contentLoaded">
-    <div *ngFor="let field of settableParameters" class="section-group">
+@if (contentLoaded) {
+<div id="production-target-settings">
+    @for (field of settableParameters; track field) {
+    <div class="section-group">
         <div class="label-section">
             <div class="label">
                 <span>{{ returnFieldName(field) }}</span>
-                <span *ngIf="field === 'current_shift'" class="label-info" i18n="@@HYT_alias_title">(optional)</span>
-                <span *ngIf="field === 'target' || field === 'produced'" class="label-info required">*</span>
+                @if (field === 'current_shift') {
+                <span class="label-info" i18n="@@HYT_alias_title">(optional)</span>
+                }
+                @if (field === 'target' || field === 'produced') {
+                <span class="label-info required">*</span>
+                }
             </div>
-            <div *ngIf="field === 'target'">
+            @if (field === 'target') {
+            <div>
                 <hyt-radio-button name="inputField-target" [options]="isTargetManuallySetOptions"
                     [verticalAlign]="false" class="radio" (changeFn)="onTargetOptionChange($event)">
                 </hyt-radio-button>
             </div>
+            }
         </div>
-        <div class="section-input" *ngIf="field === 'target' && isTargetOptionManual">
+        @if (field === 'target' && isTargetOptionManual) {
+        <div class="section-input">
             <div class="customization-container-section section-alias">
                 <div class="section-title">
                     <span i18n="@@HYT_alias_title">Field Alias</span>
@@ -21,21 +30,26 @@
                 </div>
                 <div class="section-input">
                     <mat-form-field>
+                        <mat-label>Alias</mat-label>
                         <input matInput name="hpacketfield-custom-aliases-{{field}}" id="customAliasesLabel-{{field}}"
-                            type="text" placeholder="Alias" [(ngModel)]="fieldAliases[field]">
+                            type="text" [(ngModel)]="fieldAliases[field]">
                     </mat-form-field>
                 </div>
             </div>
             <mat-form-field class="target-input">
-                <input matInput i18n-placeholder="@@HYT_enter_target" (blur)="updateTargetValue($event.target.value)"
-                    [ngModelOptions]="{ standalone: true }" placeholder="Manually enter a target number" required
+                <mat-label i18n="@@HYT_enter_target">Manually enter a target number</mat-label>
+                <input matInput (blur)="updateTargetValue($event.target.value)"
+                    [ngModelOptions]="{ standalone: true }" required
                     type="number" name="targetValue" [(ngModel)]="targetValue">
             </mat-form-field>
 
             <input name="hidden-packet-id-set-target" [(ngModel)]="targetValue" style="display: none;" required>
         </div>
-        <div class="section-input" *ngIf="(field === 'target' && !isTargetOptionManual) || field !== 'target'">
-            <div class="manual-target" *ngIf="field === 'target'">
+        }
+        @if ((field === 'target' && !isTargetOptionManual) || field !== 'target') {
+        <div class="section-input">
+            @if (field === 'target') {
+            <div class="manual-target">
                 <div class="customization-container-section section-alias">
                     <div class="section-title">
                         <span i18n="@@HYT_alias_title">Field Alias</span>
@@ -44,14 +58,17 @@
                     </div>
                     <div class="section-input">
                         <mat-form-field>
+                            <mat-label>Alias</mat-label>
                             <input matInput name="hpacketfield-custom-aliases-{{field}}"
-                                id="customAliasesLabel-{{field}}" type="text" placeholder="Alias"
+                                id="customAliasesLabel-{{field}}" type="text"
                                 [(ngModel)]="fieldAliases[field]">
                         </mat-form-field>
                     </div>
                 </div>
             </div>
-            <div class="customization-container-section section-alias" *ngIf="field !== 'target'">
+            }
+            @if (field !== 'target') {
+            <div class="customization-container-section section-alias">
                 <div class="section-title">
                     <span i18n="@@HYT_alias_title">Field Alias</span>
                     <hyt-info i18n-text="@@HYT_aliases_description"
@@ -59,11 +76,13 @@
                 </div>
                 <div class="section-input">
                     <mat-form-field>
+                        <mat-label>Alias</mat-label>
                         <input matInput name="hpacketfield-custom-aliases-{{field}}" id="customAliasesLabel-{{field}}"
-                            type="text" placeholder="Alias" [(ngModel)]="fieldAliases[field]">
+                            type="text" [(ngModel)]="fieldAliases[field]">
                     </mat-form-field>
                 </div>
             </div>
+            }
             <hyt-select [label]="'Select Packet'" [groups]="groupedPacketOptions"
                 [isRequired]="field === 'produced' || field === 'target'" [name]="'selectedPacket' + field"
                 [selected]="selectedPacketsOption && selectedPacketsOption[field] ? selectedPacketsOption[field] : {}"
@@ -71,24 +90,31 @@
                 [errorMsgRequired]="'Select one packet'" [hint]="'select one packet'" class="hyt-select-full-width">
             </hyt-select>
             <!-- TODO temp fix for hyt-select required issue -->
-            <input [name]="'hidden-packet-id-select-packet-' + field" *ngIf="field === 'target' || field === 'produced'"
+            @if (field === 'target' || field === 'produced') {
+            <input [name]="'hidden-packet-id-select-packet-' + field"
                 [(ngModel)]="selectedPackets[field]" style="display: none;" required>
+            }
 
             <div class="d-flex flex-column">
+                @if (fieldsOptions[field] && fieldsOptions[field].length > 0 && selectedPackets[field]) {
                 <hyt-inner-field-select
-                    *ngIf="fieldsOptions[field] && fieldsOptions[field].length > 0 && selectedPackets[field]"
                     [id]="'selectedField' + field" [fields]="fieldsOptions[field]"
                     [selectedFieldsIds]="selectedFields && selectedFields[field] ? selectedFields[field].fieldId : []"
                     [isRequired]="field === 'produced' || field === 'target'" [isMultiSelect]="false"
                     [name]="'selectField-' + field"
                     (fieldSelectionChanged)="onPacketFieldChange($event, field)"></hyt-inner-field-select>
+                }
                 <!-- TODO temp fix for hyt-select required issue -->
+                @if (field === 'target' || field === 'produced') {
                 <input [name]="'hidden-packet-id-select-field-' + field"
-                    *ngIf="field === 'target' || field === 'produced'" [(ngModel)]="selectedFields[field]"
+                    [(ngModel)]="selectedFields[field]"
                     style="display: none;" required>
+                }
             </div>
         </div>
+        }
     </div>
+    }
     <div class="remaining-label section-group">
         <div class="label-section">
             <div class="label">
@@ -104,10 +130,12 @@
             </div>
             <div class="section-input">
                 <mat-form-field>
+                    <mat-label>Alias</mat-label>
                     <input matInput name="hpacketfield-custom-aliases-remaining" id="customAliasesLabel-remaining"
-                        type="text" placeholder="Alias" [(ngModel)]="fieldAliases['remaining']">
+                        type="text" [(ngModel)]="fieldAliases['remaining']">
                 </mat-form-field>
             </div>
         </div>
     </div>
 </div>
+}

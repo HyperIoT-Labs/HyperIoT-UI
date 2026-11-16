@@ -31,9 +31,10 @@ interface TreeViewNode {
 }
 
 @Component({
-  selector: 'hyt-tree-view-project',
-  templateUrl: './hyt-tree-view-project.component.html',
-  styleUrls: ['./hyt-tree-view-project.component.scss']
+    selector: 'hyt-tree-view-project',
+    templateUrl: './hyt-tree-view-project.component.html',
+    styleUrls: ['./hyt-tree-view-project.component.scss'],
+    standalone: false
 })
 export class HytTreeViewProjectComponent implements OnInit {
   @Input() treeData: TreeDataNode[] = [];

@@ -43,12 +43,14 @@
                 </a>
             </li>
 
-            <li *ngIf="hasControlPanelAuthorization()" #algorithms class="has-subnav" routerLinkActive="selected"> 
+            @if (hasControlPanelAuthorization()) {
+            <li #algorithms class="has-subnav" routerLinkActive="selected">
                 <a routerLink="/algorithms">
                     <span class="hyt-icon icon-hyt_statistics"></span>
                     <span class="nav-text" i18n="@@HYT_algorithms">Algorithms</span>
                 </a>
             </li>
+            }
 
             <li #info class="has-subnav"> 
                 <a (click)="showVersionPopUp()">

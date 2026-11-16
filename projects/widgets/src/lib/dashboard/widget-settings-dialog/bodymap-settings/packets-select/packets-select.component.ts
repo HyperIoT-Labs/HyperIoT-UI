@@ -3,10 +3,11 @@ import { SelectOptionGroup } from 'components';
 import { HDevice, HDevicesService, HPacket, HPacketService } from 'core';
 
 @Component({
-  selector: 'hyperiot-packets-select',
-  templateUrl: './packets-select.component.html',
-  styleUrls: ['./packets-select.component.css'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'hyperiot-packets-select',
+    templateUrl: './packets-select.component.html',
+    styleUrls: ['./packets-select.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PacketsSelectComponent implements OnInit {
   @Input() projectId: number;

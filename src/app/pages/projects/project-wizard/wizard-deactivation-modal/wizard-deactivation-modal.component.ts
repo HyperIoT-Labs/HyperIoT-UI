@@ -3,10 +3,11 @@ import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { DialogRef } from 'components';
 
 @Component({
-  selector: 'hyt-wizard-deactivation-modal',
-  templateUrl: './wizard-deactivation-modal.component.html',
-  styleUrls: ['./wizard-deactivation-modal.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-wizard-deactivation-modal',
+    templateUrl: './wizard-deactivation-modal.component.html',
+    styleUrls: ['./wizard-deactivation-modal.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class WizardDeactivationModalComponent {
 

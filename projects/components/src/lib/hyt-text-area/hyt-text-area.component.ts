@@ -22,10 +22,11 @@ export class CustomErrorStateMatcherArea implements ErrorStateMatcher {
 }
 
 @Component({
-  selector: "hyt-text-area",
-  templateUrl: "./hyt-text-area.component.html",
-  styleUrls: ["./hyt-text-area.component.scss"],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+    selector: "hyt-text-area",
+    templateUrl: "./hyt-text-area.component.html",
+    styleUrls: ["./hyt-text-area.component.scss"],
+    providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+    standalone: false
 })
 export class HytTextAreaComponent implements OnInit, ControlValueAccessor {
   /**

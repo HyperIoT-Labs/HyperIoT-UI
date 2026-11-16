@@ -11,10 +11,11 @@
         </div>
     </div>
 
-    <div id="share-container" [ngSwitch]="overlayState">
+    <div id="share-container">
+        @switch (overlayState) {
+        @case (sharedPagesEnum.COLLABORATOR) {
         <div 
             id="collaborator-list" 
-            *ngSwitchCase="sharedPagesEnum.COLLABORATOR" 
             [@enterTrigger]="'fadeIn'"
         >
             <div class="add-collaborator">
@@ -29,7 +30,8 @@
                 </hyt-button>
             </div>
             <ul>
-                <li *ngFor="let coll of collaboratorList">
+                @for (coll of collaboratorList; track coll) {
+                <li>
                     <span [innerHTML]="coll"></span>
                     <button 
                         mat-icon-button 
@@ -42,11 +44,13 @@
                         </svg>
                     </button>                     
                 </li>
+                }
             </ul>
         </div>
+        }
+        @case (sharedPagesEnum.DELETE_COLLABORATOR) {
         <div 
             id="delete-collaborator" 
-            *ngSwitchCase="sharedPagesEnum.DELETE_COLLABORATOR"
             [@enterTrigger]="'fadeIn'"
         >
             <h3 i18n="@@HYT_confirm_remove_coll">
@@ -67,9 +71,10 @@
                 >Confirm</hyt-button>
             </div>
         </div>
+        }
+        @case (sharedPagesEnum.ADD_COLLABORATOR) {
         <div 
             id="add-collaborator" 
-            *ngSwitchCase="sharedPagesEnum.ADD_COLLABORATOR"
             [@enterTrigger]="'fadeIn'"    
         >
             <div class="row justify-content-center">
@@ -93,9 +98,10 @@
                 </hyt-button>
             </div>
         </div>
+        }
+        @case (sharedPagesEnum.SUCCESS_OPERATION) {
         <div 
             id="confirm-collaborator"
-            *ngSwitchCase="sharedPagesEnum.SUCCESS_OPERATION"
             [@enterTrigger]="'fadeIn'"    
         >  
             <div style="display: grid; place-items: center;">
@@ -108,24 +114,27 @@
             </div>
                 
         </div>
+        }
+        @case (sharedPagesEnum.LOADING) {
         <div 
             id="loading-collaborator"
-            *ngSwitchCase="sharedPagesEnum.LOADING"
             [@enterTrigger]="'fadeIn'" 
             style="display: flex; justify-content: center; padding: 1em"
         >
             <mat-spinner></mat-spinner>
         </div>
+        }
+        @case (sharedPagesEnum.ERROR) {
         <div 
             id="confirm-remove-collaborator"
-            *ngSwitchCase="sharedPagesEnum.ERROR"
             [@enterTrigger]="'fadeIn'"
         >
             <h3 i18n="@@HYT_errorOverlay">Close the overlay by clicking X and try again. If the error persists, contact us</h3>
         </div>
+        }
+        @case (sharedPagesEnum.USER_ALREADY_EXIST) {
         <div 
             id="confirm-collaborator"
-            *ngSwitchCase="sharedPagesEnum.USER_ALREADY_EXIST"
             [@enterTrigger]="'fadeIn'"    
         >  
             <div style="display: grid; place-items: center;">
@@ -145,5 +154,7 @@
             </div>
                 
         </div>
+        }
+        }
     </div>
 </div>

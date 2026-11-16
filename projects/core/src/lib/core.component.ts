@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'hyt-core',
-  template: `
+    selector: 'hyt-core',
+    template: `
     <p>
       core works!
     </p>
   `,
-  styles: [
-  ]
+    styles: [],
+    standalone: false
 })
 export class CoreComponent implements OnInit {
 

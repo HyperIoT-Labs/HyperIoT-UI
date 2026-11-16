@@ -31,9 +31,10 @@ type RuleConfiguration = {
 }
 
 @Component({
-  selector: 'hyt-compute-field-rule',
-  templateUrl: './compute-field-rule.component.html',
-  styleUrls: ['./compute-field-rule.component.scss']
+    selector: 'hyt-compute-field-rule',
+    templateUrl: './compute-field-rule.component.html',
+    styleUrls: ['./compute-field-rule.component.scss'],
+    standalone: false
 })
 export class ComputeFieldRuleComponent implements OnInit {
 

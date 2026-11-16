@@ -14,7 +14,8 @@
   </div>
 
   <div formArrayName="valuesMap">
-    <div class="map-row" *ngFor="let mappedValue of valuesMapFormArray.controls; let i = index" [formGroupName]="i">
+    @for (mappedValue of valuesMapFormArray.controls; track mappedValue; let i = $index) {
+    <div class="map-row" [formGroupName]="i">
 
       <mat-form-field>
         <mat-label>Input</mat-label>
@@ -44,6 +45,7 @@
       </button>
 
     </div>
+    }
   </div>
 
 </form>

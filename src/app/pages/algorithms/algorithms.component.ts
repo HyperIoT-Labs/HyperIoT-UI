@@ -8,9 +8,10 @@ import { AlgorithmService as AlgorithmsService } from "src/app/services/algorith
 import { DeleteConfirmDialogComponent } from "src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component";
 
 @Component({
-  selector: "hyt-algorithms",
-  templateUrl: "./algorithms.component.html",
-  styleUrls: ["./algorithms.component.scss"],
+    selector: "hyt-algorithms",
+    templateUrl: "./algorithms.component.html",
+    styleUrls: ["./algorithms.component.scss"],
+    standalone: false
 })
 export class AlgorithmsComponent implements OnInit {
   PageStatus = PageStatus;

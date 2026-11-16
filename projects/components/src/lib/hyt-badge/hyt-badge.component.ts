@@ -26,9 +26,10 @@ export enum HytBadgeSize {
  * Component for print small detail with strong visibility and appearence
  */
 @Component({
-  selector: "hyt-badge",
-  templateUrl: "./hyt-badge.component.html",
-  styleUrls: ["./hyt-badge.component.scss"],
+    selector: "hyt-badge",
+    templateUrl: "./hyt-badge.component.html",
+    styleUrls: ["./hyt-badge.component.scss"],
+    standalone: false
 })
 export class HytBadgeComponent {
   private logger: Logger;

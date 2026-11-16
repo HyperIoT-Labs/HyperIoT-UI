@@ -1,4 +1,5 @@
-<div class="toolbar-header" *ngIf="toolbarIsVisible">
+@if (toolbarIsVisible) {
+<div class="toolbar-header">
   <div class="toolbar-title">
     <!-- tooltip.hide on mouse down to hide the tooltip when user drags the widget -->
     <span 
@@ -10,36 +11,57 @@
     >{{widgetName}}</span>
   </div>
   <div class="toolbar-button">
-    <button *ngIf="config.showPlay" (click)="onPlayPause()"
+    @if (config.showPlay) {
+    <button (click)="onPlayPause()"
       [attr.disabled]="isDisabled ? true: null">
       <!-- <img *ngIf="!isPaused" i18n-title="@@HYT_toolbar_pause" title="Pause" src="assets/widgets/images/baseline-pause-24px.svg">
         <img *ngIf="isPaused" i18n-title="@@HYT_toolbar_play" title="Play" src="assets/widgets/images/baseline-play_arrow-24px.svg"> -->
-      <span *ngIf="!isPaused" class="hyt-icon icon-hyt_pause"></span>
-      <span *ngIf="isPaused" class="hyt-icon icon-hyt_play"></span>
+      @if (!isPaused) {
+      <span class="hyt-icon icon-hyt_pause"></span>
+      }
+      @if (isPaused) {
+      <span class="hyt-icon icon-hyt_play"></span>
+      }
     </button>
-    <button *ngIf="config.showTable" (click)="onTableView()">
+    }
+    @if (config.showTable) {
+    <button (click)="onTableView()">
       <!-- <img *ngIf="!showTable" i18n-title="@@HYT_toolbar_table_view" title="Table view" src="assets/widgets/images/outline-view_list-24px.svg">
         <img *ngIf="showTable" i18n-title="@@HYT_toolbar_chart_view" title="Chart view" src="assets/widgets/images/outline-show_chart-24px.svg"> -->
-      <span *ngIf="!showTable" class="hyt-icon icon-hyt_tableBig"></span>
-      <span *ngIf="showTable" class="hyt-icon icon-hyt_statistics"></span>
+      @if (!showTable) {
+      <span class="hyt-icon icon-hyt_tableBig"></span>
+      }
+      @if (showTable) {
+      <span class="hyt-icon icon-hyt_statistics"></span>
+      }
     </button>
-    <button *ngIf="config.showRefresh" i18n-title="@@HYT_toolbar_refresh" title="Refresh"
+    }
+    @if (config.showRefresh) {
+    <button i18n-title="@@HYT_toolbar_refresh" title="Refresh"
       (click)="onRefresh()">
       <!-- <img src="assets/widgets/images/outline-refresh-24px.svg"> -->
       <span class="hyt-icon icon-hyt_statistics"></span>
     </button>
-    <button *ngIf="!config.hideFullScreen" class="toolbar-button drag-handle" i18n-title="@@HYT_toolbar_full_screen" title="Full Screen" (click)="onFullScreen()">
+    }
+    @if (!config.hideFullScreen) {
+    <button class="toolbar-button drag-handle" i18n-title="@@HYT_toolbar_full_screen" title="Full Screen" (click)="onFullScreen()">
       <span class="hyt-icon icon-hyt_plusX"></span>
     </button>
-    <button *ngIf="config.showSettings" i18n-title="@@HYT_toolbar_settings" title="Settings"
+    }
+    @if (config.showSettings) {
+    <button i18n-title="@@HYT_toolbar_settings" title="Settings"
       (click)="onSettings()">
       <!-- <img src="assets/widgets/images/outline-settings-24px.svg"> -->
       <span class="hyt-icon icon-hyt_setting"></span>
     </button>
-    <button *ngIf="config.showClose" i18n-title="@@HYT_toolbar_close" title="Close"
+    }
+    @if (config.showClose) {
+    <button i18n-title="@@HYT_toolbar_close" title="Close"
       (click)="onClose()">
       <!-- <img src="assets/widgets/images/outline-close-24px.svg"> -->
       <span class="hyt-icon icon-hyt_cancel"></span>
     </button>
+    }
   </div>
 </div>
+}

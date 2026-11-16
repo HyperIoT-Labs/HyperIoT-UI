@@ -1,5 +1,12 @@
 mat-chip {
 
+    .mdc-evolution-chip__text-label {
+
+        display: flex;
+        align-items: center;
+
+    }
+
     span {
 
         &.hyt-icon {

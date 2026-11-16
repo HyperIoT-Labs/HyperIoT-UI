@@ -12,10 +12,11 @@ export class SummaryListItem {
 }
 
 @Component({
-  selector: 'hyt-generic-summary-list',
-  templateUrl: './generic-summary-list.component.html',
-  styleUrls: ['./generic-summary-list.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-generic-summary-list',
+    templateUrl: './generic-summary-list.component.html',
+    styleUrls: ['./generic-summary-list.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class GenericSummaryListComponent implements OnInit, OnChanges {
 

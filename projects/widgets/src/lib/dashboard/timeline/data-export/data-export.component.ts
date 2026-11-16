@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormControl, ValidationErrors, Validators } from '@angular/forms';
 import { DialogRef, DIALOG_DATA, SelectOptionGroup, HytSelectComponent } from 'components';
 import { DataExport } from '../models/data-export.model';
@@ -13,11 +13,9 @@ import {
   LoggerService,
   NotificationManagerService
 } from 'core';
-import { BehaviorSubject, catchError, concatMap, filter, finalize, forkJoin, interval, Observable, of, Subject, Subscription, switchMap, takeWhile, tap, throwError } from 'rxjs';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { NgxMatDateAdapter, NgxMatDatetimePicker, } from '@angular-material-components/datetime-picker';
-import { NgxMatMomentAdapter, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NGX_MAT_MOMENT_FORMATS } from '@angular-material-components/moment-adapter';
-import moment, { Moment } from 'moment';
+import { catchError, concatMap, finalize, forkJoin, interval, Observable, of, Subject, switchMap, takeWhile, throwError } from 'rxjs';
+import { DATETIME_PICKER_PROVIDERS, timeRangeValidator } from '../../datetime-picker.config';
+import moment from 'moment';
 import { HttpClient } from '@angular/common/http';
 import saveAs from 'file-saver';
 
@@ -33,22 +31,15 @@ type ExportHPacketData = {
 };
 
 @Component({
-  selector: 'hyperiot-data-export',
-  templateUrl: './data-export.component.html',
-  styleUrls: ['./data-export.component.scss'],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
-    { provide: NgxMatDateAdapter, useClass: NgxMatMomentAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: NGX_MAT_MOMENT_FORMATS },
-    { provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
-  ],
+    selector: 'hyperiot-data-export',
+    templateUrl: './data-export.component.html',
+    styleUrls: ['./data-export.component.scss'],
+    providers: DATETIME_PICKER_PROVIDERS,
+    standalone: false
 })
-export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
+export class DataExportComponent implements OnInit {
 
   readonly maxLength = 255;
-
-  maxValuesSubscription$: Subscription;
-  maxValue$ = new BehaviorSubject<Moment>(moment());
 
   exportErrorList: { hPacketId: number, exportId: string }[] = [];
 
@@ -65,12 +56,9 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
       ]
     ],
     hPacketFormat: [null, Validators.required],
-  });
+  }, { validators: timeRangeValidator });
 
   @ViewChild('selectPackets') selectPackets: HytSelectComponent;
-
-  @ViewChild('startTimePicker') startTimePicker: NgxMatDatetimePicker<any>;
-  @ViewChild('endTimePicker') endTimePicker: NgxMatDatetimePicker<any>;
 
   readonly hPacketFormatEnum = HPacket.FormatEnum;
 
@@ -133,24 +121,6 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.startTime.statusChanges
-      .subscribe((status) => {
-        if (status === 'VALID') {
-          if (this.endTime.disabled) {
-            this.endTime.enable();
-          }
-        } else {
-          this.endTime.disable();
-        }
-      });
-
-    this.startTime.valueChanges
-      .subscribe((value) => {
-        if (value > this.endTime.value) {
-          this.endTime.reset();
-        }
-      });
-
     this.currentProjectId = 'exportParams' in this.data
       ? this.data.exportParams.hProjectId
       : this.data.projectId;
@@ -194,57 +164,6 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
       this.form.patchValue({ ...this.initialFormValue });
     }
   }
-
-  ngAfterViewInit(): void {
-    this.maxValuesSubscription$ = interval(100)
-      .pipe(
-        filter(() => this.startTimePicker.opened || this.endTimePicker.opened),
-        tap(() => this.maxValue$.next(moment())),
-        tap(() => {
-          const timeContainer: HTMLDivElement = document.querySelector('ngx-mat-datetime-content > div.time-container');
-          if (timeContainer) {
-            const errorDateContainer = document.getElementById('errorDateContainer')
-            const setDateButton: HTMLButtonElement = document.querySelector("ngx-mat-datetime-content > div.actions > button");
-            if (!this.startTimePicker.valid || !this.endTimePicker.valid) {
-              if (!errorDateContainer) {
-                const errorLabel: HTMLLabelElement = document.createElement('label');
-                errorLabel.id = 'errorLabel';
-                errorLabel.style.fontSize = '14px';
-                errorLabel.textContent = 'Error: The specified date is not applicable.';
-
-                const errorDateContainer: HTMLDivElement = document.createElement('div');
-                errorDateContainer.id = 'errorDateContainer';
-                errorDateContainer.style.display = 'block';
-                errorDateContainer.style.color = 'red';
-                errorDateContainer.append(errorLabel);
-
-                timeContainer.appendChild(errorDateContainer);
-                timeContainer.style.flexDirection = 'column';
-                timeContainer.style.alignItems = 'center';
-
-                setDateButton.disabled = true;
-                setDateButton.classList.add('mat-button-disabled');
-              }
-            } else {
-              if (errorDateContainer) {
-                errorDateContainer.remove();
-              }
-
-              if (setDateButton) {
-                setDateButton.disabled = false;
-                setDateButton.classList.remove('mat-button-disabled');
-              }
-            }
-          }
-        })
-      ).subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.maxValuesSubscription$.unsubscribe();
-    this.maxValue$.unsubscribe();
-  }
-
 
   private exportNameValidator(control: AbstractControl): ValidationErrors | null {
     if (control.value === null) {

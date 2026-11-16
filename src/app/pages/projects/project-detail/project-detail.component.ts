@@ -31,10 +31,11 @@ enum TreeStatusEnum {
 }
 
 @Component({
-  selector: 'hyt-project-detail',
-  templateUrl: './project-detail.component.html',
-  styleUrls: ['./project-detail.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-project-detail',
+    templateUrl: './project-detail.component.html',
+    styleUrls: ['./project-detail.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ProjectDetailComponent implements OnInit, OnDestroy {
   @ViewChild('treeView', { static: true }) treeView: HytTreeViewProjectComponent;

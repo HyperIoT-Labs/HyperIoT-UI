@@ -1,5 +1,5 @@
 import { NgModule, Injectable } from '@angular/core';
-import { Routes, RouterModule, CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Routes, RouterModule, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthenticationComponent } from '../pages/authentication/authentication.component';
 import { PasswordResetComponent } from '../pages/authentication/password-reset/password-reset.component';
 import { UserActivationComponent } from '../pages/authentication/user-activation/user-activation.component';
@@ -37,7 +37,7 @@ export enum HytRoutesDataFields {
 }
 
 @Injectable()
-export class LoggedInGuard implements CanActivate {
+export class LoggedInGuard  {
 
   constructor(private router: Router, private cookieService: CookieService, private postLoginService: PostLoginService) { }
 
@@ -58,7 +58,7 @@ export class LoggedInGuard implements CanActivate {
  * This guard checks if user is admin or he has access the permission to do something on a resource
  */
 @Injectable()
-export class IsProtectedResourceGuard implements CanActivate {
+export class IsProtectedResourceGuard  {
 
   constructor(private router: Router, private cookieService: CookieService) {}
 

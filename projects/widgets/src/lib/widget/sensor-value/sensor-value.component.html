@@ -19,17 +19,24 @@
 
   <content-widget>
 
-    <div *ngIf="!isConfigured" class="configure-notice">
+    @if (!isConfigured) {
+    <div class="configure-notice">
       <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
     </div>
+    }
 
-    <div *ngIf="isConfigured" class="sensor-value-container" [ngClass]="widget.config.bgColor">
+    @if (isConfigured) {
+    <div class="sensor-value-container" [ngClass]="widget.config.bgColor">
     
       <div class="value-container">
-        <span *ngIf="canRender(sensorRenderValue)" class="sensor-value" [ngStyle]="{'color': widget.config.textColor}">
+        @if (canRender(sensorRenderValue)) {
+        <span class="sensor-value" [ngStyle]="{'color': widget.config.textColor}">
           {{ sensorRenderValue }}
         </span>
-        <span *ngIf="!canRender(sensorRenderValue)">Waiting for data...</span>
+        }
+        @if (!canRender(sensorRenderValue)) {
+        <span>Waiting for data...</span>
+        }
         <div class="timestamp">
           {{ timestamp | amTimeAgo }}
         </div>
@@ -43,6 +50,7 @@
       </div>
 
     </div>
+    }
 
   </content-widget>
 

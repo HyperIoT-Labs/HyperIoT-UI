@@ -13,10 +13,11 @@ enum PageStatus {
 }
 
 @Component({
-  selector: 'hyt-areas-view',
-  templateUrl: './areas-view.component.html',
-  styleUrls: ['./areas-view.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-areas-view',
+    templateUrl: './areas-view.component.html',
+    styleUrls: ['./areas-view.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class AreasViewComponent implements OnDestroy {
 

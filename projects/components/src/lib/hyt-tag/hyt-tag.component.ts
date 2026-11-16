@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'hyt-tag',
-  templateUrl: './hyt-tag.component.html',
-  styleUrls: ['./hyt-tag.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-tag',
+    templateUrl: './hyt-tag.component.html',
+    styleUrls: ['./hyt-tag.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytTagComponent implements OnInit {
 

@@ -21,10 +21,11 @@ import { environment } from "src/environments/environment";
 import { triggerAsyncId } from "async_hooks";
 
 @Component({
-  selector: "hyt-packet-form",
-  templateUrl: "./packet-form.component.html",
-  styleUrls: ["./packet-form.component.scss"],
-  encapsulation: ViewEncapsulation.None,
+    selector: "hyt-packet-form",
+    templateUrl: "./packet-form.component.html",
+    styleUrls: ["./packet-form.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PacketFormComponent
   extends ProjectFormEntity

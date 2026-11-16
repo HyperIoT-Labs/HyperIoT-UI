@@ -6,9 +6,10 @@ import { WidgetAction } from '../../base/base-widget/model/widget.model';
 import { ServiceType } from '../../service/model/service-type';
 
 @Component({
-  selector: 'hyperiot-hpacket-table',
-  templateUrl: './hpacket-table.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './hpacket-table.component.scss'],
+    selector: 'hyperiot-hpacket-table',
+    templateUrl: './hpacket-table.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './hpacket-table.component.scss'],
+    standalone: false
 })
 export class HpacketTableComponent extends BaseTableComponent implements AfterViewInit {
 

@@ -6,10 +6,11 @@ import { DialogService } from "../hyt-dialog/dialog.service";
 import { HytChartModalComponent } from "../hyt-modal/hyt-chart-modal/hyt-chart-modal.component";
 
 @Component({
-  selector: "hyt-chatbot-chart-message",
-  templateUrl: "./hyt-chatbot-chart-message.component.html",
-  styleUrls: ["./hyt-chatbot-chart-message.component.scss"],
-  encapsulation: ViewEncapsulation.None,
+    selector: "hyt-chatbot-chart-message",
+    templateUrl: "./hyt-chatbot-chart-message.component.html",
+    styleUrls: ["./hyt-chatbot-chart-message.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 
 export class HytChatbotChartMessageComponent {

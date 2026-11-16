@@ -1,24 +1,24 @@
 <mat-accordion class="container-dmuc">
   <mat-expansion-panel>
     <mat-expansion-panel-header>
-      <ng-container *ngIf="getConfigrationStatus() === 'none'">
+      @if (getConfigrationStatus() === 'none') {
         <mat-panel-title>
           <mat-icon class="error" aria-hidden="false" aria-label="warning icon">warning</mat-icon>
         </mat-panel-title>
         <mat-panel-description i18n="@@HYT_map_no_center">Set the coordinates of the center of the map</mat-panel-description>
-      </ng-container>
-      <ng-container *ngIf="getConfigrationStatus() === 'nodevice'">
+      }
+      @if (getConfigrationStatus() === 'nodevice') {
         <mat-panel-title>
           <mat-icon class="warning" aria-hidden="false" aria-label="warning icon">warning</mat-icon>
         </mat-panel-title>
         <mat-panel-description i18n="@@HYT_map_no_items">No device or sub-area set</mat-panel-description>
-      </ng-container>
-      <ng-container *ngIf="getConfigrationStatus() === 'complete'">
+      }
+      @if (getConfigrationStatus() === 'complete') {
         <mat-panel-title>
           <mat-icon class="success" aria-hidden="false" aria-label="check_circle icon">check_circle</mat-icon>
         </mat-panel-title>
         <mat-panel-description i18n="@@HYT_map_ok">Map data are set correctly</mat-panel-description>
-      </ng-container>
+      }
     </mat-expansion-panel-header>
 
     <div id="coordinates-configuration">
@@ -37,8 +37,10 @@
         </mat-button-toggle-group>
       </div>
     </div>
-    <div id="container-coord-forms" [ngSwitch]="selectedCoordType">
-      <div *ngSwitchCase="'LATLONG'">
+    <div id="container-coord-forms">
+      @switch (selectedCoordType) {
+      @case ('LATLONG') {
+      <div>
         <div class="container-latlong-form">
           <form [formGroup]="latLongForm" (ngSubmit)="saveMapCenterAndZoom()">
             <div class=" form-row container-lat-long">
@@ -66,33 +68,41 @@
                 <input matInput [min]="mapConfiguration.minZoom" [max]="mapConfiguration.maxZoom" placeholder="Zoom" type="number" formControlName="zoom" />
               </mat-form-field> -->
               <mat-label i18n="@@HYT_zoom_level">Zoom Level</mat-label>
-              <mat-slider 
+              <mat-slider
                   [min]="mapConfiguration.minZoom"
                   [max]="mapConfiguration.maxZoom"
-                  tickInterval="1"
-                  thumbLabel
-                  formControlName="zoom"
-                  (input)="latLongForm.controls.zoom.setValue($event.value)"
+                  step="1"
+                  showTickMarks
+                  discrete
                   >
+                  <input matSliderThumb formControlName="zoom" />
               </mat-slider>
               {{ latLongForm.value.zoom }}
             </div>
             <div class="edit-center-action">
-              <button type="submit" *ngIf="editCenter" mat-icon-button aria-label="Save Edit Center">
+              @if (editCenter) {
+              <button type="submit" mat-icon-button aria-label="Save Edit Center">
                 <mat-icon>check</mat-icon>
               </button>
-              <button *ngIf="editCenter" mat-icon-button (click)="cancelEditCenter()" aria-label="Revert Edit Center">
+              }
+              @if (editCenter) {
+              <button mat-icon-button (click)="cancelEditCenter()" aria-label="Revert Edit Center">
                 <mat-icon>close</mat-icon>
               </button>
-              <button *ngIf="!editCenter" mat-icon-button (click)="enableEditCenter()" aria-label="Enable Edit Center">
+              }
+              @if (!editCenter) {
+              <button mat-icon-button (click)="enableEditCenter()" aria-label="Enable Edit Center">
                 <mat-icon>edit</mat-icon>
               </button>
+              }
             </div>
 <!--        <button mat-button (click)="saveMapCenterAndZoom()" [disabled]="latLongForm.invalid || !latLongForm.dirty">Salva Coordinate</button> -->
           </form>
         </div>
       </div>
-      <div *ngSwitchCase="'GEOCODING'">
+      }
+      @case ('GEOCODING') {
+      <div>
         <div class="container-geocoding-form">
           <form [formGroup]="geoSearchForm">
             <div class=" form-row container-address">
@@ -104,9 +114,11 @@
                   <mat-spinner diameter="24" strokeWidth="3"></mat-spinner>
                 </mat-icon>
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                  <mat-option *ngFor="let address of addressList | async" [value]="address">
+                  @for (address of addressList | async; track address) {
+                  <mat-option [value]="address">
                     {{ address.label }}
                   </mat-option>
+                  }
                 </mat-autocomplete>
               </mat-form-field>
             </div>
@@ -118,6 +130,8 @@
           </form>
         </div>
       </div>
+      }
+      }
     </div>
 
   </mat-expansion-panel>

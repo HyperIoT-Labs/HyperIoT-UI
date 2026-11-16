@@ -1,3 +1,5 @@
 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{option}}</mat-option>
+    @for (option of filteredOptions | async; track option) {
+    <mat-option [value]="option">{{option}}</mat-option>
+    }
 </mat-autocomplete>

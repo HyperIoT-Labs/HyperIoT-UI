@@ -4,9 +4,10 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { HPacketField, HPacketFieldsHandlerService } from 'core';
 
 @Component({
-  selector: 'hyt-inner-field-select',
-  templateUrl: './hyt-inner-field-select.component.html',
-  styleUrls: ['./hyt-inner-field-select.component.css']
+    selector: 'hyt-inner-field-select',
+    templateUrl: './hyt-inner-field-select.component.html',
+    styleUrls: ['./hyt-inner-field-select.component.css'],
+    standalone: false
 })
 export class HytInnerFieldSelectComponent implements OnChanges, OnInit {
 

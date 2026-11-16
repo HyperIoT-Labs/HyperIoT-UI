@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'hyt-icon-button',
-  templateUrl: './hyt-icon-button.component.html',
-  styleUrls: ['./hyt-icon-button.component.css']
+    selector: 'hyt-icon-button',
+    templateUrl: './hyt-icon-button.component.html',
+    styleUrls: ['./hyt-icon-button.component.css'],
+    standalone: false
 })
 export class HytIconButtonComponent {
   /** Specifies button color: primary, accent or warn */

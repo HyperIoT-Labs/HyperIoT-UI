@@ -6,7 +6,7 @@ describe('OfflineDataService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: OfflineDataService = TestBed.get(OfflineDataService);
+    const service: OfflineDataService = TestBed.inject(OfflineDataService);
     expect(service).toBeTruthy();
   });
 });

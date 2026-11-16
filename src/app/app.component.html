@@ -1,17 +1,21 @@
 <div id="hyt-container" cdkScrollable>
 
-  <div *ngIf="showToolBars()" id="hyt-container-topbar">
+  @if (showToolBars()) {
+  <div id="hyt-container-topbar">
     <hyt-topbar
       [logoPath]="(logoPaths | async)?.standard"
       [logoMobilePath]="(logoPaths | async)?.mobile"
     ></hyt-topbar>
   </div>
+  }
 
   <div id="hyt-container-nav">
 
-    <div *ngIf="showToolBars()" id="hyt-container-sidebar">
+    @if (showToolBars()) {
+    <div id="hyt-container-sidebar">
       <hyt-sidebar></hyt-sidebar>
     </div>
+    }
 
     <div id="hyt-container-router" class="{{(showToolBars()) ? 'container-fluid' : 'container-full-screen'}}">
       <router-outlet></router-outlet>
@@ -33,4 +37,6 @@
 
 </div>
 
-<hyt-notification-box *ngIf="isLogged()"  [notify-position]="'TOP_CENTER'"></hyt-notification-box>
+@if (isLogged()) {
+<hyt-notification-box  [notify-position]="'TOP_CENTER'"></hyt-notification-box>
+}

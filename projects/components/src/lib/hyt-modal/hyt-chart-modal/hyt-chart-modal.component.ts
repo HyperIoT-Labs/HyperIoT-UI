@@ -4,9 +4,10 @@ import { DialogRef } from '../../hyt-dialog/dialog-ref';
 import { PlotlyService } from 'angular-plotly.js';
 
 @Component({
-  selector: 'hyt-chart-modal',
-  templateUrl: './hyt-chart-modal.component.html',
-  styleUrls: ['./hyt-chart-modal.component.scss']
+    selector: 'hyt-chart-modal',
+    templateUrl: './hyt-chart-modal.component.html',
+    styleUrls: ['./hyt-chart-modal.component.scss'],
+    standalone: false
 })
 export class HytChartModalComponent {
 

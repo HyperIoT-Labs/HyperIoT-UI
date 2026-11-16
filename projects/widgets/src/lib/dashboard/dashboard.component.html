@@ -1,39 +1,49 @@
 <div id="dashboard-page">
-    <hyperiot-dashboard-debug *ngIf="debug"
+    @if (debug) {
+    <hyperiot-dashboard-debug
                               [data]="[
                               currentDashboard,
                               currentDashboardId,
                               currentDashboardType,
                               hProjectList,
                               hProjectListOptions]"></hyperiot-dashboard-debug>
-    <div *ngIf="enableBreadcrumb" class="header d-flex flex-row justify-content-stretch">
+    }
+    @if (enableBreadcrumb) {
+    <div class="header d-flex flex-row justify-content-stretch">
 
         <div class="breadcrumb flex-grow-1">
             <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="'/'">Home</a>
-            <span *ngIf="showAreas"> &gt; <strong>Areas</strong></span>
+            @if (showAreas) {
+            <span> &gt; <strong>Areas</strong></span>
+            }
             <span> &gt; <strong>Dashboard</strong></span>
         </div>
 
     </div>
+    }
 
-    <div id="container-dashboard" [ngSwitch]="pageStatus">
+    <div id="container-dashboard">
 
         <div class="row">
 
-            <div id="tools-dashboard-box" class="col-12 {{(pageStatus == 0)?'inLoading':''}}" *ngIf="pageStatus != -1 && pageStatus !== 2">
+            @if (pageStatus != -1 && pageStatus !== 2) {
+            <div id="tools-dashboard-box" class="col-12 {{(pageStatus == 0)?'inLoading':''}}">
 
                 <div class="row no-gutters">
 
                     <div class="col-4 left-tools">
 
-                        <button mat-button *ngIf="enableOnlineOffline" (click)="changeSignalState($event)" [disabled]="pageStatus == 0">
+                        @if (enableOnlineOffline) {
+                        <button mat-button (click)="changeSignalState($event)" [disabled]="pageStatus == 0">
                             <div id="signal-btn">
                                 <span class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOffFilled':'icon-hyt_wifiOnFilled'}}"></span>
                                 <span class="button-label">{{(signalIsOn)?'Offline':'Online'}}</span>
                             </div>
                         </button>
+                        }
 
-                        <button mat-button *ngIf="signalIsOn && enableStreamControl" (click)="changeStreamState($event)" [disabled]="pageStatus == 0">
+                        @if (signalIsOn && enableStreamControl) {
+                        <button mat-button (click)="changeStreamState($event)" [disabled]="pageStatus == 0">
                             <div id="play-btn">
                                 <span class="hyt-icon {{(streamIsOn)?'icon-hyt_pause':'icon-hyt_play'}}"></span>
                                 <span class="button-label">{{(streamIsOn)?'Pause':'Play'}}</span>
@@ -41,28 +51,38 @@
                                 <!-- <p i18n="@@HYT_stream_is_on">{streamIsOn, select, true {Play} false {Pause}}</p> -->
                             </div>
                         </button>
+                        }
 
-                        <hyt-topology-toolbar *ngIf="enableTopologyToolbar" [dataRecordingIsOn]="dataRecordingIsOn" [upTimeSec]="upTimeSec"
+                        @if (enableTopologyToolbar) {
+                        <hyt-topology-toolbar [dataRecordingIsOn]="dataRecordingIsOn" [upTimeSec]="upTimeSec"
                             [idProjectSelected]="idProjectSelected" [recordStateInLoading]="recordStateInLoading"
                             (recordingStateChange)="changeTopologyState($event)">
                         </hyt-topology-toolbar>
+                        }
                     </div>
 
-                  <div *ngIf="showHDevice" class="col-4 center-tools">
+                  @if (showHDevice) {
+                  <div class="col-4 center-tools">
                     <div id="device-header" class="flex-column pr-2">
                       <span style="font-size: 2em; padding-top: 0.2em; padding-left: 0.4em;" class="hyt-icon icon-hyt_device"></span>
                       <h3 i18n="@HYT_dashboard_device">Device Dashboard</h3>
                     </div>
                     <div class="flex-column pl-2">
-                      <h4 *ngIf="currentDevice && currentDevice?.deviceName" class="title-badge">{{currentDevice?.deviceName}}</h4>
-                      <small *ngIf="currentDevice && currentDevice?.description">{{currentDevice?.description}}</small>
+                      @if (currentDevice && currentDevice?.deviceName) {
+                      <h4 class="title-badge">{{currentDevice?.deviceName}}</h4>
+                      }
+                      @if (currentDevice && currentDevice?.description) {
+                      <small>{{currentDevice?.description}}</small>
+                      }
                     </div>
                   </div>
+                  }
 
-                    <div *ngIf="!showHDevice" class="col-4 center-tools">
+                    @if (!showHDevice) {
+                    <div class="col-4 center-tools">
 
+                        @if (!showAreas && pageStatus == 1 && enableProjectSelection) {
                         <hyt-select
-                            *ngIf="!showAreas && pageStatus == 1 && enableProjectSelection"
                             [label]="'Select a project'"
                             name="project"
                             [options]="hProjectListOptions"
@@ -72,21 +92,28 @@
                             (changeFn)="onSelectChange($event)"
                         >
                         </hyt-select>
-                      <div *ngIf="!showAreas && pageStatus == 1 && !enableProjectSelection">
+                        }
+                      @if (!showAreas && pageStatus == 1 && !enableProjectSelection) {
+                      <div>
                         <label>Project name: </label>
                         <span> {{getCurrentProjectData(idProjectSelected, 'name')}}</span>
                       </div>
+                      }
 
-                        <button mat-button *ngIf="enableProjectEdit" (click)="goToEditProject()">
+                        @if (enableProjectEdit) {
+                        <button mat-button (click)="goToEditProject()">
                             <div id="edit-btn">
                                 <span class="hyt-icon icon-hyt_pencil"></span>
                                 <span class="button-label" i18n="@@HYT_edit">Edit</span>
                             </div>
                         </button>
+                        }
 
                     </div>
+                    }
 
-                    <div *ngIf="enableAddWidget" class="col-4 right-tools">
+                    @if (enableAddWidget) {
+                    <div class="col-4 right-tools">
 
                         <!-- <hyt-select
                             *ngIf="!showAreas && pageStatus == 1" [label]="'Select a project'" name="project"
@@ -95,9 +122,11 @@
                         >
                         </hyt-select> -->
 
-                        <h3 *ngIf="showAreas" style="float:left; margin-top: 18px; color: blue">
+                        @if (showAreas) {
+                        <h3 style="float:left; margin-top: 18px; color: blue">
                             {{ areaPath && areaPath[areaPath.length - 1]?.name }}
                         </h3>
+                        }
                         <!--
                         <div *ngIf="showAreas" class="current-path">
                             <span *ngFor="let area of areaPath; let i = index; let c = count">
@@ -107,29 +136,37 @@
                             </span>
                         </div>
                         -->
-                        <button mat-button *ngIf="(showAreas || showHDevice) && (areaId || deviceAreaId)" [routerLink]="['/areas', idProjectSelected, areaId || deviceAreaId]">
+                        @if ((showAreas || showHDevice) && (areaId || deviceAreaId)) {
+                        <button mat-button [routerLink]="['/areas', idProjectSelected, areaId || deviceAreaId]">
                             <div id="area-widget-btn">
                                 <span class="hyt-icon icon-hyt_areaB16"></span>
                                 <span class="button-label">Areas</span>
                             </div>
                         </button>
+                        }
 
-                        <button mat-button *ngIf="enableAddWidget" (click)="openWidgetModal()" [disabled]="pageStatus !== PageStatus.Standard">
+                        @if (enableAddWidget) {
+                        <button mat-button (click)="openWidgetModal()" [disabled]="pageStatus !== PageStatus.Standard">
                             <div id="add-widget-btn">
                                 <span class="hyt-icon icon-hyt_widgetPlus"></span>
                                 <span class="button-label" i18n="@@HYT_add_a_widget">Add a widget</span>
                             </div>
                         </button>
+                        }
 
                     </div>
+                    }
 
                 </div>
 
             </div>
+            }
 
         </div>
 
-        <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading"
+        @switch (pageStatus) {
+        @case (PageStatus.Loading) {
+        <div id="loadingStatus"
             class="mt-5 d-flex flex-column row align-items-center justify-content-center">
             <!-- Loading -->
 
@@ -139,21 +176,27 @@
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 
         </div>
+        }
 
-        <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
+        @case (PageStatus.Standard) {
+        <div id="standardStatus" class="row">
 
-            <div *ngIf="!signalIsOn" class="timeline-container">
+            @if (!signalIsOn) {
+            <div class="timeline-container">
 
                 <hyperiot-timeline [projectId]="idProjectSelected"
                     [dashboardPackets]="packetsInDashboard" (dateOutput)="timeLineSelection($event)"
                     [defaultRange]="timelineDefaultRange" (defaultRangeChanged)="onDefaultRangeChanged($event)">
                 </hyperiot-timeline>
             </div>
+            }
             <!-- Standard -->
-            <div *ngIf="dataRecordingStatus < 1 && signalIsOn" id="dashboard-overlay-blurred"
+            @if (dataRecordingStatus < 1 && signalIsOn) {
+            <div id="dashboard-overlay-blurred"
                 class="row no-gutters justify-content-center">
 
-                <div *ngIf="dataRecordingStatus <= 0 && recordStateInLoading" class="col-md-4">
+                @if (dataRecordingStatus <= 0 && recordStateInLoading) {
+                <div class="col-md-4">
                   <h2 i18n="@@HYT_data_recording_check_status" id="overlay-blurred-title">Check project status</h2>
                   <!--@I18N-->
                   <h3 i18n="@@HYT_data_recording_waiting_status" id="overlay-blurred-text">
@@ -161,8 +204,10 @@
                   </h3>
                   <!--@I18N-->
                 </div>
+                }
 
-                <div *ngIf="dataRecordingStatus <= 0 && !recordStateInLoading" class="col-md-4">
+                @if (dataRecordingStatus <= 0 && !recordStateInLoading) {
+                <div class="col-md-4">
                     <h2 i18n="@@HYT_data_recording_is_disabled" id="overlay-blurred-title">Data recording is disabled</h2>
                     <!--@I18N-->
                     <h3 i18n="@@HYT_data_recording_is_disabled_text" id="overlay-blurred-text">
@@ -171,13 +216,16 @@
                     </h3>
                     <!--@I18N-->
                 </div>
+                }
 
             </div>
+            }
 
             <div id="container-box-dashboard"
                 class="col-12 {{(dataRecordingStatus < 1 && signalIsOn) ? 'blurred-animation' : ''}}">
 
-                <div id="loadingOfflineData" *ngIf="offlineWidgetStatus === 0"
+                @if (offlineWidgetStatus === 0) {
+                <div id="loadingOfflineData"
                     class="d-flex flex-column align-items-center">
                     <!-- Loading -->
 
@@ -187,6 +235,7 @@
                     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 
                 </div>
+                }
 
                 <hyperiot-dashboard-view [dashboard]="currentDashboard" [dashboardType]="currentDashboardType"
                     [dashboardWidgets]="currentDashboard?.widgets" (dsTopologyResTimeChange)="topologyResTimeChange($event)"
@@ -196,8 +245,10 @@
             </div>
 
         </div>
+        }
 
-        <div id="newStatus" *ngSwitchCase="PageStatus.New" class="row align-items-center justify-content-center">
+        @case (PageStatus.New) {
+        <div id="newStatus" class="row align-items-center justify-content-center">
             <!-- New -->
             <hyt-empty-project-list-view
                 title="There are no projects!"
@@ -205,17 +256,23 @@
             ></hyt-empty-project-list-view>
 
         </div>
+        }
 
-        <div id="errorStatus" *ngSwitchCase="PageStatus.Error"
+        @case (PageStatus.Error) {
+        <div id="errorStatus"
             class="mt-5 d-flex flex-column row align-items-center justify-content-center">
             <!-- Error -->
             <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
 
         </div>
+        }
 
-        <div *ngSwitchDefault>
+        @default {
+        <div>
             switch-case error
         </div>
+        }
+        }
 
     </div>
 

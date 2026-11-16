@@ -3,7 +3,9 @@
     <hr>
     <h3>Body map: </h3>
     <mat-button-toggle-group class="bodyMap-configuration-toggle" [(ngModel)]="selectedBodyMapValue" name="gender-mode" aria-label="Gender mode" (change)="onBodyMapChange($event)">
-      <mat-button-toggle *ngFor="let bm of bodyMaps" [value]="bm.value">{{ bm.label }}</mat-button-toggle>
+      @for (bm of bodyMaps; track bm) {
+      <mat-button-toggle [value]="bm.value">{{ bm.label }}</mat-button-toggle>
+      }
     </mat-button-toggle-group>
 
   </div>
@@ -37,7 +39,8 @@
     </div>
 
     <div class="muscle-list-container">
-      <div *ngFor="let association of musclesMap" class="muscle-row">
+      @for (association of musclesMap; track association) {
+      <div class="muscle-row">
 
         <div class="muscle-row-info">
 
@@ -69,6 +72,7 @@
         </div>
 
       </div>
+      }
     </div>
 
   </div>

@@ -8,10 +8,11 @@ import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { Validators } from '@angular/forms';
 
 @Component({
-  selector: 'hyt-application-form',
-  templateUrl: './application-form.component.html',
-  styleUrls: ['./application-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-application-form',
+    templateUrl: './application-form.component.html',
+    styleUrls: ['./application-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ApplicationFormComponent extends ProjectFormEntity implements AfterViewInit, OnDestroy {
 
@@ -140,7 +141,7 @@ export class ApplicationFormComponent extends ProjectFormEntity implements After
     super.edit(d, readyCallback);
   }
   clone(entity?: HDevice): HDevice {
-    const device = { ...entity } || this.entity;
+    const device = { ...entity };
     device.id = 0;
     device.entityVersion = 1;
     device.deviceName = `${device.deviceName}Copy`;

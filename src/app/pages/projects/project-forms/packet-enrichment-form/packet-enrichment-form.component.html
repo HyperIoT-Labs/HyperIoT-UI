@@ -3,7 +3,8 @@
     <!--@I18N@-->
   </p>
 
-  <div *ngIf="showCover && !editMode" class="row">
+  @if (showCover && !editMode) {
+  <div class="row">
     <div id="container-add-enrich" class="col-12">
       <hyt-button [color]="'hyt-base-default-white'" (clickFn)="loadEmpty()">
         <span class="hyt-icon icon-hyt_plus"></span>
@@ -11,6 +12,7 @@
       </hyt-button>
     </div>
   </div>
+  }
   <!-- END FIRST ROW -->
 
   <form
@@ -56,54 +58,52 @@
         </hyt-select>
       </div>
 
+      @if (selectedEnrichmentType !== enrichmentTypes.VALIDATION_ENRICHMENT) {
       <div
-        *ngIf="selectedEnrichmentType !== enrichmentTypes.VALIDATION_ENRICHMENT"
         id="ffield-col-enrich-tag-cat"
         class="col-8 offset-2 col-tag-cat"
       >
+        @if (selectedEnrichmentType === enrichmentTypes.ADD_TAG_ENRICHMENT) {
         <hyt-asset-tag
           #assetTag
-          *ngIf="selectedEnrichmentType === enrichmentTypes.ADD_TAG_ENRICHMENT"
           [project]="project"
           [packet]="packet"
           [selectedTags]="assetTags"
         >
         </hyt-asset-tag>
+        }
 
+        @if (selectedEnrichmentType === enrichmentTypes.ADD_CATEGORY_ENRICHMENT) {
         <hyt-asset-category
           #assetCategory
-          *ngIf="
-            selectedEnrichmentType === enrichmentTypes.ADD_CATEGORY_ENRICHMENT
-          "
           [project]="project"
           [packet]="packet"
           [selectedCategories]="assetCategories"
         >
         </hyt-asset-category>
+        }
 
+        @if (selectedEnrichmentType === enrichmentTypes.FOURIER_TRANSFORM_ENRICHMENT) {
         <hyt-fourier-transform
           #fourierTransform
-          *ngIf="
-            selectedEnrichmentType ===
-            enrichmentTypes.FOURIER_TRANSFORM_ENRICHMENT
-          "
           [project]="project"
           [packet]="packet"
           [config]="ruleConfig"
         >
         </hyt-fourier-transform>
+        }
 
+        @if (selectedEnrichmentType === enrichmentTypes.COMPUTE_FIELD_RULE_ACTION) {
         <hyt-compute-field-rule
-          *ngIf="
-            selectedEnrichmentType === enrichmentTypes.COMPUTE_FIELD_RULE_ACTION
-          "
           #computeFieldRule
           [project]="project"
           [packet]="packet"
           [config]="ruleConfig"
         >
         </hyt-compute-field-rule>
+        }
       </div>
+      }
     </div>
     <!-- END FIRST FORM ROW -->
 
@@ -141,24 +141,23 @@
     </div>
     <!-- END THIRD FORM ROW -->
 
+    @if (selectedEnrichmentType !== 'it.acsoftware.hyperiot.rule.service.actions.FourierTransformRuleAction') {
     <div
-      *ngIf="
-        selectedEnrichmentType !==
-        'it.acsoftware.hyperiot.rule.service.actions.FourierTransformRuleAction'
-      "
       class="form-group row"
     >
       <div class="col-12">
+        @if (allPackets) {
         <hyt-rule-definition
-          *ngIf="allPackets"
           [currentPacket]="packet"
           #ruleDef
           formControlName="ruleDefinition"
           [allPackets]="allPackets"
         >
         </hyt-rule-definition>
+        }
       </div>
     </div>
+    }
     <!-- END FOURTH FORM ROW -->
 
     <!-- 
@@ -167,16 +166,18 @@
       consider making a component out of it 
     -->
 
+    @if (loadingStatus !== LoadingStatus.Ready) {
     <div
-      *ngIf="loadingStatus !== LoadingStatus.Ready"
       class="overlay d-flex flex-column align-items-center justify-content-center"
     >
-      <div *ngIf="loadingStatus === LoadingStatus.Loading">
+      @if (loadingStatus === LoadingStatus.Loading) {
+      <div>
         <h4 i18n="@@HYT_loading_data">Loading data...</h4>
       </div>
+      }
 
+      @if (loadingStatus === LoadingStatus.Error) {
       <div
-        *ngIf="loadingStatus === LoadingStatus.Error"
         class="error-overlay d-flex flex-column justify-content-center"
       >
         <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
@@ -189,22 +190,23 @@
           <span class="icon-hyt_cancelC"></span>
         </hyt-button>
       </div>
+      }
 
+      @if (loadingStatus === LoadingStatus.Saving) {
       <h4
-        *ngIf="loadingStatus === LoadingStatus.Saving"
         i18n="@@HYT_saving_data"
       >
         Saving data...
       </h4>
+      }
 
+      @if (loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving) {
       <mat-progress-bar
-        *ngIf="
-          loadingStatus === LoadingStatus.Loading ||
-          loadingStatus === LoadingStatus.Saving
-        "
         mode="indeterminate"
       ></mat-progress-bar>
+      }
     </div>
+    }
   </form>
   <!-- END FORM -->
 </div>

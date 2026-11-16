@@ -79,9 +79,9 @@
               </div> <!-- Container CheckBox Privacy -->
 
               <div class="container-form-field errorMessage">
-                <ng-container *ngIf="getError('general')">
+                @if (getError('general')) {
                   {{getError('general')}}
-                </ng-container>
+                }
               </div> <!-- Error Box -->
 
               <div id="container-submit-btn" class="container-form-field">
@@ -90,7 +90,7 @@
                 </hyt-button>
               </div> <!-- Container Button -->
 
-              <ng-container *ngIf="registrationStatus == 1">
+              @if (registrationStatus == 1) {
                 <div class="sk-circle">
                   <div class="sk-circle1 sk-child"></div>
                   <div class="sk-circle2 sk-child"></div>
@@ -105,13 +105,10 @@
                   <div class="sk-circle11 sk-child"></div>
                   <div class="sk-circle12 sk-child"></div>
                 </div>
-              </ng-container>
-
-              <ng-container *ngIf="registrationStatus == 2">
-
+              }
+              @if (registrationStatus == 2) {
                 <div id="successMessage" i18n="@@HYT_registration_form_ok">Please click on the link that has just been sent to your email account to complete the registration process</div>
-
-              </ng-container> <!-- *ngIf="registrationStatus == 2" -->
+              } <!-- *ngIf="registrationStatus == 2" -->
 
             </form> <!-- End Form -->
 

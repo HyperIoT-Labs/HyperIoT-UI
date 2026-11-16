@@ -25,7 +25,8 @@
                 <div class="col-6">
     
                     <table id="tableSummary">
-                        <tr *ngFor="let data of data">
+                        @for (data of data; track data) {
+                        <tr>
                             <td class="exagon-block">
                                 <hyt-hexagon [iconPath]="data.iconPath" [dimension]="0.8"></hyt-hexagon>
                             </td>
@@ -33,10 +34,13 @@
                                 <span class="label-type">{{data.type}}</span>
                                 <hr>
                                 <ul>
-                                    <li class="entity" *ngFor="let ent of data.entities">{{ent}}</li>
+                                    @for (ent of data.entities; track ent) {
+                                    <li class="entity">{{ent}}</li>
+                                    }
                                 </ul>
                             </td>
                         </tr>
+                        }
                     </table>
     
                 </div>

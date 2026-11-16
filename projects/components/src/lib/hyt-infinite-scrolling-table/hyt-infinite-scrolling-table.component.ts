@@ -28,10 +28,11 @@ enum TableStatus {
 }
 
 @Component({
-  selector: 'hyt-infinite-scrolling-table',
-  templateUrl: './hyt-infinite-scrolling-table.component.html',
-  styleUrls: ['./hyt-infinite-scrolling-table.component.css'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'hyt-infinite-scrolling-table',
+    templateUrl: './hyt-infinite-scrolling-table.component.html',
+    styleUrls: ['./hyt-infinite-scrolling-table.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytInfiniteScrollingTableComponent implements OnInit {
 

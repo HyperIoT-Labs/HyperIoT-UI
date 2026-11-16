@@ -5,9 +5,10 @@ import { DeviceActions } from '../../models/device-actions';
 import { UtilsService } from '../../services/utils.service';
 
 @Component({
-  selector: 'hyt-map-device-info',
-  templateUrl: './map-device-info.component.html',
-  styleUrls: ['./map-device-info.component.scss']
+    selector: 'hyt-map-device-info',
+    templateUrl: './map-device-info.component.html',
+    styleUrls: ['./map-device-info.component.scss'],
+    standalone: false
 })
 export class MapDeviceInfoComponent {
 

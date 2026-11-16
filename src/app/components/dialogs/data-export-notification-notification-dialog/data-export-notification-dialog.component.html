@@ -19,27 +19,24 @@
     </div>
   </div>
 
+  @if (notificationList$ | async; as notificationList) {
   <div
-    *ngIf="notificationList$ | async as notificationList"
     id="notification-scroll-container"
   >
     <div id="notification-list" [@containerAnim]="notificationList.length">
+      @if (notificationList.length === 0) {
       <div
         id="no-notification"
-        *ngIf="
-          notificationList.length === 0;
-          else notificationListValueTemplate
-        "
       >
         <hyt-no-data [width]="150" [height]="150"></hyt-no-data>
         <h3 class="alarm-title" i18n="@@HYT_no_notifications">
           No notifications
         </h3>
       </div>
-      <ng-template #notificationListValueTemplate>
-        <ng-container *ngFor="let notification of notificationList">
+      } @else {
+        @for (notification of notificationList; track notification) {
+          @if (notification; as data) {
           <mat-card
-            *ngIf="notification as data"
             appearance="outlined"
             [ngClass]="{ 'p-2': data.exportInfo.progress == 100 }"
           >
@@ -75,7 +72,8 @@
                         <div>{{ data.exportParams.hPacket.name }}</div>
                       </div>
                     </div>
-                    <div *ngIf="data.exportInfo.progress === 100">
+                    @if (data.exportInfo.progress === 100) {
+                    <div>
                       <mat-icon
                         class="cursor-pointer"
                         (click)="
@@ -87,15 +85,11 @@
                         undo
                       </mat-icon>
                     </div>
+                    }
                   </div>
                 </div>
 
-                <ng-container
-                  *ngIf="
-                    data.exportInfo.progress === 100;
-                    else exportInProgressTemplate
-                  "
-                >
+                @if (data.exportInfo.progress === 100) {
                   <mat-card-actions align="end" class="p-0 m-0">
                     <small>
                       <strong>Downloaded: </strong>
@@ -109,20 +103,21 @@
                       </time>
                     </small>
                   </mat-card-actions>
-                </ng-container>
-                <ng-template #exportInProgressTemplate>
+                } @else {
                   <mat-card-footer class="mt-2">
                     <mat-progress-bar
                       mode="determinate"
                       [value]="data.exportInfo.progress"
                     ></mat-progress-bar>
                   </mat-card-footer>
-                </ng-template>
+                }
               </div>
             </mat-card-content>
           </mat-card>
-        </ng-container>
-      </ng-template>
+          }
+        }
+      }
     </div>
   </div>
+  }
 </div>

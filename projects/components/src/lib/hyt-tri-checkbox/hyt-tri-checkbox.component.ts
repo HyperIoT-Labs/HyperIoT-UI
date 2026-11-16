@@ -13,14 +13,15 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_TRI_CHECKBOX: any = {
 };
 
 @Component({
-  selector: "hyt-tri-checkbox",
-  templateUrl: "./hyt-tri-checkbox.component.html",
-  styleUrls: ["./hyt-tri-checkbox.component.scss"],
-  providers: [
-    CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_TRI_CHECKBOX,
-    { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: "noop" },
-  ],
-  encapsulation: ViewEncapsulation.None,
+    selector: "hyt-tri-checkbox",
+    templateUrl: "./hyt-tri-checkbox.component.html",
+    styleUrls: ["./hyt-tri-checkbox.component.scss"],
+    providers: [
+        CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_TRI_CHECKBOX,
+        { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: "noop" },
+    ],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytTriCheckboxComponent implements OnInit, ControlValueAccessor {
   /** Disabled */

@@ -28,17 +28,18 @@ interface RuleRow {
  * through a dynamic form that self-constructs based on user input.
  */
 @Component({
-  selector: 'hyt-rule-definition',
-  templateUrl: './rule-definition.component.html',
-  styleUrls: ['./rule-definition.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => RuleDefinitionComponent),
-      multi: true
-    }
-  ],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'hyt-rule-definition',
+    templateUrl: './rule-definition.component.html',
+    styleUrls: ['./rule-definition.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => RuleDefinitionComponent),
+            multi: true
+        }
+    ],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges {
   @Input() allPackets: HPacket[] = [];

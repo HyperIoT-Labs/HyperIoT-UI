@@ -2,9 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from 'components';
 
 @Component({
-  selector: 'hyt-generic-message-dialog',
-  templateUrl: './generic-message-dialog.component.html',
-  styleUrls: ['./generic-message-dialog.component.scss']
+    selector: 'hyt-generic-message-dialog',
+    templateUrl: './generic-message-dialog.component.html',
+    styleUrls: ['./generic-message-dialog.component.scss'],
+    standalone: false
 })
 export class GenericMessageDialogComponent implements OnInit {
 

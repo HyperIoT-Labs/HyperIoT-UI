@@ -4,19 +4,21 @@
 
         <a routerLink="/" [ngStyle]="{'pointer-events': previewMode ? 'none' : 'auto' }">
 
+            @if (winInnerWidth > mobileBreakPoints.xs) {
             <img
                 id="img-logo-hyt"
                 [src]="logoPath"
                 alt="HyperIoT Logo Extended"
-                *ngIf="winInnerWidth > mobileBreakPoints.xs"
             > <!--@I18N@-->
+            }
 
+            @if (winInnerWidth <= mobileBreakPoints.xs) {
             <img
                 id="img-logo-mob-hyt"
                 [src]="logoMobilePath"
                 alt="HyperIoT Logo Single Char"
-                *ngIf="winInnerWidth <= mobileBreakPoints.xs"
             > <!--@I18N@-->
+            }
 
         </a>
 
@@ -25,8 +27,8 @@
     </div>
 
     <div id="main-container">
+        @if (winInnerWidth <= mobileBreakPoints.md) {
         <div
-            *ngIf="winInnerWidth <= mobileBreakPoints.md"
             id="hamburger-btn"
             class="menu-mobile"
             (click)="toggleMenu()">
@@ -42,11 +44,14 @@
             <!-- FINE -->
 
         </div>
-        <div *ngIf="!previewMode" class="d-flex">
+        }
+        @if (!previewMode) {
+        <div class="d-flex">
             <hyt-data-export-notification-button></hyt-data-export-notification-button>
             <hyt-notification-button></hyt-notification-button>
             <hyt-account-button></hyt-account-button>
         </div>
+        }
     </div>
 
 </div>

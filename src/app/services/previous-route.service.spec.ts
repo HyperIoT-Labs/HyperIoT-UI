@@ -6,7 +6,7 @@ describe('PreviousRouteService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: PreviousRouteService = TestBed.get(PreviousRouteService);
+    const service: PreviousRouteService = TestBed.inject(PreviousRouteService);
     expect(service).toBeTruthy();
   });
 });

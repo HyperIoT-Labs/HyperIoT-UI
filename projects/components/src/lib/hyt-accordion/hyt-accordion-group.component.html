@@ -1,5 +1,6 @@
 <div class="accordion-group">
-    <div *ngFor="let item of items;index as i">
+    @for (item of items; track item; let i = $index) {
+    <div>
         <div class="accordion-header" [ngClass]="{disabled: item.disabled}" (click)="item.disabled ? {} :toggleState(i)">
             <ng-container>
                 <div class="header">
@@ -8,11 +9,14 @@
                 <div [ngClass]="expanded.has(i) ? 'hyt-icon icon-hyt_lessC' : 'hyt-icon icon-hyt_plusC'"></div>
             </ng-container>
         </div>
-        <div *ngIf="expanded.has(i)">
+        @if (expanded.has(i)) {
+        <div>
             <ng-container>
                 <div class="content" [innerHtml]="item.content.innerHTML">
                 </div>
             </ng-container>
         </div>
+        }
     </div>
+    }
 </div>

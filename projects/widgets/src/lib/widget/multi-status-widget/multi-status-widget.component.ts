@@ -5,9 +5,10 @@ import { BaseWidgetComponent } from '../../base/base-widget/base-widget.componen
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
 @Component({
-  selector: 'hyperiot-multi-status-widget',
-  templateUrl: './multi-status-widget.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './multi-status-widget.component.scss']
+    selector: 'hyperiot-multi-status-widget',
+    templateUrl: './multi-status-widget.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './multi-status-widget.component.scss'],
+    standalone: false
 })
 export class MultiStatusWidgetComponent extends BaseWidgetComponent implements OnInit, OnDestroy {
   /**

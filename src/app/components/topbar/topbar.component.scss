@@ -22,6 +22,11 @@
 
   .event-bell {
     top: 16px;
+    color: inherit;
+
+    .mdc-button__label {
+      position: static;
+    }
   }
 
   #logo-container {

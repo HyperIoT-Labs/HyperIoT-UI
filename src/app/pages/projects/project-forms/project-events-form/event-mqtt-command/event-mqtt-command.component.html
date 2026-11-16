@@ -117,7 +117,8 @@
         
             </div> <!-- END EVENT IS ACTIVE ROW -->
     
-            <div id="mqtt-disabled-elements" *ngIf="mqttUrl && mqttTopic" class="fieldset-row-mqtt">
+            @if (mqttUrl && mqttTopic) {
+            <div id="mqtt-disabled-elements" class="fieldset-row-mqtt">
     
     
                 <div id="fpack-col-mqtt-url" class="mqtt-basis-50">
@@ -148,6 +149,7 @@
                 </div>
     
             </div> <!-- END MQTT DISALBLED ELEMENTS ROW -->
+            }
             
             <div id="event-packet" class="fieldset-row-mqtt">
     
@@ -169,22 +171,22 @@
                 
             </div> <!-- END EVENT PACKET ROW -->
             
-            <div *ngIf="currentOutputPacket !== undefined && currentOutputPacket !== null" id="container-mqtt-fields">
+            @if (currentOutputPacket !== undefined && currentOutputPacket !== null) {
+            <div id="container-mqtt-fields">
 
                 <div id="mqtt-fields-description">
                     <!--@I18N@-->
                 </div>
 
-                <ng-container *ngFor="let field of fieldsOptions">
-
+                @for (field of fieldsOptions; track field) {
                     <div class="mqtt-sigle-field">
                         <hyt-input-text [form]="mqttFieldsFormGroup" formControlName="{{field.label}}" name="{{field.label}}" [fieldValue]="mqttFieldsFormGroup.get(field.label).value"
                             i18n-placeholder="@@HYT_{{field.label}}" placeholder="{{field.label}}" hintMessage="Enter {{field.label}}" (change)="inputChanged($event.target,field.label)">
                         </hyt-input-text>
                     </div>
-                    
-                </ng-container>
+                }
             </div>
+            }
 
         </fieldset>
 

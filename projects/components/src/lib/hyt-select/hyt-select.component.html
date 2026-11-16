@@ -16,53 +16,68 @@
     positionSelect
   >
 
-    <mat-select-trigger *ngIf="chips && isMultiple">
-      <mat-chip-list>
-        <mat-chip *ngFor="let val of formControl.value"
+    @if (chips && isMultiple) {
+    <mat-select-trigger>
+      <mat-chip-set>
+        @for (val of formControl.value; track val) {
+        <mat-chip
           [removable]="true" (removed)="onChipRemoved(val)">
           {{ getChipLabel(val) }}
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
-      </mat-chip-list>
+        }
+      </mat-chip-set>
     </mat-select-trigger>
+    }
 
-    <div *ngIf="isSearchable" class="search-filter">
+    @if (isSearchable) {
+    <div class="search-filter">
       <!-- class="icon-hyt_search" placeholder="&#xe95e;" TODO search icon -->
       <mat-form-field>
         <input matInput [(ngModel)]="searchValue" i18n-placeholder="@@HYT_search" placeholder="Search" (ngModelChange)="onSearch()" >
       </mat-form-field>
       <mat-icon class="delete-icon" (click)="resetSearchValue()">close</mat-icon>
     </div>
+    }
 
+    @for (group of groups; track group) {
     <mat-optgroup
-      *ngFor="let group of groups"
       [ngStyle]="{'display': isGroupVisibile(group) ? 'block' : 'none'}"
       [disabled]="group.disabled"
     >
-      <span *ngIf="group.icon" class="hyt-icon {{ group.icon }}"></span>
+      @if (group.icon) {
+      <span class="hyt-icon {{ group.icon }}"></span>
+      }
       {{ group.name }}
 
+      @for (option of group.options; track option) {
       <mat-option
-        *ngFor="let option of group.options"
         [ngStyle]="{'display': isGroupOptionVisibe(group, option) ? 'flex' : 'none'}"
         [value]="option.value"
         (click)="emitOptionValue(option.value)"
       >
-        <span *ngIf="option.icon" class="hyt-icon {{ option.icon }}"></span>
+        @if (option.icon) {
+        <span class="hyt-icon {{ option.icon }}"></span>
+        }
         {{ option.label }}
       </mat-option>
+      }
 
     </mat-optgroup>
+    }
 
+    @for (option of selectOptions; track option) {
     <mat-option
-      *ngFor="let option of selectOptions"
       [ngStyle]="{'display': option.label.toLowerCase().includes(searchValue) ? 'flex' : 'none'}"
       [value]="option.value"
       [disabled]="option.disabled ? true : null"
     >
-      <span *ngIf="option.icon" class="hyt-icon {{ option.icon }}"></span>
+      @if (option.icon) {
+      <span class="hyt-icon {{ option.icon }}"></span>
+      }
       {{ option.label }}
     </mat-option>
+    }
 
   </mat-select>
 
@@ -70,8 +85,10 @@
     {{ hint }}
   </mat-hint>
 
-  <mat-error *ngFor="let error of getErrorList()">
+  @for (error of getErrorList(); track error) {
+  <mat-error>
     {{ error }}
   </mat-error>
+  }
 
 </mat-form-field>

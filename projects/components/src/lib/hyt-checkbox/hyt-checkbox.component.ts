@@ -12,11 +12,12 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_CHECKBOX: any = {
 };
 
 @Component({
-  selector: "hyt-checkbox",
-  templateUrl: "./hyt-checkbox.component.html",
-  styleUrls: ["./hyt-checkbox.component.css"],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_CHECKBOX],
-  encapsulation: ViewEncapsulation.None,
+    selector: "hyt-checkbox",
+    templateUrl: "./hyt-checkbox.component.html",
+    styleUrls: ["./hyt-checkbox.component.css"],
+    providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_CHECKBOX],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytCheckboxComponent implements OnInit, ControlValueAccessor {
   /** Function called when click event is triggered */
@@ -33,10 +34,10 @@ export class HytCheckboxComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {}
 
-  onClick() {
-    this.onChange(!this.value);
+  onClick(checked: boolean) {
+    this.onChange(checked);
     this.onTouched();
-    this.changeFn.emit(!this.value);
+    this.changeFn.emit(checked);
   }
 
   /**

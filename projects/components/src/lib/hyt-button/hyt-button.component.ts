@@ -11,10 +11,11 @@ import {
  * Wrapper for the botton element.
  */
 @Component({
-  selector: "hyt-button",
-  templateUrl: "./hyt-button.component.html",
-  styleUrls: ["./hyt-button.component.scss"],
-  encapsulation: ViewEncapsulation.None,
+    selector: "hyt-button",
+    templateUrl: "./hyt-button.component.html",
+    styleUrls: ["./hyt-button.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytButtonComponent {
   /** Specifies button color: primary, accent or warn */

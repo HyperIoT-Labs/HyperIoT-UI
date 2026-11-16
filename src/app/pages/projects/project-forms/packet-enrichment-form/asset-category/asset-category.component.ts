@@ -7,9 +7,10 @@ import { LoadStatus } from 'src/app/models/loadStatus';
 import { AddCetegoryModalComponent } from '../../categories-form/add-cetegory-modal/add-cetegory-modal.component';
 
 @Component({
-  selector: 'hyt-asset-category',
-  templateUrl: './asset-category.component.html',
-  styleUrls: ['./asset-category.component.scss']
+    selector: 'hyt-asset-category',
+    templateUrl: './asset-category.component.html',
+    styleUrls: ['./asset-category.component.scss'],
+    standalone: false
 })
 export class AssetCategoryComponent implements OnInit {
 

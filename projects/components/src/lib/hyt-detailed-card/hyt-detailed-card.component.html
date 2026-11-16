@@ -8,9 +8,11 @@
     >
       <span>{{ title }}</span>
     </div>
-    <div class="detailed-front-icon" *ngIf="detailedIcon.length">
+    @if (detailedIcon.length) {
+    <div class="detailed-front-icon">
       <hyt-badge [icon]="detailedIcon" size="sm"></hyt-badge>
     </div>
+    }
     <div
       class="box-card-hover"
       [ngStyle]="{'background-image': imageHoverCard ? getImageUrl(imageHoverCard) : null}"
@@ -27,12 +29,16 @@
 
       <!-- Card Elements -->
       <div class="d-grid">
-        <div class="card-elements" *ngIf="details.length">
-          <div class="single-element" *ngFor="let detail of details">
+        @if (details.length) {
+        <div class="card-elements">
+          @for (detail of details; track detail) {
+          <div class="single-element">
             <span class="hyt-icon icon-hyt_{{detail.icon}}"></span>
             <span [innerHTML]="detail.label"></span>
           </div>
+          }
         </div>
+        }
         <!-- End Card Elements -->
         <!-- Card footer -->
         <div
@@ -46,14 +52,15 @@
           >
             {{btnLabel}}
           </hyt-button>
+          @if (secondaryButtonIcon.length) {
           <hyt-button
             class="detailed-card-btn detailed-secondary-btn"
             type="outlined"
             (click)="onSecondaryClick($event)"
-            *ngIf="secondaryButtonIcon.length"
           >
             <span class="hyt-icon icon-hyt_{{secondaryButtonIcon}}"></span>
           </hyt-button>
+          }
         </div>
         <!-- End Card Footer -->
       </div>

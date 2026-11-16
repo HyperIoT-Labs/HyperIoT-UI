@@ -10,15 +10,16 @@ import { ServiceType } from "../../service/model/service-type";
 import { DecimalPipe } from '@angular/common';
 
 @Component({
-  selector: 'hyperiot-trend-gauge-chart',
-  templateUrl: './trend-gauge-chart.component.html',
-  styleUrls: [
-    '../../../../../../src/assets/widgets/styles/widget-commons.css',
-    './trend-gauge-chart.component.css'
-  ],
-  providers: [
-    DecimalPipe
-  ]
+    selector: 'hyperiot-trend-gauge-chart',
+    templateUrl: './trend-gauge-chart.component.html',
+    styleUrls: [
+        '../../../../../../src/assets/widgets/styles/widget-commons.css',
+        './trend-gauge-chart.component.css'
+    ],
+    providers: [
+        DecimalPipe
+    ],
+    standalone: false
 })
 export class TrendGaugeChartComponent extends BaseGenericComponent implements OnInit, OnDestroy {
 

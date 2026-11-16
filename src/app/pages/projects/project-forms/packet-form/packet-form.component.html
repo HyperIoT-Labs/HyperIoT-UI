@@ -144,7 +144,8 @@
 
         </div> <!-- Fourth Row -->
 
-        <div *ngIf="mqttUrl && (mqttTopic || mqttReadTopic)" class="form-group row">
+        @if (mqttUrl && (mqttTopic || mqttReadTopic)) {
+        <div class="form-group row">
 
             <div id="fpack-col-mqtt-url" class="col-6">
 
@@ -158,7 +159,8 @@
                 </hyt-input-text>
 
             </div>
-            <div *ngIf="mqttTopic" id="fpack-col-mqtt-topic" class="col-6">
+            @if (mqttTopic) {
+            <div id="fpack-col-mqtt-topic" class="col-6">
 
                 <hyt-input-text
                     i18n-placeholder="@@HYT_mqtt_topic"
@@ -170,8 +172,10 @@
                 </hyt-input-text>
 
             </div>
+            }
 
-            <div *ngIf="mqttReadTopic" id="fpack-col-mqtt-topic"  [ngClass]="mqttTopic != null ? 'col-6 offset-6':'col-6'" >
+            @if (mqttReadTopic) {
+            <div id="fpack-col-mqtt-topic"  [ngClass]="mqttTopic != null ? 'col-6 offset-6':'col-6'" >
 
                 <hyt-input-text
                     i18n-placeholder="@@HYT_mqtt_read_topic"
@@ -183,8 +187,10 @@
                 </hyt-input-text>
 
             </div>
+            }
 
         </div>
+        }
 
     </form>
 
@@ -194,18 +200,21 @@
         consider making a component out of it 
     -->
 
-    <div #overlayHeight *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
+    @if (loadingStatus !== LoadingStatus.Ready) {
+    <div #overlayHeight class="overlay d-flex flex-column align-items-center justify-content-center">
         
+        @if (loadingStatus === LoadingStatus.Loading) {
         <div 
-            *ngIf="loadingStatus === LoadingStatus.Loading" 
             [ngClass]="getCustomClass()"
         >
 
             <h4 i18n="@@HYT_loading_data">Loading data...</h4>
 
         </div> 
+        }
         
-        <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
+        @if (loadingStatus === LoadingStatus.Error) {
+        <div class="error-overlay d-flex flex-column justify-content-center">
             <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
 
             <hyt-button 
@@ -215,14 +224,19 @@
                 <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span> 
             </hyt-button>
         </div> 
+        }
 
-        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">Saving data...</h4>
+        @if (loadingStatus === LoadingStatus.Saving) {
+        <h4 i18n="@@HYT_saving_data">Saving data...</h4>
+        }
 
+        @if (loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving) {
         <mat-progress-bar 
-            *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
             mode="indeterminate"
         ></mat-progress-bar> 
+        }
 
     </div>
+    }
 
 </div>

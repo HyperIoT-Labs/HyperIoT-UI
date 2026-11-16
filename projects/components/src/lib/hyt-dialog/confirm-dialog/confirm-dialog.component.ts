@@ -4,9 +4,10 @@ import { DIALOG_DATA } from "../dialog-tokens";
 import { ConfirmDialogConfig, ConfirmDialogResult } from "./confirm-dialog.model";
 
 @Component({
-  selector: "app-confirm-dialog",
-  templateUrl: "./confirm-dialog.component.html",
-  styleUrls: ["./confirm-dialog.component.scss"],
+    selector: "app-confirm-dialog",
+    templateUrl: "./confirm-dialog.component.html",
+    styleUrls: ["./confirm-dialog.component.scss"],
+    standalone: false
 })
 export class ConfirmDialogComponent {
   dismissed = false;

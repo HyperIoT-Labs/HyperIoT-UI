@@ -1,28 +1,31 @@
 <div class="padding-6 d-flex flex-column justify-content-stretch">
 
-    <ng-container *ngIf="widget.config">
-
+    @if (widget.config) {
         <div class="d-flex flex-column">
             <mat-form-field>
+                <mat-label i18n="@@HYT_widget_settings_select_algorithm">Select Algorithm</mat-label>
                 <mat-select [(ngModel)]="selectedHProjectAlgorithm" [compareWith]="algorithmCompare"
                     (ngModelChange)="onAlgorithmChange()" name="algorithm-select"
-                    placeholder="Select Algorithm"
-                    i18n-placeholder="@@HYT_widget_settings_select_algorithm" required disableRipple>
-                    <mat-option *ngFor="let hProjectAlgorithm of hProjectAlgorithmList" [value]="hProjectAlgorithm" selected>
+                    required disableRipple>
+                    @for (hProjectAlgorithm of hProjectAlgorithmList; track hProjectAlgorithm) {
+                    <mat-option [value]="hProjectAlgorithm" selected>
                         {{hProjectAlgorithm.name}}
                     </mat-option>
+                    }
                 </mat-select>
             </mat-form-field>
         </div>
 
-        <div id="box-fields-customization" *ngIf="outputFields && outputFields.length > 0">
+        @if (outputFields && outputFields.length > 0) {
+        <div id="box-fields-customization">
 
             <div class="box-fields-customization-title">
                 <h3 id="title-customization" i18n="@@HYT_fields_customization">Fields Customization</h3>
             </div>
             
             <mat-accordion>
-                <mat-expansion-panel *ngFor="let field of outputFields">
+                @for (field of outputFields; track field) {
+                <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <span class="customization-field-title">{{ field.name }}</span>
@@ -40,37 +43,44 @@
                             </div>
                             <div class="section-input">
                                 <mat-form-field>
+                                    <mat-label>Alias</mat-label>
                                     <input matInput name="hpacketfield-custom-aliases-{{field.id}}" id="customAliasesLabel-{{field.id}}" type="text"
-                                        placeholder="Alias" [(ngModel)]="fieldAliases[field.id]">
+                                        [(ngModel)]="fieldAliases[field.id]">
                                 </mat-form-field>
                             </div>
                         </div>
 
-                        <div class="customization-container-section section-unit-conversion" *ngIf="field.fieldType === 'NUMBER' || field.fieldType === 'INTEGER' || field.fieldType === 'FLOAT' || field.fieldType === 'DOUBLE'">
+                        @if (field.fieldType === 'NUMBER' || field.fieldType === 'INTEGER' || field.fieldType === 'FLOAT' || field.fieldType === 'DOUBLE') {
+                        <div class="customization-container-section section-unit-conversion">
                             <div class="section-title">
                                 <span i18n="@@HYT_unit_conversion_title">Unit Conversion</span>
                             </div>
                             <div class="section-input">
+                                @if (fieldUnitConversions[field.id].convertFrom != null) {
                                 <hyt-select-template
                                     name="hpacketfield-unit-from-{{field.id}}"
                                     [(ngModel)]="fieldUnitConversions[field.id].convertFrom"
                                     [options]="fieldUnitConversions[field.id].options" [disabled]="true"
-                                    label="Convert From" *ngIf="fieldUnitConversions[field.id].convertFrom != null">
+                                    label="Convert From">
                                 </hyt-select-template>
+                                }
+                                @if (fieldUnitConversions[field.id].convertFrom != null) {
                                 <hyt-select-template
                                     name="hpacketfield-unit-{{field.id}}"
                                     [(ngModel)]="fieldUnitConversions[field.id].convertTo"
                                     [options]="fieldUnitConversions[field.id].options"
                                     label="Convert to"
                                     [sortingAlgorithm]="'A-Z'"
-                                    [isSortable]="true" *ngIf="fieldUnitConversions[field.id].convertFrom != null">
+                                    [isSortable]="true">
                                 </hyt-select-template>
+                                }
+                                @if (fieldUnitConversions[field.id].convertFrom == null) {
                                 <hyt-input-template
                                     name="hpacketfield-custom-unit-{{field.id}}" id="customUnitLabel-{{field.id}}" type="text"
                                     i18n-placeholder="@@HYT_customUnitLabel" placeholder="Custom Unit Label"
-                                    [(ngModel)]="fieldUnitConversions[field.id].conversionCustomLabel" #name="ngModel" [isRequired]="false"
-                                        *ngIf="fieldUnitConversions[field.id].convertFrom == null">
+                                    [(ngModel)]="fieldUnitConversions[field.id].conversionCustomLabel" #name="ngModel" [isRequired]="false">
                                 </hyt-input-template>
+                                }
                                 <hyt-select-template
                                     name="hpacketfield-decimals-{{field.id}}"
                                     [(ngModel)]="fieldUnitConversions[field.id].decimals"
@@ -81,13 +91,15 @@
                                 </hyt-select-template>
                             </div>
                         </div>
+                        }
                     </div>
 
                 </mat-expansion-panel>
+                }
             </mat-accordion>
 
         </div>
-
-    </ng-container>
+        }
+    }
 
 </div>

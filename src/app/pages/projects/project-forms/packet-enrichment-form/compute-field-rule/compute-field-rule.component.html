@@ -3,21 +3,16 @@
     <div class="form-group">
       <p class="title">Input</p>
       <div class="box">
-        <div
-          *ngFor="
-            let variableFormGroup of variablesFormArray.controls;
-            let i = index;
-            let count = count
-          "
-        >
+        @for (variableFormGroup of variablesFormArray.controls; track variableFormGroup; let i = $index; let count = $count) {
+        <div>
           <div [formGroup]="$any(variableFormGroup)">
             <div class="input-field-container">
               <mat-form-field>
+                <mat-label>Placeholder alias</mat-label>
                 <input
                   matInput
                   formControlName="placeHolder"
                   class="hyt-input form-control"
-                  placeholder="Placeholder alias"
                   type="text"
                   readonly
                 />
@@ -26,27 +21,26 @@
               <mat-form-field>
                 <mat-label>Select one field</mat-label>
                 <mat-select formControlName="field" required>
+                  @for (option of fieldOptions; track option) {
                   <mat-option
-                    *ngFor="let option of fieldOptions"
                     [value]="option.field"
                     [disabled]="option.disabled"
                   >
                     {{ option.field.name }}
                   </mat-option>
+                  }
                 </mat-select>
               </mat-form-field>
 
+              @if (count > 1) {
               <button
-                *ngIf="count > 1"
-                matButton
-                class="mat-button"
+                mat-button
                 type="button"
                 (click)="deleteVariable(i)"
               >
-                <span class="mat-button-wrapper">
-                  <span class="hyt-icon icon-hyt_trash"></span>
-                </span>
+                <span class="hyt-icon icon-hyt_trash"></span>
               </button>
+              }
             </div>
           </div>
           <div class="addButton">
@@ -60,6 +54,7 @@
             </hyt-button>
           </div>
         </div>
+        }
       </div>
     </div>
 
@@ -103,7 +98,7 @@
               (click)="deleteConstant(i)"
             >
               <span class="mat-button-wrapper">
-                <span class="hyt-icon icon-hyt_trash"></span>
+              <span class="hyt-icon icon-hyt_trash"></span>
               </span>
             </button>
           </div>
@@ -222,26 +217,15 @@
         >
           <mat-form-field>
             <mat-label>Multiplicity</mat-label>
-            <ng-container
-              *ngIf="
-                !outputPacketFieldGroup.value?.id || enableEditPackedField;
-                else multiplicityTemplate
-              "
-            >
+            @if (!outputPacketFieldGroup.value?.id || enableEditPackedField) {
               <mat-select formControlName="multiplicity" required>
-                <ng-container
-                  *ngFor="
-                    let multiplicity of packetFieldDetail.multiplicity
-                      | keyvalue
-                  "
-                >
+                @for (multiplicity of packetFieldDetail.multiplicity | keyvalue; track multiplicity) {
                   <mat-option [value]="multiplicity.key">
                     {{ multiplicity.value }}
                   </mat-option>
-                </ng-container>
+                }
               </mat-select>
-            </ng-container>
-            <ng-template #multiplicityTemplate>
+            } @else {
               <input
                 matInput
                 formControlName="multiplicity"
@@ -249,28 +233,20 @@
                 required
                 type="text"
               />
-            </ng-template>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>Type</mat-label>
-            <ng-container
-              *ngIf="
-                !outputPacketFieldGroup.value?.id || enableEditPackedField;
-                else typeTemplate
-              "
-            >
+            @if (!outputPacketFieldGroup.value?.id || enableEditPackedField) {
               <mat-select formControlName="type" required>
-                <ng-container
-                  *ngFor="let type of packetFieldDetail.type | keyvalue"
-                >
+                @for (type of packetFieldDetail.type | keyvalue; track type) {
                   <mat-option [value]="type.key">
                     {{ type.value }}
                   </mat-option>
-                </ng-container>
+                }
               </mat-select>
-            </ng-container>
-            <ng-template #typeTemplate>
+            } @else {
               <input
                 matInput
                 formControlName="type"
@@ -279,7 +255,7 @@
                 type="text"
                 [readonly]="!enableEditPackedField"
               />
-            </ng-template>
+            }
           </mat-form-field>
 
           <mat-form-field>
@@ -296,13 +272,11 @@
             />
           </mat-form-field>
 
+          @if (outputPacketFieldGroup.value?.id) {
           <div
-            *ngIf="outputPacketFieldGroup.value?.id; else createPacketTemplate"
             class="addButton"
           >
-            <ng-container
-              *ngIf="enableEditPackedField; else editPacketTemplate"
-            >
+            @if (enableEditPackedField) {
               <div class="addButton">
                 <hyt-button
                   (clickFn)="updatePacketField()"
@@ -312,18 +286,18 @@
                   <span>UPDATE</span>
                 </hyt-button>
               </div>
-            </ng-container>
-            <ng-template #editPacketTemplate>
+            } @else {
+              @if (!enableEditPackedField) {
               <hyt-button
-                *ngIf="!enableEditPackedField"
                 (clickFn)="enableEditPackedField = true"
                 [color]="'hyt-base-total-white'"
               >
                 <span>EDIT</span>
               </hyt-button>
-            </ng-template>
+              }
+            }
           </div>
-          <ng-template #createPacketTemplate>
+          } @else {
             <div class="addButton">
               <hyt-button
                 (clickFn)="createPacketField()"
@@ -334,11 +308,13 @@
                 <span class="hyt-icon icon-hyt_plusC"></span>
               </hyt-button>
             </div>
-          </ng-template>
+          }
 
-          <div *ngIf="errorCreationOutputField">
+          @if (errorCreationOutputField) {
+          <div>
             <p class="error">{{ errorCreationOutputField }}</p>
           </div>
+          }
         </div>
 
         <div class="rule-container">
@@ -353,39 +329,30 @@
                 type="text"
               />
             </mat-form-field>
-            <ng-container
-              *ngIf="
-                formulaFormControl.invalid && formulaFormControl.dirty;
-                else expressionValid
-              "
-            >
+            @if (formulaFormControl.invalid && formulaFormControl.dirty) {
               <mat-icon color="warn" matSuffix> highlight_off </mat-icon>
-            </ng-container>
-            <ng-template #expressionValid>
+            } @else {
               <mat-icon color="primary" matSuffix> done_outline </mat-icon>
-            </ng-template>
+            }
           </div>
+          @if (formulaFormControl.invalid && formulaFormControl.dirty) {
           <mat-hint
-            *ngIf="formulaFormControl.invalid && formulaFormControl.dirty"
             class="mat-error"
           >
-            <ng-container *ngIf="formulaFormControl.getError('formulaIsEmpty')">
+            @if (formulaFormControl.getError('formulaIsEmpty')) {
               Formula is empty
-            </ng-container>
-            <ng-container
-              *ngIf="formulaFormControl.getError('placeholderUnset')"
-            >
+            }
+            @if (formulaFormControl.getError('placeholderUnset')) {
               Some placeholder is not set
-            </ng-container>
-            <ng-container
-              *ngIf="formulaFormControl.getError('placeholderNotUsed')"
-            >
+            }
+            @if (formulaFormControl.getError('placeholderNotUsed')) {
               Some placeholder is not used
-            </ng-container>
-            <ng-container *ngIf="formulaFormControl.getError('invalid')">
+            }
+            @if (formulaFormControl.getError('invalid')) {
               Invalid expression!
-            </ng-container>
+            }
           </mat-hint>
+          }
         </div>
 
         <div class="rule-info">

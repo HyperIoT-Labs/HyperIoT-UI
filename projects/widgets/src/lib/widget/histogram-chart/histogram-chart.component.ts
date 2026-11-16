@@ -7,9 +7,10 @@ import { WidgetAction } from '../../base/base-widget/model/widget.model';
 import { TimeSeries } from '../../data/time-series';
 
 @Component({
-  selector: 'hyperiot-histogram-chart',
-  templateUrl: './histogram-chart.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './histogram-chart.component.css']
+    selector: 'hyperiot-histogram-chart',
+    templateUrl: './histogram-chart.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './histogram-chart.component.css'],
+    standalone: false
 })
 export class HistogramChartComponent extends BaseGenericComponent implements OnInit {
   /**

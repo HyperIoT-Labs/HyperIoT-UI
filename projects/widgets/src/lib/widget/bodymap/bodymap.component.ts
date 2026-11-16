@@ -6,9 +6,10 @@ import { BaseGenericComponent } from '../../base/base-generic/base-generic.compo
 import { BodyMapAssociation } from '../../dashboard/widget-settings-dialog/bodymap-settings/bodymap.model';
 
 @Component({
-  selector: 'hyperiot-bodymap',
-  templateUrl: './bodymap.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './bodymap.component.scss'],
+    selector: 'hyperiot-bodymap',
+    templateUrl: './bodymap.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './bodymap.component.scss'],
+    standalone: false
 })
 export class BodymapComponent extends BaseGenericComponent implements OnInit {
   @ViewChild('bodyMap') bodyMap: ElementRef;

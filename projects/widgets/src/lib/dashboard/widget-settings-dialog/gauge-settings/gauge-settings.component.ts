@@ -7,9 +7,10 @@ import { Observable } from 'rxjs';
 import { PacketSelectComponent } from '../packet-select/packet-select.component';
 
 @Component({
-  selector: 'hyperiot-gauge-settings',
-  templateUrl: './gauge-settings.component.html',
-  styleUrls: ['./gauge-settings.component.css']
+    selector: 'hyperiot-gauge-settings',
+    templateUrl: './gauge-settings.component.html',
+    styleUrls: ['./gauge-settings.component.css'],
+    standalone: false
 })
 export class GaugeSettingsComponent implements OnInit, OnDestroy {
   subscription: any;

@@ -2,10 +2,11 @@ import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angu
 import { SelectableText } from '../selectableText';
 
 @Component({
-  selector: 'hyt-selectable-text',
-  templateUrl: './selectable-text.component.html',
-  styleUrls: ['./selectable-text.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-selectable-text',
+    templateUrl: './selectable-text.component.html',
+    styleUrls: ['./selectable-text.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class SelectableTextComponent {
 

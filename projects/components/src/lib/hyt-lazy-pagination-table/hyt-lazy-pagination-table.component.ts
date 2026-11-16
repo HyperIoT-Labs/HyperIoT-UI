@@ -19,10 +19,11 @@ enum TableStatus {
 }
 
 @Component({
-  selector: 'hyt-lazy-pagination-table',
-  templateUrl: './hyt-lazy-pagination-table.component.html',
-  styleUrls: ['./hyt-lazy-pagination-table.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-lazy-pagination-table',
+    templateUrl: './hyt-lazy-pagination-table.component.html',
+    styleUrls: ['./hyt-lazy-pagination-table.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytLazyPaginationTableComponent implements OnInit {
 

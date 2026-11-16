@@ -46,10 +46,11 @@ import AreaViewTypeEnum = Area.AreaViewTypeEnum;
 import { MatTab, MatTabChangeEvent, MatTabGroup } from "@angular/material/tabs";
 
 @Component({
-  selector: 'hyt-areas-form',
-  templateUrl: './areas-form.component.html',
-  styleUrls: ['./areas-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-areas-form',
+    templateUrl: './areas-form.component.html',
+    styleUrls: ['./areas-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class AreasFormComponent extends ProjectFormEntity implements OnInit, AfterViewInit, OnDestroy {
   /**

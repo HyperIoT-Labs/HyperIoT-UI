@@ -5,13 +5,13 @@
 
 // Required
 // toastr dependency
-@import '~ngx-toastr/toastr';
+@import 'ngx-toastr/toastr';
 // Bootstrap
 @import "../../../node_modules/bootstrap/scss/functions";
 @import "../../../node_modules/bootstrap/scss/variables";
 @import "../../../node_modules/bootstrap/scss/mixins";
 // toastr dependency: commented to use the regular style of toastr (not bootstrap)
-/*  @import '~ngx-toastr/toastr-bs4-alert'; */
+/*  @import 'ngx-toastr/toastr-bs4-alert'; */
 
 /* OVERRIDE BOOTSTRAP BREAKPOINTS */
 
@@ -34,6 +34,50 @@ $container-max-widths: (
 
 // Optional
 @import "../../../node_modules/bootstrap/scss/reboot";
+
+// TEMPORARY FIXES for Angular Material components: overrides needed because the global
+// Bootstrap styles (reboot) conflict with the Material ones, or because the Material
+// defaults differ from the application ones
+mat-checkbox label,
+mat-radio-button label {
+  margin-bottom: 0;
+}
+
+mat-card[class*="mat-elevation-z"] {
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+mat-card.mat-elevation-z2 {
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+mat-card.mat-elevation-z4 {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+mat-card.mat-elevation-z5 {
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12);
+}
+mat-card.mat-elevation-z8 {
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.mat-mdc-button-base {
+  white-space: nowrap;
+}
+
+hyt-button[type]:not(:disabled),
+hyt-icon-button[type]:not(:disabled) {
+  cursor: default;
+}
+
+.mdc-button__label .hyt-icon,
+.mdc-button__label .mat-icon {
+  vertical-align: middle;
+}
+
+// Font of the Material (MDC) components, otherwise they fall back to Roboto
+:root {
+  --mat-typography-font-family: 'Exo', sans-serif;
+}
+
 // @import "../../../node_modules/bootstrap/scss/type";
 // @import "../../../node_modules/bootstrap/scss/images";
 // @import "../../../node_modules/bootstrap/scss/code";
@@ -57,7 +101,6 @@ $container-max-widths: (
 @import "./components/inputs";
 @import "./components/buttons";
 @import "./components/cards";
-@import "./components/checks";
 
 /* Widget */
 @import "./widgets/generalWidget";

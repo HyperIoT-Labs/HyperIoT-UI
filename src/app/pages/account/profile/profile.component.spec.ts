@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, UntypedFormBuilder, FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HUserService } from 'core';
-import {MatFormFieldModule} from "@angular/material/form-field";
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;

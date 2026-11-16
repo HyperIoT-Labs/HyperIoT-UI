@@ -9,9 +9,10 @@ export enum AlarmBtnClicked {
 }
 
 @Component({
-  selector: "hyt-alarm",
-  templateUrl: "./hyt-alarm.component.html",
-  styleUrls: ["./hyt-alarm.component.scss"],
+    selector: "hyt-alarm",
+    templateUrl: "./hyt-alarm.component.html",
+    styleUrls: ["./hyt-alarm.component.scss"],
+    standalone: false
 })
 export class HytAlarmComponent {
   btnClicked = AlarmBtnClicked;

@@ -1,10 +1,11 @@
 import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'hyt-button-toggle',
-  templateUrl: './hyt-button-toggle.component.html',
-  styleUrls: ['./hyt-button-toggle.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-button-toggle',
+    templateUrl: './hyt-button-toggle.component.html',
+    styleUrls: ['./hyt-button-toggle.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytButtonToggleComponent {
 

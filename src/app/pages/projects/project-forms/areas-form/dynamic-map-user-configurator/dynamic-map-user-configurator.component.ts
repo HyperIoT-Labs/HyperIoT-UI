@@ -6,9 +6,10 @@ import {Logger, LoggerService} from "core";
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'hyt-dynamic-map-user-configurator',
-  templateUrl: './dynamic-map-user-configurator.component.html',
-  styleUrls: ['./dynamic-map-user-configurator.component.scss']
+    selector: 'hyt-dynamic-map-user-configurator',
+    templateUrl: './dynamic-map-user-configurator.component.html',
+    styleUrls: ['./dynamic-map-user-configurator.component.scss'],
+    standalone: false
 })
 export class DynamicMapUserConfiguratorComponent implements OnInit, AfterViewInit {
 

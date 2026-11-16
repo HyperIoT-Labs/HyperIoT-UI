@@ -107,11 +107,12 @@ export class NodeDatabase {
 }
 
 @Component({
-  selector: 'hyt-tree-view-editable',
-  templateUrl: './hyt-tree-view-editable.component.html',
-  styleUrls: ['./hyt-tree-view-editable.component.scss'],
-  providers: [NodeDatabase],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-tree-view-editable',
+    templateUrl: './hyt-tree-view-editable.component.html',
+    styleUrls: ['./hyt-tree-view-editable.component.scss'],
+    providers: [NodeDatabase],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytTreeViewEditableComponent implements OnInit {
 
@@ -220,7 +221,7 @@ export class HytTreeViewEditableComponent implements OnInit {
     flatNode.data = node.data;
     flatNode.root = node.root;
     flatNode.level = level;
-    flatNode.expandable = !((node.children == null) || (node.children === []));
+    flatNode.expandable = !(node.children == null);
     this.flatNodeMap.set(flatNode, node);
     this.nestedNodeMap.set(node, flatNode);
     return flatNode;

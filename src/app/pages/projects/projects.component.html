@@ -9,23 +9,29 @@
     <!-- button on the right side -->
     <div class="align-self-right">
 
-      <hyt-button *ngIf="pageStatus === 1" [isDisabled]="deletingInLoading" id="add-project-btn-top" (clickFn)="addProject()"
+      @if (pageStatus === 1) {
+      <hyt-button [isDisabled]="deletingInLoading" id="add-project-btn-top" (clickFn)="addProject()"
         [color]="'hyt-base-total-white'">
         <span class="hyt-icon icon-hyt_plusC"></span>
         <ng-container i18n="@@HYT_add_new_project">Add new project</ng-container>
       </hyt-button>
+      }
 
     </div>
 
   </div>
 
-  <div id="container-projects" [ngSwitch]="pageStatus" class="container-fluid">
+  <div id="container-projects" class="container-fluid">
 
-    <div id="page-up-btn" *ngIf="scrolled" (click)="scrollToTopPage()">&#8686;</div>
+    @if (scrolled) {
+    <div id="page-up-btn" (click)="scrollToTopPage()">&#8686;</div>
+    }
 
     <div id="mobile-add-new-project-btn" (click)="addProject()">&#x2B;</div>
 
-    <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading" class="mt-5 d-flex flex-column align-items-center justify-content-center">
+    @switch (pageStatus) {
+    @case (PageStatus.Loading) {
+    <div id="loadingStatus" class="mt-5 d-flex flex-column align-items-center justify-content-center">
 
       <img id="animatedPreloaderImg" src="assets/images/hyperiot_logo_single_char_animated.svg" alt="Hyperiot Animated Logo">
       <h2 i18n="@@HYT_page_is_loading">Page is loading...</h2>
@@ -34,8 +40,10 @@
       <!-- Page is loading... -->
 
     </div> <!-- PageStatus.Loading -->
+    }
 
-    <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
+    @case (PageStatus.Standard) {
+    <div id="standardStatus" class="row">
       <!-- Standard -->
 
       <div id="container-box-project" class="col-12">
@@ -93,14 +101,16 @@
 
         <div id="row-cotainer-cards" [ngClass]="{'cards-blurred' : deletingInLoading}" class="row cards-blurred">
 
-          <div *ngIf="hProjectsFiltered.length == 0" class="col-12">
+          @if (hProjectsFiltered.length == 0) {
+          <div class="col-12">
             <span i18n="@@HYT_no_project_found">No project that matches the search found...</span>
           </div>
+          }
 
           <div class="hyt-card-wrapper">
             <div class="hyt-card-container">
+              @for (p of hProjectsFiltered; track p) {
               <hyt-detailed-card
-                *ngFor="let p of hProjectsFiltered"
                 [title]="p.name"
                 [description]="p.description"
                 [detailedIcon]="sharedIconMap.get(sharedType(p.hProjectSharingInfo))"
@@ -115,6 +125,7 @@
                 (secondaryBtnClick)="showPanel($event)"
                 [forceHover]="forceHoverId == p.id"
                 ></hyt-detailed-card>
+              }
             </div>
           </div>
 
@@ -123,23 +134,30 @@
       </div>
 
     </div> <!-- PageStatus.Standard -->
+    }
 
     <!-- PageStatus.New -->
+    @case (PageStatus.New) {
     <hyt-empty-project-list-view
-      *ngSwitchCase="PageStatus.New"
       title="There are no projects!"
       message="To add a project click the button below."
     ></hyt-empty-project-list-view>
+    }
 
-    <div id="errorStatus" *ngSwitchCase="PageStatus.Error" class="mt-5 d-flex flex-column align-items-center justify-content-center">
+    @case (PageStatus.Error) {
+    <div id="errorStatus" class="mt-5 d-flex flex-column align-items-center justify-content-center">
 
       <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
 
     </div> <!-- PageStatus.Error -->
+    }
 
-    <div id="defaultStatus" *ngSwitchDefault class="mt-5 d-flex flex-column align-items-center justify-content-center">
+    @default {
+    <div id="defaultStatus" class="mt-5 d-flex flex-column align-items-center justify-content-center">
       <h2 i18n="@@HYT_error">Error!</h2>
     </div>
+    }
+    }
 
   </div>
 

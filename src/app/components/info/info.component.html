@@ -7,8 +7,12 @@
         </div>
         <div class="version-row">
             <span i18n="@@HYT_services_version">Services version</span>: 
-            <ng-container *ngIf="!beVersionPending">{{ beVersion }}</ng-container>
-            <mat-spinner *ngIf="beVersionPending" strokeWidth="6px" [diameter]="14"></mat-spinner>
+            @if (!beVersionPending) {
+            {{ beVersion }}
+            }
+            @if (beVersionPending) {
+            <mat-spinner strokeWidth="6px" [diameter]="14"></mat-spinner>
+            }
         </div>
         <hr>
         <div class="info-links">

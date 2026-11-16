@@ -2,10 +2,11 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { PlatformService } from '../../../services/platform/platform.service';
 
 @Component({
-  selector: 'hyt-prompt',
-  templateUrl: './prompt.component.html',
-  styleUrls: ['./prompt.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-prompt',
+    templateUrl: './prompt.component.html',
+    styleUrls: ['./prompt.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PromptComponent {
 

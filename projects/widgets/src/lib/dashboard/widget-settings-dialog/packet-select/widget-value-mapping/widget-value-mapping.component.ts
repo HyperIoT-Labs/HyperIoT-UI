@@ -4,16 +4,17 @@ import { HPacketField } from 'core';
 import { FieldValuesMap } from '../../../../base/base-widget/model/widget.model';
 
 @Component({
-  selector: 'hyperiot-widget-value-mapping',
-  templateUrl: './widget-value-mapping.component.html',
-  styleUrls: ['./widget-value-mapping.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => WidgetValueMappingComponent),
-      multi: true,
-    }
-  ],
+    selector: 'hyperiot-widget-value-mapping',
+    templateUrl: './widget-value-mapping.component.html',
+    styleUrls: ['./widget-value-mapping.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => WidgetValueMappingComponent),
+            multi: true,
+        }
+    ],
+    standalone: false
 })
 export class WidgetValueMappingComponent implements ControlValueAccessor, OnInit {
   

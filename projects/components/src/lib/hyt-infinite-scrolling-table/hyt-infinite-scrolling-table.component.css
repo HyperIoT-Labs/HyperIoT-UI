@@ -49,6 +49,9 @@
 
 .cdk-overlay-container .hyt-header-tooltip {
   margin: 0px;
+}
+
+.cdk-overlay-container .hyt-header-tooltip .mdc-tooltip__surface {
   word-break: break-all;
   white-space: normal;
   background-color: #266dca;

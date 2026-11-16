@@ -21,17 +21,19 @@ mat-tree {
         min-height: 40px;
         
         button {
-          &.mat-icon-button {
+          &.mat-mdc-icon-button {
             width: 25px;
             height: 25px;
             line-height: 25px;
+            padding: 0;
+            vertical-align: middle;
 
             mat-icon {
               &.mat-icon {
                 width: 20px;
                 height: 20px;
                 line-height: 20px;
-                font-size: 1.4em;
+                font-size: 19.6px;
               }
             }
           }
@@ -47,65 +49,39 @@ mat-tree {
               margin: 0px;
             }
 
-            .mat-ripple-element {
-
-              &:nth-child(1),
-              &:nth-child(2) {
-                display: none;
-              }
-              
+            .mat-mdc-checkbox-ripple,
+            .mdc-checkbox__ripple,
+            .mdc-checkbox__checkmark,
+            .mdc-checkbox__mixedmark {
+              display: none;
             }
 
-            &.mat-checkbox-checked {
+            &.mat-mdc-checkbox-checked .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background {
+              background-color: #ffffff !important;
+              border: 2px solid #1a3f73 !important;
 
-              .mat-checkbox-background {
-                background-color: #ffffff;
-                border: 2px solid #1a3f73;
-
-                &::before {
-
-                  content: "";
-                  width: 8px;
-                  height: 8px;
-                  background-color: #1a3f73;
-                  position: absolute;
-
-                }
-
-                svg {
-                  display: none;
-                }
-              }
-
-            }
-
-            &.mat-checkbox-indeterminate {
-              .mat-checkbox-background {
-                background-color: #ffffff;
-                border: 2px solid #1a3f73;
-
-                &::before {
-                  content: '';
-                  border-left: 13px solid transparent;
-                  border-right: 0px solid transparent;
-                  border-top: 13px solid #1a3f73;
-                  transform: rotate(90deg);
-                }
-
-                svg {
-                  display: none;
-                }
+              &::before {
+                content: "";
+                width: 8px;
+                height: 8px;
+                background-color: #1a3f73;
+                position: absolute;
               }
             }
 
-            &.mat-checkbox-anim-indeterminate-unchecked {
-              .mat-checkbox-background {
-                .mat-checkbox-mixedmark {
-                  display: none;
-                }
+            .mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background,
+            .mdc-checkbox__native-control[data-indeterminate=true] ~ .mdc-checkbox__background {
+              background-color: #ffffff !important;
+              border: 2px solid #1a3f73 !important;
+
+              &::before {
+                content: '';
+                border-left: 13px solid transparent;
+                border-right: 0px solid transparent;
+                border-top: 13px solid #1a3f73;
+                transform: rotate(90deg);
               }
             }
-
           }
 
         }
@@ -148,17 +124,19 @@ mat-tree {
     li {
 
       button {
-        &.mat-icon-button {
+        &.mat-mdc-icon-button {
           width: 25px;
           height: 25px;
           line-height: 25px;
+          padding: 0;
+          vertical-align: middle;
 
           mat-icon {
             &.mat-icon {
               width: 20px;
               height: 20px;
               line-height: 20px;
-              font-size: 1.4em;
+              font-size: 19.6px;
             }
           }
         }
@@ -169,74 +147,30 @@ mat-tree {
         margin-right: 15px;
 
         mat-checkbox {
-          
+
           label {
             margin: 0px;
           }
 
-          .mat-ripple-element {
-
-            &:nth-child(1),
-            &:nth-child(2) {
-              display: none;
-            }
-            
+          .mat-mdc-checkbox-ripple,
+          .mdc-checkbox__ripple,
+          .mdc-checkbox__checkmark,
+          .mdc-checkbox__mixedmark {
+            display: none;
           }
 
-          &.mat-checkbox-checked {
+          &.mat-mdc-checkbox-checked.mat-accent .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background {
+            background-color: #ffffff !important;
+            border: 2px solid #1a3f73 !important;
 
-            &.mat-accent {
-
-              .mat-checkbox-background {
-                background-color: #ffffff;
-                border: 2px solid #1a3f73;
-  
-                &::before {
-  
-                  content: "";
-                  width: 8px;
-                  height: 8px;
-                  background-color: #1a3f73;
-                  position: absolute;
-  
-                }
-  
-                svg {
-                  display: none;
-                }
-              }
-
-            }
-
-          }
-
-          &.mat-checkbox-indeterminate {
-            .mat-checkbox-background {
-              background-color: #ffffff;
-              border: 2px solid #1a3f73;
-
-              &::before {
-                content: '';
-                border-left: 13px solid transparent;
-                border-right: 0px solid transparent;
-                border-top: 13px solid #1a3f73;
-                transform: rotate(90deg);
-              }
-
-              svg {
-                display: none;
-              }
+            &::before {
+              content: "";
+              width: 8px;
+              height: 8px;
+              background-color: #1a3f73;
+              position: absolute;
             }
           }
-
-          &.mat-checkbox-anim-indeterminate-unchecked {
-            .mat-checkbox-background {
-              .mat-checkbox-mixedmark {
-                display: none;
-              }
-            }
-          }
-
         }
 
       }

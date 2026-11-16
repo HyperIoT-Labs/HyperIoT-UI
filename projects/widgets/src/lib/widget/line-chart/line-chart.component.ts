@@ -39,12 +39,13 @@ type TrendField = {
 }
 
 @Component({
-  selector: 'hyperiot-line-chart',
-  templateUrl: './line-chart.component.html',
-  styleUrls: [
-    '../../../../../../src/assets/widgets/styles/widget-commons.css',
-    './line-chart.component.css',
-  ],
+    selector: 'hyperiot-line-chart',
+    templateUrl: './line-chart.component.html',
+    styleUrls: [
+        '../../../../../../src/assets/widgets/styles/widget-commons.css',
+        './line-chart.component.css',
+    ],
+    standalone: false
 })
 export class LineChartComponent extends BaseChartComponent implements OnInit, OnDestroy {
   @ViewChild('lineChartPlotly') lineChartPlotly: PlotlyComponent;

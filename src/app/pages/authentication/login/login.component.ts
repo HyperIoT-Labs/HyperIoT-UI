@@ -16,10 +16,11 @@ import { PostLoginService } from 'src/app/services/postLogin/post-login.service'
  * It is used to hallow the user to login with the credentials of his account.
  */
 @Component({
-  selector: 'hyt-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class LoginComponent implements OnInit {
 

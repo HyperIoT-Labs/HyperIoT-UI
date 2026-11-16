@@ -30,11 +30,12 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_SELECT: any = {
  * This compoenent allows to select an element in a set of options.
  */
 @Component({
-  selector: "hyt-select",
-  templateUrl: "./hyt-select.component.html",
-  styleUrls: ["./hyt-select.component.scss"],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_SELECT],
-  encapsulation: ViewEncapsulation.None,
+    selector: "hyt-select",
+    templateUrl: "./hyt-select.component.html",
+    styleUrls: ["./hyt-select.component.scss"],
+    providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_SELECT],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytSelectComponent
   implements OnInit, ControlValueAccessor, OnChanges

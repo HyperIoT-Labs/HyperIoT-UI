@@ -23,10 +23,11 @@ enum TopologyRequestState {
 }
 
 @Component({
-  selector: 'hyt-confirm-recording-action',
-  templateUrl: './hyt-confirm-recording-action.component.html',
-  styleUrls: ['./hyt-confirm-recording-action.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-confirm-recording-action',
+    templateUrl: './hyt-confirm-recording-action.component.html',
+    styleUrls: ['./hyt-confirm-recording-action.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytConfirmRecordingActionComponent implements OnDestroy {
 

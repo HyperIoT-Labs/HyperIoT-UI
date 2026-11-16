@@ -1,8 +1,11 @@
 <mat-form-field>
-    <mat-select placeholder="Select Fields" [(ngModel)]="selectedFieldsIds" multiple>
-        <mat-option *ngFor="let field of fieldsOption" [value]="field.value">
+    <mat-label>Select Fields</mat-label>
+    <mat-select [(ngModel)]="selectedFieldsIds" multiple>
+        @for (field of fieldsOption; track field) {
+        <mat-option [value]="field.value">
             {{ field.label }}
         </mat-option>
+        }
         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="hyt-tree">
             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
                 <li class="mat-tree-node">

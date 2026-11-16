@@ -4,7 +4,8 @@
         <span class="hyt-icon icon-hyt_userCircle"></span>
     </button>
 
-    <div *ngIf="isLoggedIn" class="dropdown-content">
+    @if (isLoggedIn) {
+    <div class="dropdown-content">
 
         <div class="submenu-element">
             <a routerLink="/account/profile">
@@ -21,5 +22,6 @@
         </div>
 
     </div>
+    }
 
 </div>

@@ -7,26 +7,27 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 
 @Component({
-  selector: 'hyperiot-alarms-widget',
-  templateUrl: './alarms-widget.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './alarms-widget.component.scss'],
-  animations: [
-    trigger('containerAnim', [
-      transition('* => *', [
-        group([
-          query('hyt-alarm:enter', [
-            style({ height: 0, opacity: 0, 'overflow-y': 'clip' }),
-            animate('200ms ease-in', style({ height: '*', opacity: 1 })),
-            style({ 'overflow-y': 'auto' }),
-          ], { optional: true }),
-          query('hyt-alarm:leave', [
-            animate('200ms ease-out', style({ opacity: 0, transform: 'translateX(-300px)','overflow-y': 'clip' })),
-            animate('200ms', style({ height: 0, padding: 0 })),
-          ], { optional: true }),
+    selector: 'hyperiot-alarms-widget',
+    templateUrl: './alarms-widget.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './alarms-widget.component.scss'],
+    animations: [
+        trigger('containerAnim', [
+            transition('* => *', [
+                group([
+                    query('hyt-alarm:enter', [
+                        style({ height: 0, opacity: 0, 'overflow-y': 'clip' }),
+                        animate('200ms ease-in', style({ height: '*', opacity: 1 })),
+                        style({ 'overflow-y': 'auto' }),
+                    ], { optional: true }),
+                    query('hyt-alarm:leave', [
+                        animate('200ms ease-out', style({ opacity: 0, transform: 'translateX(-300px)', 'overflow-y': 'clip' })),
+                        animate('200ms', style({ height: 0, padding: 0 })),
+                    ], { optional: true }),
+                ]),
+            ]),
         ]),
-      ]),
-    ]),
-  ],
+    ],
+    standalone: false
 })
 export class AlarmsWidgetComponent extends BaseWidgetComponent {
   protected logger: Logger;

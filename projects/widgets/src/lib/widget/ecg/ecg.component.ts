@@ -12,9 +12,10 @@ import { PlotlyService } from 'angular-plotly.js';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
 @Component({
-  selector: 'hyperiot-ecg',
-  templateUrl: './ecg.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './ecg.component.scss'],
+    selector: 'hyperiot-ecg',
+    templateUrl: './ecg.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './ecg.component.scss'],
+    standalone: false
 })
 export class EcgComponent extends BaseTableComponent implements OnInit {
   allData$: Subject<any[]> = new Subject();

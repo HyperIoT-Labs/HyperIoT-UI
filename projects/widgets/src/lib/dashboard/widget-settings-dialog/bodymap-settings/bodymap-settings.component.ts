@@ -13,6 +13,7 @@ import { BodyMap, BodyMapAssociation } from './bodymap.model';
     styleUrls: ['./bodymap-settings.component.scss'],
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
     encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class BodymapSettingsComponent implements OnInit, OnDestroy {
     subscription: any;

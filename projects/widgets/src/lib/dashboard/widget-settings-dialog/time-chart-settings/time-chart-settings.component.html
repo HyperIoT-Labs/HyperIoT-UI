@@ -5,7 +5,8 @@
         [useSpinner]="useSpinner" [customSettingsStatus]="pageStatus"></hyperiot-packet-select>
 
     <!-- TREND Settings -->
-     <div id="time-chart-settings" class="pt-10" *ngIf="checkbox && pageStatus === 1 && pageStatus === 1">
+     @if (checkbox && pageStatus === 1 && pageStatus === 1) {
+     <div id="time-chart-settings" class="pt-10">
             <div class="box-fields-customization-title">
                 <h3 id="title-thresholds">Trend</h3>
             </div>
@@ -14,7 +15,8 @@
 
             <div class="config-threshold">
                 <ng-container [formGroup]="trendForm">
-                    <div *ngFor="let trendControl of trendForm.controls; let i = index" [formGroupName]="i"
+                    @for (trendControl of trendForm.controls; track trendControl; let i = $index) {
+                    <div [formGroupName]="i"
                         class="threshold-row">
                                 <div class="input-button-row">
                                     <div class="input-row">
@@ -48,17 +50,20 @@
                                                     [ngClass]="{ 'thickness-only': trendControl.get('line.type').value === null }">
                                                     <!-- Type Input (e.g., linear, dashed) -->
                                                     <mat-form-field>
-                                                        <mat-select formControlName="type" placeholder="Type"
+                                                        <mat-label>Type</mat-label>
+                                                        <mat-select formControlName="type"
                                                             [ngClass]="!!trendControl.get('line.type').value">
                                                             <mat-select-trigger>
                                                                 <div class="line-option"
                                                                     [ngClass]="trendControl.get('line.type').value"></div>
                                                             </mat-select-trigger>
 
-                                                            <mat-option *ngFor="let lineType of lineTypeOptions"
+                                                            @for (lineType of lineTypeOptions; track lineType) {
+                                                            <mat-option class="line-type-option"
                                                                 [value]="lineType">
                                                                 <div class="line-option" [ngClass]="lineType"></div>
                                                             </mat-option>
+                                                            }
                                                         </mat-select>
                                                     </mat-form-field>
                                                 </div>
@@ -70,8 +75,9 @@
 
                                                 <div class="line-thickness">
                                                     <mat-form-field>
+                                                        <mat-label>Thickness</mat-label>
                                                         <input class="thickness" matInput type="number" formControlName="thickness" min="1" max="5"
-                                                            placeholder="Thickness" />
+                                                            />
                                                     </mat-form-field>
 
                                                     <hyt-info class="lh1" i18n-text="@@HYT_line_description" text="Choose the type and thickness of the threshold line." style="color: #0856b6;"></hyt-info>
@@ -84,32 +90,42 @@
                                     </div>
                                 </div>
                             </div>
+                    }
                 </ng-container>
             </div>
      </div>
+     }
 
-    <div id="time-chart-settings" *ngIf="packetPageStatus === 1 && pageStatus === 1">
-        <div *ngIf="checkbox && (selectedFields.length > 0 || widget.config.packetId)"
+    @if (packetPageStatus === 1 && pageStatus === 1) {
+    <div id="time-chart-settings">
+        @if (checkbox && (selectedFields.length > 0 || widget.config.packetId)) {
+        <div
             class="padding-6 d-flex flex-column justify-content-stretch pt25">
             <div class="box-fields-customization-title">
                 <h3 id="title-thresholds" i18n="@@HYT_thresholds">Thresholds</h3>
             </div>
             <mat-checkbox color="primary" [(ngModel)]="thresholdActive" [ngModelOptions]="{ standalone: true }"
                 (ngModelChange)="isChecked()">Show/Collapse Thresholds</mat-checkbox>
-            <div class="config-threshold" *ngIf="collapseThresold">
+            @if (collapseThresold) {
+            <div class="config-threshold">
                 <ng-container [formGroup]="thresholdsForm">
-                    <div *ngFor="let thresholdControl of thresholdsForm.controls; let i = index" [formGroupName]="i"
+                    @for (thresholdControl of thresholdsForm.controls; track thresholdControl; let i = $index) {
+                    <div [formGroupName]="i"
                         class="threshold-row">
                         <!-- New thresholds -->
-                        <div *ngIf="thresholdControl.get('id').value === null; else selectedThreshold" class="threshold-row setted-new-threshold">
+                        @if (thresholdControl.get('id').value === null) {
+                        <div class="threshold-row setted-new-threshold">
                             <mat-form-field class="input-button-row">
-                                <mat-select formControlName="id" placeholder="Select Rule" [defaultValue]="null" [required]="false"
+                                <mat-label>Select Rule</mat-label>
+                                <mat-select formControlName="id" [defaultValue]="null" [required]="false"
                                     (selectionChange)="onThresholdSelected(thresholdControl.get('id').value, true)">
                                     <mat-select-trigger>
                                         {{ getSelectedThresholdName(thresholdControl.get('id').value) || "Select threshold" }}
                                     </mat-select-trigger>
-                                    <mat-optgroup *ngFor="let group of thresholds | keyvalue" [label]="group.key">
-                                        <mat-option *ngFor="let rule of group.value" [value]="rule.id"
+                                    @for (group of thresholds | keyvalue; track group) {
+                                    <mat-optgroup [label]="group.key">
+                                        @for (rule of group.value; track rule) {
+                                        <mat-option [value]="rule.id"
                                             [disabled]="disabledThresholdOption(rule)" style="white-space: normal; word-wrap: break-word; height: auto !important;">
                                             <div>{{ rule.name }}</div>
                                             <div style="font-size: 12px; color: gray;">
@@ -117,29 +133,35 @@
                                                 formatRulePrettyDefinition(rule.rulePrettyDefinition) : '' }}
                                             </div>
                                         </mat-option>
+                                        }
                                     </mat-optgroup>
+                                    }
                                 </mat-select>
                             </mat-form-field>
                         </div>
-
+                        } @else {
                         <!-- List of existing thresholds -->
-                        <ng-template #selectedThreshold>
-                            <div *ngIf="thresholdControl.get('id').value !== null">
+                            @if (thresholdControl.get('id').value !== null) {
+                            <div>
                                 <div class="input-button-row">
                                     <div class="input-row">
 
                                         <div class="edit-row">
 
-                                            <mat-form-field *ngIf="thresholdControl">
-                                                <mat-select formControlName="id" placeholder="Select rule" [defaultValue]="null"
+                                            @if (thresholdControl) {
+                                            <mat-form-field>
+                                                <mat-label>Select rule</mat-label>
+                                                <mat-select formControlName="id" [defaultValue]="null"
                                                     (selectionChange)="onThresholdSelected(thresholdControl.get('id').value, true)">
                                                     <mat-select-trigger>
                                                         {{ getSelectedThresholdName(thresholdControl.get('id').value) ||
                                                         "Select threshold" }}
                                                     </mat-select-trigger>
-                                                    <mat-optgroup *ngFor="let group of thresholds | keyvalue"
+                                                    @for (group of thresholds | keyvalue; track group) {
+                                                    <mat-optgroup
                                                         [label]="group.key">
-                                                        <mat-option *ngFor="let rule of group.value" [value]="rule.id"
+                                                        @for (rule of group.value; track rule) {
+                                                        <mat-option [value]="rule.id"
                                                             [disabled]="disabledThresholdOption(rule)" style="white-space: normal; word-wrap: break-word; height: auto !important;">
                                                             <div>{{ rule.name }}</div>
                                                             <div style="font-size: 12px; color: gray;">
@@ -148,9 +170,12 @@
                                                                 }}
                                                             </div>
                                                         </mat-option>
+                                                        }
                                                     </mat-optgroup>
+                                                    }
                                                 </mat-select>
                                             </mat-form-field>
+                                            }
 
                                             <!-- Line settings (color, thickness, type) -->
                                             <div class="line-settings" formGroupName="line">
@@ -166,38 +191,44 @@
                                                     <hyt-info class="lh1" i18n-text="@@HYT_colorpicker_description" text="Choose the color that you want for the threshold line." style="color: #0856b6;"></hyt-info>
                                                 </div>
 
-                                                <div *ngIf="thresholdControl.get('id').value" class="line-type"
+                                                @if (thresholdControl.get('id').value) {
+                                                <div class="line-type"
                                                     [ngClass]="{ 'thickness-only': thresholdControl.get('line.type').value === null }">
                                                     <!-- Type Input (e.g., linear, dashed) -->
-                                                    <mat-form-field
-                                                        *ngIf="thresholdControl.get('line.type').value && thresholdControl.get('line.type').value !== null; else empty">
-                                                        <mat-select formControlName="type" placeholder="Type"
+                                                    @if (thresholdControl.get('line.type').value && thresholdControl.get('line.type').value !== null) {
+                                                    <mat-form-field>
+                                                        <mat-label>Type</mat-label>
+                                                        <mat-select formControlName="type"
                                                             [ngClass]="!!thresholdControl.get('line.type').value">
                                                             <mat-select-trigger>
                                                                 <div class="line-option"
                                                                     [ngClass]="thresholdControl.get('line.type').value"></div>
                                                             </mat-select-trigger>
 
-                                                            <mat-option *ngFor="let lineType of lineTypeOptions"
+                                                            @for (lineType of lineTypeOptions; track lineType) {
+                                                            <mat-option class="line-type-option"
                                                                 [value]="lineType">
                                                                 <div class="line-option" [ngClass]="lineType"></div>
                                                             </mat-option>
+                                                            }
                                                         </mat-select>
                                                     </mat-form-field>
+                                                    } @else {
+                                                        <div></div>
+                                                    }
                                                 </div>
+                                                }
 
                                                 <!-- Thickness Input -->
-                                                <ng-template #empty>
-                                                    <div></div>
-                                                </ng-template>
 
                                                 <div class="line-thickness">
                                                     <mat-form-field>
+                                                        <mat-label>Thickness</mat-label>
                                                         <input [ngClass]="{
                                                                 'thickness': thresholdControl.get('line.type').value && thresholdControl.get('line.type').value !== null,
                                                                 'no-thickness': !thresholdControl.get('line.type').value || thresholdControl.get('line.type').value === null
                                                             }" matInput type="number" formControlName="thickness" min="1" max="5"
-                                                            placeholder="Thickness" />
+                                                            />
                                                     </mat-form-field>
                                                     
                                                     <hyt-info class="lh1" i18n-text="@@HYT_line_description" text="Choose the type and thickness of the threshold line." style="color: #0856b6;"></hyt-info>
@@ -208,29 +239,38 @@
                                         </div>
 
                                         <!-- Delete button (Existing selected thresholds) -->
-                                        <div *ngIf="thresholdControl.get('id').value">
+                                        @if (thresholdControl.get('id').value) {
+                                        <div>
                                             <button mat-icon-button class="hyt-base-btn red" (click)="deleteSelected(i)">
                                                 <mat-icon>delete</mat-icon>
                                             </button>
                                         </div>
+                                        }
 
                                     </div>
                                 </div>
                             </div>
-                        </ng-template>
+                            }
+                        }
                     </div>
+                    }
                 </ng-container>
             </div>
+            }
         </div>
+        }
     </div>
+    }
     <!--
 <div *ngFor="let field of selectedFields">{{field.name}}</div>
 -->
     <!-- Plotly chart specific options -->
 
-    <div class="loading-overlay" *ngIf="!useSpinner && packetPageStatus === 1 && pageStatus === 0">
+    @if (!useSpinner && packetPageStatus === 1 && pageStatus === 0) {
+    <div class="loading-overlay">
         <mat-spinner strokeWidth="8" diameter="100"></mat-spinner>
     </div>
+    }
 
     <div class="padding-6 d-flex flex-column justify-content-stretch">
         <!-- not yet implemented -->

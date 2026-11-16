@@ -10,10 +10,11 @@ import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-erro
 
 
 @Component({
-  selector: 'hyt-device-form',
-  templateUrl: './device-form.component.html',
-  styleUrls: ['./device-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-device-form',
+    templateUrl: './device-form.component.html',
+    styleUrls: ['./device-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class DeviceFormComponent extends ProjectFormEntity implements AfterViewInit,OnInit, OnDestroy {
 
@@ -177,7 +178,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
   }
 
   clone(entity?: HDevice): HDevice {
-    const device = { ...entity } || this.entity;
+    const device = { ...entity };
     device.id = 0;
     device.entityVersion = 1;
     device.deviceName = `${device.deviceName}Copy`;

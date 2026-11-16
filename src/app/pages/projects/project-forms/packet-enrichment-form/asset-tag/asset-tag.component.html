@@ -1,24 +1,35 @@
-<div *ngIf="tagStatus==0" i18n="@@HYT_loading_data">
+@if (tagStatus==0) {
+<div i18n="@@HYT_loading_data">
   Loading data...
 </div>
-<div *ngIf="tagStatus==-1" i18n="@@HYT_error_occurred">
+}
+@if (tagStatus==-1) {
+<div i18n="@@HYT_error_occurred">
   An unexpected error has occurred
 </div>
-<div *ngIf="tagStatus==1">
+}
+@if (tagStatus==1) {
+<div>
   <mat-form-field class="tag-list">
-    <mat-chip-list #chipList>
-      <mat-chip *ngFor="let tag of tags" [selectable]="true" [removable]="true" (removed)="remove(tag)">
+    <mat-label>Tags</mat-label>
+    <mat-chip-grid #chipList>
+      @for (tag of tags; track tag) {
+      <mat-chip-row [removable]="true" (removed)="remove(tag)">
         {{tag.name}}
         <mat-icon matChipRemove>cancel</mat-icon>
-      </mat-chip>
-      <input placeholder="Tags" #tagInput [formControl]="tagCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+      </mat-chip-row>
+      }
+      <input #tagInput [formControl]="tagCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
         [matChipInputSeparatorKeyCodes]="[13, 188]" [matChipInputAddOnBlur]="false"
         (matChipInputTokenEnd)="add($event)">
-    </mat-chip-list>
+    </mat-chip-grid>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-      <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+      @for (tag of filteredTags | async; track tag) {
+      <mat-option [value]="tag">
         {{tag.name}}
       </mat-option>
+      }
     </mat-autocomplete>
   </mat-form-field>
 </div>
+}

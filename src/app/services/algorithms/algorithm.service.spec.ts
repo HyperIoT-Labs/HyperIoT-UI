@@ -6,7 +6,7 @@ describe('AlgorithmService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: AlgorithmService = TestBed.get(AlgorithmService);
+    const service: AlgorithmService = TestBed.inject(AlgorithmService);
     expect(service).toBeTruthy();
   });
 });

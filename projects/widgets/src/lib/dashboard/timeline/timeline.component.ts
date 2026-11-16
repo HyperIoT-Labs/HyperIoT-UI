@@ -21,9 +21,10 @@ import { CustomTimeLineRangeHandler, LastMonthTimeLineRangeHandler, LastWeekTime
  * to give the user the possibility to make a timeSelection to show old saved packet data.
  */
 @Component({
-  selector: 'hyperiot-timeline',
-  templateUrl: './timeline.component.html',
-  styleUrls: ['./timeline.component.scss']
+    selector: 'hyperiot-timeline',
+    templateUrl: './timeline.component.html',
+    styleUrls: ['./timeline.component.scss'],
+    standalone: false
 })
 export class TimelineComponent implements OnChanges {
 

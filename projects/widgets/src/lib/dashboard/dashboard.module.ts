@@ -49,12 +49,11 @@ import { WidgetValueMappingComponent } from './widget-settings-dialog/packet-sel
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { GaugeSettingsComponent } from './widget-settings-dialog/gauge-settings/gauge-settings.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ColorPickerModule } from 'ngx-color-picker';
+import { ColorPickerDirective } from 'ngx-color-picker';
 import { DataExportComponent } from './timeline/data-export/data-export.component';
-import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { OwlDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { MatRadioModule } from '@angular/material/radio';
-import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { OwlMomentDateTimeModule } from '@danielmoncada/angular-datetime-picker-moment-adapter';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TrendGaugeChartSettingsComponent } from './widget-settings-dialog/trend-gauge-chart-settings/trend-gauge-chart-settings.component';
@@ -95,7 +94,7 @@ import { CustomDefaultSelectionDialogComponent } from './custom-default-selectio
     CustomDefaultSelectionDialogComponent,
   ],
   imports: [
-    ColorPickerModule,
+    ColorPickerDirective,
     CommonModule,
     ComponentsModule,
     DragDropModule,
@@ -106,7 +105,6 @@ import { CustomDefaultSelectionDialogComponent } from './custom-default-selectio
     MatButtonToggleModule,
     MatCheckboxModule,
     MatChipsModule,
-    MatDatepickerModule,
     MatDividerModule,
     MatExpansionModule,
     MatFormFieldModule,
@@ -119,9 +117,8 @@ import { CustomDefaultSelectionDialogComponent } from './custom-default-selectio
     MatSliderModule,
     MatTabsModule,
     MatTooltipModule,
-    NgxMatDatetimePickerModule,
-    NgxMatMomentModule,
-    NgxMatTimepickerModule,
+    OwlDateTimeModule,
+    OwlMomentDateTimeModule,
     ReactiveFormsModule,
     RouterModule,
     WidgetsModule,

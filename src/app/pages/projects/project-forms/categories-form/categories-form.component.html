@@ -4,14 +4,17 @@
         <!--@I18N@-->
     </div>
 
-    <div id="container-loading-cat" *ngIf="categoryStatus==0">
+    @if (categoryStatus==0) {
+    <div id="container-loading-cat">
         
         <span class="text-loading">Loading Categories</span>
         <div class="loader"></div>
         <!--@I18N@-->
     </div>
+    }
 
-    <div class="row-categories row" *ngIf="categoryStatus==1">
+    @if (categoryStatus==1) {
+    <div class="row-categories row">
         <div class="col-8 offset-2 category-tree">
 
             <hyt-tree-view-category [treeDataFlat]="categoriesFlatTree" mode="project" [addFunction]="addFunction"
@@ -20,13 +23,16 @@
 
         </div>
     </div>
+    }
 
     
 
-    <div id="container-error-cat" *ngIf="categoryStatus==-1">
+    @if (categoryStatus==-1) {
+    <div id="container-error-cat">
         
         <span class="text-error">Error loading category data</span>
         <!--@I18N@-->
     </div>
+    }
 
 </div>

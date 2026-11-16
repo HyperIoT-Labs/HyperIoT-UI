@@ -10,10 +10,11 @@ import { Node, HytTreeViewEditableComponent } from 'components';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
-  selector: 'hyt-input-fields-form',
-  templateUrl: './input-fields-form.component.html',
-  styleUrls: ['./input-fields-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-input-fields-form',
+    templateUrl: './input-fields-form.component.html',
+    styleUrls: ['./input-fields-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class InputFieldsFormComponent extends AlgorithmFormEntity implements OnInit, AfterViewInit {
 

@@ -57,10 +57,11 @@ interface HytSelectOption extends HProject {
 const { REALTIME, OFFLINE } = Dashboard.DashboardTypeEnum;
 
 @Component({
-  selector: 'hyperiot-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyperiot-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   @ViewChild(DashboardViewComponent)
@@ -174,7 +175,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private logger: Logger;
 
-  private dataSourceByNavigationState: Dashboard.DashboardTypeEnum | undefined = this.router.getCurrentNavigation().extras.state?.dataSource;
+  private dataSourceByNavigationState: Dashboard.DashboardTypeEnum | undefined = this.router.currentNavigation().extras.state?.dataSource;
 
   constructor(
     private dashboardConfigService: DashboardConfigService,

@@ -6,9 +6,10 @@ import { EventComponentType } from '../event-component-type.enum';
 import { SelectableText } from './selectableText';
 
 @Component({
-  selector: 'hyt-event-mail',
-  templateUrl: './event-mail.component.html',
-  styleUrls: ['./event-mail.component.scss']
+    selector: 'hyt-event-mail',
+    templateUrl: './event-mail.component.html',
+    styleUrls: ['./event-mail.component.scss'],
+    standalone: false
 })
 export class EventMailComponent implements OnInit,EventComponent {
 

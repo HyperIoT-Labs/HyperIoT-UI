@@ -1,4 +1,8 @@
 <button mat-icon-button class="icon-picker-button" (click)="openIconPickerList()">
-  <span *ngIf="value.includes('fa ') || value.includes('hyt-icon ')" [ngClass]="value"></span>
-  <span *ngIf="!value.includes('fa ') && !value.includes('hyt-icon ')" class="material-icons">{{value}}</span>
+  @if (value.includes('fa ') || value.includes('hyt-icon ')) {
+  <span [ngClass]="value"></span>
+  }
+  @if (!value.includes('fa ') && !value.includes('hyt-icon ')) {
+  <span class="material-icons">{{value}}</span>
+  }
 </button>

@@ -6,7 +6,7 @@ describe('HytTopologyService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: HytTopologyService = TestBed.get(HytTopologyService);
+    const service: HytTopologyService = TestBed.inject(HytTopologyService);
     expect(service).toBeTruthy();
   });
 });

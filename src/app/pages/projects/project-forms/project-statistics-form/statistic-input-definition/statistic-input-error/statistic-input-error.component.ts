@@ -2,10 +2,11 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { DialogRef } from 'components';
 
 @Component({
-  selector: 'hyt-statistic-input-error',
-  templateUrl: './statistic-input-error.component.html',
-  styleUrls: ['./statistic-input-error.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-statistic-input-error',
+    templateUrl: './statistic-input-error.component.html',
+    styleUrls: ['./statistic-input-error.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class StatisticInputErrorComponent {
 

@@ -1,7 +1,6 @@
-<div *ngIf="(useSpinner && packetSelectStatus === 1 && customSettingsStatus === 1) || !useSpinner" id="packet-select-component" class="padding-6 d-flex flex-row justify-content-stretch">
-
-    <ng-container *ngIf="widget.config && !(widget.config.packetId && !selectedPacket)">
-
+@if ((useSpinner && packetSelectStatus === 1 && customSettingsStatus === 1) || !useSpinner) {
+<div id="packet-select-component" class="padding-6 d-flex flex-row justify-content-stretch">
+    @if (widget.config && !(widget.config.packetId && !selectedPacket)) {
         <div id="packet-selection" class="d-flex flex-column">
             <hyt-select
                 [name]="'packetSelect'"
@@ -18,11 +17,8 @@
             </hyt-select>
 
         </div>
-
-    </ng-container>
-
-    <ng-container *ngIf="selectedPacket != null">
-
+    }
+    @if (selectedPacket != null) {
         <div id="field-selection" class="d-flex flex-column">
 
             <!-- <hyt-select-template
@@ -39,22 +35,26 @@
                 (fieldSelectionChanged)="onPacketFieldChange($event)"></hyt-inner-field-select>
 
         </div>
-        <div *ngIf="widgetType === 'time-chart'" id="field-fit-to-timeline" class="d-flex flex-column">
+        @if (widgetType === 'time-chart') {
+        <div id="field-fit-to-timeline" class="d-flex flex-column">
           <mat-checkbox
             color="primary"
             name="fitToTimelineCheckbox"
             id="fitToTimelineCheckbox"
             [(ngModel)]="fitToTimelineCheckbox" i18n="@@HYT_fields_fit_to_timeline">Fit to timeline</mat-checkbox>
         </div>
+        }
 
-        <div id="box-fields-customization" *ngIf="selectedFields && selectedFields.length > 0">
+        @if (selectedFields && selectedFields.length > 0) {
+        <div id="box-fields-customization">
 
             <div class="box-fields-customization-title">
                 <h3 id="title-customization" i18n="@@HYT_fields_customization">Fields Customization</h3>
             </div>
 
             <mat-accordion>
-                <mat-expansion-panel *ngFor="let field of selectedFields">
+                @for (field of selectedFields; track field) {
+                <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <!-- <span class="customization-field-title">{{ field.name }}</span> -->
@@ -73,55 +73,67 @@
                             </div>
                             <div class="section-input">
                                 <mat-form-field>
+                                    <mat-label>Alias</mat-label>
                                     <input matInput name="hpacketfield-custom-aliases-{{field.id}}" id="customAliasesLabel-{{field.id}}" type="text"
-                                        placeholder="Alias" [(ngModel)]="fieldAliases[field.id]">
+                                        [(ngModel)]="fieldAliases[field.id]">
                                 </mat-form-field>
                             </div>
                         </div>
 
-                        <div class="customization-container-section section-fileType" *ngIf="field.type === 'FILE'">
+                        @if (field.type === 'FILE') {
+                        <div class="customization-container-section section-fileType">
                             <div class="section-title">
                                 <span i18n="@@HYT_file_mime_type_title">File MIME Type</span>
                             </div>
                             <div class="section-input">
                                 <mat-form-field>
+                                    <mat-label>e.g. application/octet-stream</mat-label>
                                     <input matInput name="hpacketfield-custom-file-type-{{field.id}}" id="file-type-Label-{{field.id}}" type="text"
-                                        placeholder="e.g. application/octet-stream" [(ngModel)]="fieldFileMimeTypes[field.id]" [matAutocomplete]="auto"
+                                        [(ngModel)]="fieldFileMimeTypes[field.id]" [matAutocomplete]="auto"
                                         (ngModelChange)="filterMimeTypeList(field.id)">
                                     <mat-autocomplete #auto="matAutocomplete" (opened)="filterMimeTypeList(field.id)">
-                                        <mat-option *ngFor="let option of filteredMIMETypesOptions" [value]="option">
+                                        @for (option of filteredMIMETypesOptions; track option) {
+                                        <mat-option [value]="option">
                                             {{ option }}
                                         </mat-option>
+                                        }
                                     </mat-autocomplete>
                                 </mat-form-field>
                             </div>
                         </div>
+                        }
 
-                        <div class="customization-container-section section-unit-conversion" *ngIf="field.type === 'INTEGER' || field.type === 'FLOAT' || field.type === 'DOUBLE'">
+                        @if (field.type === 'INTEGER' || field.type === 'FLOAT' || field.type === 'DOUBLE') {
+                        <div class="customization-container-section section-unit-conversion">
                             <div class="section-title">
                                 <span i18n="@@HYT_unit_conversion_title">Unit Conversion</span>
                             </div>
                             <div class="section-input">
+                                @if (fieldUnitConversions[field.id].convertFrom != null) {
                                 <hyt-select-template
                                     name="hpacketfield-unit-from-{{field.id}}"
                                     [(ngModel)]="fieldUnitConversions[field.id].convertFrom"
                                     [options]="fieldUnitConversions[field.id].options" [disabled]="true"
-                                    label="Convert From" *ngIf="fieldUnitConversions[field.id].convertFrom != null">
+                                    label="Convert From">
                                 </hyt-select-template>
+                                }
+                                @if (fieldUnitConversions[field.id].convertFrom != null) {
                                 <hyt-select-template
                                     name="hpacketfield-unit-{{field.id}}"
                                     [(ngModel)]="fieldUnitConversions[field.id].convertTo"
                                     [options]="fieldUnitConversions[field.id].options"
                                     label="Convert to"
                                     [sortingAlgorithm]="'A-Z'"
-                                    [isSortable]="true" *ngIf="fieldUnitConversions[field.id].convertFrom != null">
+                                    [isSortable]="true">
                                 </hyt-select-template>
+                                }
+                                @if (fieldUnitConversions[field.id].convertFrom == null) {
                                 <hyt-input-template
                                     name="hpacketfield-custom-unit-{{field.id}}" id="customUnitLabel-{{field.id}}" type="text"
                                     i18n-placeholder="@@HYT_customUnitLabel" placeholder="Custom Unit Label"
-                                    [(ngModel)]="fieldUnitConversions[field.id].conversionCustomLabel" #name="ngModel" [isRequired]="false"
-                                        *ngIf="fieldUnitConversions[field.id].convertFrom == null">
+                                    [(ngModel)]="fieldUnitConversions[field.id].conversionCustomLabel" #name="ngModel" [isRequired]="false">
                                 </hyt-input-template>
+                                }
                                 <hyt-select-template
                                     name="hpacketfield-decimals-{{field.id}}"
                                     [(ngModel)]="fieldUnitConversions[field.id].decimals"
@@ -132,17 +144,20 @@
                                 </hyt-select-template>
                             </div>
                         </div>
+                        }
 
-                        <div class="customization-container-section value-status-map" *ngIf="widget.type === 'multi-status'">
+                        @if (widget.type === 'multi-status') {
+                        <div class="customization-container-section value-status-map">
                             <span class="section-title" i18n="@@HYT_unit_conversion_title">Value Mapping</span>
                             <div class="section-input">
                                 <hyperiot-widget-value-mapping name="hpacketfield-value-map-{{field.id}}"
                                     [(ngModel)]="fieldValuesMapList[field.id]"></hyperiot-widget-value-mapping>
                             </div>
                         </div>
+                        }
 
-                        <div class="customization-container-section dynamic-label"
-                            *ngIf="widget.type === 'multi-status'">
+                        @if (widget.type === 'multi-status') {
+                        <div class="customization-container-section dynamic-label">
                             <div class="section-title">
                                 <span i18n="@@HYT_dynamic_label">Dynamic Label</span>
                                 <hyt-info [text]="dynamicLabelDescription"></hyt-info>
@@ -154,16 +169,20 @@
                                     [errorMsgRequired]="'Select one packet'" [hint]="'select one packet'"
                                     class="hyt-select-full-width">
                                 </hyt-select>
-                                <hyt-inner-field-select *ngIf="dynamicLabelFields[field.id] && dynamicLabelFields[field.id]?.length > 0" [fields]="dynamicLabelFields[field.id]"
+                                @if (dynamicLabelFields[field.id] && dynamicLabelFields[field.id]?.length > 0) {
+                                <hyt-inner-field-select [fields]="dynamicLabelFields[field.id]"
 
                                     [selectedFieldsIds]="dynamicLabelSelectedField[field.id]?.fieldId ? [dynamicLabelSelectedField[field.id].fieldId] : []" [isMultiSelect]="false"
 
                                     (fieldSelectionChanged)="onDynamicLabelPacketFieldSelect($event, field.id)">
                                 </hyt-inner-field-select>
+                                }
                             </div>
                         </div>
+                        }
 
-                        <div class="customization-container-section section-custom-expression" *ngIf="field.type === 'INTEGER' || field.type === 'FLOAT' || field.type === 'DOUBLE'">
+                        @if (field.type === 'INTEGER' || field.type === 'FLOAT' || field.type === 'DOUBLE') {
+                        <div class="customization-container-section section-custom-expression">
                             <div class="section-title">
                                 <span i18n="@@HYT_expressions_title">Expressions</span>
                             </div>
@@ -181,16 +200,24 @@
                                         <mat-form-field class="example-full-width">
                                             <mat-label>Expression</mat-label>
                                             <input [(ngModel)]="fieldRules[field.id].expression" matInput [name]="'expression' + field.id" type="text" (keyup)="updateExpression($event, field.id)" [value]="fieldRules[field.id]?.expression">
-                                            <mat-icon *ngIf="expressionIsValid" color="primary" matSuffix>done_outline</mat-icon>
-                                            <mat-icon *ngIf="!expressionIsValid" color="warn" matSuffix>highlight_off</mat-icon>
-                                            <mat-hint class="mat-error" *ngIf="!expressionIsValid">Invalid expression!</mat-hint>
+                                            @if (expressionIsValid) {
+                                            <mat-icon color="primary" matSuffix>done_outline</mat-icon>
+                                            }
+                                            @if (!expressionIsValid) {
+                                            <mat-icon color="warn" matSuffix>highlight_off</mat-icon>
+                                            }
+                                            @if (!expressionIsValid) {
+                                            <mat-hint class="mat-error">Invalid expression!</mat-hint>
+                                            }
                                         </mat-form-field>
                                     </div>
                                 </ng-container>
                             </div>
                         </div>
+                        }
 
-                        <div class="customization-container-section line-settings" *ngIf="widget.type === 'time-chart'">
+                        @if (widget.type === 'time-chart') {
+                        <div class="customization-container-section line-settings">
 
                             <div class="section-title">
                                 <span i18n="@@HYT_line_settings">Line Settings</span>
@@ -202,40 +229,51 @@
                                     name="hpacketfield-line-color-{{field.id}}">
 
                                 <mat-form-field>
+                                    <mat-label i18n="@@HYT_type">Type</mat-label>
                                     <mat-select [(value)]="fieldLineSettings[field.id].type"
-                                        i18n-placeholder="@@HYT_type" placeholder="Type">
+                                       >
                                         <mat-select-trigger>
                                             <div class="line-option"
                                                 [ngClass]="fieldLineSettings[field.id].type"></div>
                                         </mat-select-trigger>
 
-                                        <mat-option *ngFor="let lineType of lineTypeOptions"
+                                        @for (lineType of lineTypeOptions; track lineType) {
+                                        <mat-option class="line-type-option"
                                             [value]="lineType">
                                             <div class="line-option" [ngClass]="lineType"></div>
                                         </mat-option>
+                                        }
                                     </mat-select>
                                 </mat-form-field>
 
                                 <mat-form-field>
+                                    <mat-label i18n="@@HYT_Thickness">Thickness</mat-label>
                                     <input class="thickness" matInput type="number" [(ngModel)]="fieldLineSettings[field.id].thickness" min="1" max="5"
-                                        i18n-placeholder="@@HYT_Thickness" placeholder="Thickness" name="hpacketfield-line-thickness-{{field.id}}">
+                                        name="hpacketfield-line-thickness-{{field.id}}">
                                 </mat-form-field>
 
                             </div>
 
                         </div>
+                        }
 
                     </div>
                 </mat-expansion-panel>
+                }
             </mat-accordion>
         </div>
-
-    </ng-container>
+        }
+    }
 
 </div>
-<div class="loading-overlay" *ngIf="useSpinner && (packetSelectStatus === 0 || customSettingsStatus === 0)">
+}
+@if (useSpinner && (packetSelectStatus === 0 || customSettingsStatus === 0)) {
+<div class="loading-overlay">
     <mat-spinner strokeWidth="8" diameter="100"></mat-spinner>
 </div>
-<div class="loading-overlay error" *ngIf="useSpinner && (packetSelectStatus === -1 || customSettingsStatus === -1)" i18n="@@HYT_error_occurred">
+}
+@if (useSpinner && (packetSelectStatus === -1 || customSettingsStatus === -1)) {
+<div class="loading-overlay error" i18n="@@HYT_error_occurred">
     An unexpected error has occurred
 </div>
+}

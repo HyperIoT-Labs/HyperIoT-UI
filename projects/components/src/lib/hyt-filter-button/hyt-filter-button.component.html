@@ -1,8 +1,8 @@
 <div class="row d-flex flex-wrap align-items-center justify-content-center mt-2 mt-md-0">
     <span [innerHTML]="label" class="col-12 text-center mb-1"></span>
     <div class="hyt-filter-button-container d-flex flex-wrap align-items-center justify-content-center">
+        @for (option of options; track option) {
         <label 
-        *ngFor="let option of options" 
         class="hyt-filter-button hyt-filter-button-{{shape}}"
         [matTooltip]="option.tooltip"
     >
@@ -15,10 +15,12 @@
               [attr.matTooltip]="option.tooltip"
               (change)="onRadioChange(option)"
             />
-            <span class="hyt-icon icon-hyt_{{option.icon}}" *ngIf="option.icon; else labelFilter"></span>
-            <ng-template #labelFilter>
+            @if (option.icon) {
+            <span class="hyt-icon icon-hyt_{{option.icon}}"></span>
+            } @else {
                 <span [attr.i18n]="option.keyLabel">{{ option.label }}</span>
-            </ng-template>
+            }
         </label>
+        }
     </div>
 </div>

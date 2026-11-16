@@ -260,7 +260,7 @@
 
 mat-option {
 
-  &.mat-option {
+  &.mat-mdc-option {
 
     font-family: 'Exo';
 
@@ -294,7 +294,7 @@ mat-option {
 
           span {
 
-            &.mat-button-wrapper {
+            &.mdc-button__label {
 
               display: flex;
               align-items: center;

@@ -11,10 +11,11 @@ interface ChosenInput {
 }
 
 @Component({
-  selector: 'hyt-input-definition-modal',
-  templateUrl: './input-definition-modal.component.html',
-  styleUrls: ['./input-definition-modal.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-input-definition-modal',
+    templateUrl: './input-definition-modal.component.html',
+    styleUrls: ['./input-definition-modal.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class InputDefinitionModalComponent implements OnInit {
   

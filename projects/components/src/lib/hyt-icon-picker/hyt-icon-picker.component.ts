@@ -5,16 +5,17 @@ import { HytIconPickerListComponent } from './hyt-icon-picker-list/hyt-icon-pick
 import { DialogLayout } from '../hyt-dialog/dialog.models';
 
 @Component({
-  selector: 'hyt-icon-picker',
-  templateUrl: './hyt-icon-picker.component.html',
-  styleUrls: ['./hyt-icon-picker.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => HytIconPickerComponent),
-      multi: true,
-    }
-  ],
+    selector: 'hyt-icon-picker',
+    templateUrl: './hyt-icon-picker.component.html',
+    styleUrls: ['./hyt-icon-picker.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => HytIconPickerComponent),
+            multi: true,
+        }
+    ],
+    standalone: false
 })
 export class HytIconPickerComponent implements ControlValueAccessor {
 

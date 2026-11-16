@@ -8,9 +8,10 @@ import { SubmissionStatus } from '../models/pageStatus';
  * It is used to hallow the user to activate his new account and to finish the registration process.
  */
 @Component({
-  selector: 'hyt-user-activation',
-  templateUrl: './user-activation.component.html',
-  styleUrls: ['./user-activation.component.scss']
+    selector: 'hyt-user-activation',
+    templateUrl: './user-activation.component.html',
+    styleUrls: ['./user-activation.component.scss'],
+    standalone: false
 })
 export class UserActivationComponent implements OnInit {
 

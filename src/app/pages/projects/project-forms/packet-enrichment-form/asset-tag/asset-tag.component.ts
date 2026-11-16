@@ -3,7 +3,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { AssetTag, AssetTagsService, HProject } from 'core';
 import { startWith, map } from 'rxjs/operators';
-import {MatChipInputEvent} from '@angular/material/chips';
+import { MatChipInputEvent } from '@angular/material/chips';
 
 export enum TagStatus {
   Default = 0,
@@ -12,9 +12,10 @@ export enum TagStatus {
 }
 
 @Component({
-  selector: 'hyt-asset-tag',
-  templateUrl: './asset-tag.component.html',
-  styleUrls: ['./asset-tag.component.scss']
+    selector: 'hyt-asset-tag',
+    templateUrl: './asset-tag.component.html',
+    styleUrls: ['./asset-tag.component.scss'],
+    standalone: false
 })
 export class AssetTagComponent implements OnInit {
 

@@ -11,6 +11,10 @@
     background: #fff;
     z-index: 1;
 
+    mat-form-field {
+        max-width: 212px;
+    }
+
     .delete-icon {
         cursor: pointer;
     }

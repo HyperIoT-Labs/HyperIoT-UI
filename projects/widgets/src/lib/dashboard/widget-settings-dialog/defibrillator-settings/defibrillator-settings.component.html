@@ -1,13 +1,17 @@
-<div id="time-chart-settings" *ngIf="projectPackets.length > 0">
+@if (projectPackets.length > 0) {
+<div id="time-chart-settings">
   <ng-template #channelTemplate let-area="area" let-channel="channel" let-key="key">
     <div class="channel-settings">
       <div class="channel-settings-row channel-settings-type">
         <mat-form-field>
-          <mat-select placeholder="Select type" i18n-placeholder="@@HYT_widget_settings_select_packet"
+          <mat-label i18n="@@HYT_widget_settings_select_packet">Select type</mat-label>
+          <mat-select
             [(ngModel)]="channel.type" (ngModelChange)="onTypeChanged(channel)" [name]="key + '-type'" [disabled]="isFieldDisabled(key + '-type')">
-            <mat-option *ngFor="let fieldType of fieldsTypeOptions" [value]="fieldType.value">
+            @for (fieldType of fieldsTypeOptions; track fieldType) {
+            <mat-option [value]="fieldType.value">
               {{fieldType.label}}
             </mat-option>
+            }
           </mat-select>
         </mat-form-field>
         <input matInput placeholder="Colore" type="color" [(ngModel)]="channel.color" [name]="key + '-color'">
@@ -64,35 +68,42 @@
     </div> -->
   </div>
   <div class="fields-and-colors-select">
-    <mat-tab-group>
+    <mat-tab-group [mat-stretch-tabs]="false">
 
       <mat-tab label="Standard">
-        <div class="area" *ngFor="let area of defibrillatorSettings.standard | keyvalue:noOrder; let iArea = index">
+        @for (area of defibrillatorSettings.standard | keyvalue:noOrder; track area; let iArea = $index) {
+        <div class="area">
           <label class="area-label">{{ area.key }}</label>
 
-          <div *ngIf="area.key === 'standardArea1' && !isStandardArea1Sorted()" class="sort-warn">
+          @if (area.key === 'standardArea1' && !isStandardArea1Sorted()) {
+          <div class="sort-warn">
             Channels will be sorted in the widget to match area1 parameters
           </div>
+          }
 
           <mat-accordion>
-            <mat-expansion-panel *ngFor="let channel of area.value | keyvalue:noOrder; let iChannel = index; ">
+            @for (channel of area.value | keyvalue:noOrder; track channel; let iChannel = $index) {
+            <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   {{ channel.key }}
                 </mat-panel-title>
-                <mat-panel-description *ngIf="channel.value.type">
+                @if (channel.value.type) {
+                <mat-panel-description>
                   <span class="type-label" [ngStyle]="{'color': channel.value.color}">{{ channel.value.type }}</span>
-                  <hyt-tag [color]="'#fff'" textColor="channel.value.color"></hyt-tag>
                 </mat-panel-description>
+                }
               </mat-expansion-panel-header>
 
               <ng-container
                 *ngTemplateOutlet="channelTemplate; context: { area: area.value, channel: channel.value, key: 'standard' + '-' + area.key + '-' + channel.key }"></ng-container>
 
             </mat-expansion-panel>
+            }
           </mat-accordion>
 
         </div>
+        }
 
       </mat-tab>
 
@@ -103,28 +114,35 @@
             [selected]="derivationsGridLayout"
             [options]="[{label: '1X12', value: '1:12'},{label: '2X6', value: '2:6'},{label: '3X4', value: '3:4'},{label: '4X3', value: '4:3'}]"></hyt-select>
         </div>
-        <div class="area" *ngFor="let area of defibrillatorSettings.derivations | keyvalue; let iArea = index">
+        @for (area of defibrillatorSettings.derivations | keyvalue; track area; let iArea = $index) {
+        <div class="area">
           <label class="area-label">{{ area.key }}</label>
           <mat-accordion>
-            <mat-expansion-panel *ngFor="let channel of area.value | keyvalue; let iChannel = index;">
+            @for (channel of area.value | keyvalue; track channel; let iChannel = $index) {
+            <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   {{ channel.key }}
                 </mat-panel-title>
-                <mat-panel-description *ngIf="channel.value.type">
+                @if (channel.value.type) {
+                <mat-panel-description>
                   <span class="type-label" [ngStyle]="{'color': channel.value.color}">{{ channel.value.type }}</span>
                 </mat-panel-description>
+                }
               </mat-expansion-panel-header>
 
               <ng-container
                 *ngTemplateOutlet="channelTemplate; context: { area: area.value, channel: channel.value, key: 'derivations' + '-' + area.key + '-' + channel.key }"></ng-container>
 
             </mat-expansion-panel>
+            }
           </mat-accordion>
         </div>
+        }
 
       </mat-tab>
 
     </mat-tab-group>
   </div>
 </div>
+}

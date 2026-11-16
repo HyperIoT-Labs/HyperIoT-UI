@@ -57,15 +57,16 @@
                     border: .5px solid lightgray;
                     border-radius: 5px;
                     padding: 5px;
+                    text-align: left;
                 }
 
                 mat-select {
 
-                    .mat-form-field {
+                    .mat-mdc-form-field {
                         width: auto !important;
                     }
 
-                    .mat-select-value {
+                    .mat-mdc-select-value {
                         max-width: 100%;
                         width: auto;
                     }

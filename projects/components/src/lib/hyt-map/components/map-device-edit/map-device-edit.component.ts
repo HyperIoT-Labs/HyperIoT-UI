@@ -4,9 +4,10 @@ import { Area, AreaDevice } from 'core';
 import { AREA_ICONS_OPTIONS } from '../../models/area-icons';
 
 @Component({
-  selector: 'hyt-map-device-edit',
-  templateUrl: './map-device-edit.component.html',
-  styleUrls: ['./map-device-edit.component.scss']
+    selector: 'hyt-map-device-edit',
+    templateUrl: './map-device-edit.component.html',
+    styleUrls: ['./map-device-edit.component.scss'],
+    standalone: false
 })
 export class MapDeviceEditComponent implements OnInit {
 

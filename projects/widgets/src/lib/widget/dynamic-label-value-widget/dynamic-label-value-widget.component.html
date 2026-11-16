@@ -17,17 +17,21 @@
     </header-widget>
 
     <content-widget>
-        <div *ngIf="!isConfigured; else configured" class="configure-notice">
+        @if (!isConfigured) {
+        <div class="configure-notice">
             <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
         </div>
-        <ng-template #configured>
-            <div *ngIf="loadingOfflineData" class="loading-overlay">
+        } @else {
+            @if (loadingOfflineData) {
+            <div class="loading-overlay">
                 <p>Loading data...</p>
                 <mat-spinner strokeWidth="4" diameter="44"></mat-spinner>
             </div>
+            }
             <div class="key-value-container">
                 <ul class="items-list">
-                    <li class="item" *ngFor="let label of chartLabels; let i = index">
+                    @for (label of chartLabels; track label; let i = $index) {
+                    <li class="item">
                         <div class="label-span field-row">
                             <span class="item-label">{{ label.label }}</span>
                         </div>
@@ -35,10 +39,10 @@
                             <span class="item-value">{{ chartData[label.id] }}</span>
                         </div>
                     </li>
+                    }
                 </ul>
             </div>
-
-        </ng-template>
+        }
 
     </content-widget>
 

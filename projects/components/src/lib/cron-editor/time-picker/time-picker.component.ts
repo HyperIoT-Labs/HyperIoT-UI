@@ -3,9 +3,10 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import Utils from '../Utils';
 
 @Component({
-  selector: 'hyt-cron-time-picker',
-  templateUrl: './time-picker.component.html',
-  styleUrls: ['./time-picker.component.css']
+    selector: 'hyt-cron-time-picker',
+    templateUrl: './time-picker.component.html',
+    styleUrls: ['./time-picker.component.css'],
+    standalone: false
 })
 export class TimePickerComponent implements OnInit {
   @Output() public change = new EventEmitter();

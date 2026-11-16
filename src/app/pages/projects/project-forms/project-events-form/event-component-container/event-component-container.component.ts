@@ -32,9 +32,10 @@ class FakeEventComponent implements EventComponent{
 }
 
 @Component({
-  selector: 'hyt-event-component-container',
-  templateUrl: './event-component-container.component.html',
-  styleUrls: ['./event-component-container.component.scss']
+    selector: 'hyt-event-component-container',
+    templateUrl: './event-component-container.component.html',
+    styleUrls: ['./event-component-container.component.scss'],
+    standalone: false
 })
 export class EventComponentContainerComponent implements OnInit {
 

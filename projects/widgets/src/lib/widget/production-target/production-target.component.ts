@@ -4,9 +4,10 @@ import { Subscription } from 'rxjs';
 import { BaseGenericComponent } from '../../base/base-generic/base-generic.component';
 import { HytBadgeShape, HytBadgeSize } from 'components';
 @Component({
-  selector: 'hyperiot-production-target',
-  templateUrl: './production-target.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './production-target.component.scss']
+    selector: 'hyperiot-production-target',
+    templateUrl: './production-target.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './production-target.component.scss'],
+    standalone: false
 })
 export class ProductionTargetComponent extends BaseGenericComponent implements OnInit {
   isPaused = false;

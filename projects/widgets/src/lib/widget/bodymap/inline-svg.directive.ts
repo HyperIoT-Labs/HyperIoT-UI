@@ -8,7 +8,8 @@ import { Subscription } from 'rxjs';
  * It replaces the unmaintained `ng-inline-svg` package and keeps the same selector.
  */
 @Directive({
-  selector: '[inlineSVG]'
+    selector: '[inlineSVG]',
+    standalone: false
 })
 export class InlineSvgDirective implements OnDestroy {
 

@@ -58,7 +58,8 @@ import 'zone.js';  // Included with Angular CLI.
 // patch to make 'convert-units' package work
 (window as any).global = window;
 // patch for avro-js
-global.Buffer = global.Buffer || require('buffer').Buffer;
+import { Buffer } from 'buffer';
+global.Buffer = global.Buffer || Buffer;
 (window as any).process = {
     env: { DEBUG: undefined },
     browser: true

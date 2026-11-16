@@ -19,11 +19,12 @@ import { PageStatus } from '../models/page-status';
 import { DEFAULT_LINE_COLORS, LineTypes } from '../../model/line.model';
 
 @Component({
-  selector: 'hyperiot-packet-select',
-  templateUrl: './packet-select.component.html',
-  styleUrls: ['./packet-select.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
+    selector: 'hyperiot-packet-select',
+    templateUrl: './packet-select.component.html',
+    styleUrls: ['./packet-select.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+    standalone: false
 })
 export class PacketSelectComponent implements OnInit, OnChanges {
   @Input() widget;

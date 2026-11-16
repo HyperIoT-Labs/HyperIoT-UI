@@ -6,9 +6,10 @@ import { WidgetAction } from '../../base/base-widget/model/widget.model';
 import {catchError} from "rxjs/operators";
 
 @Component({
-  selector: 'hyperiot-events-log',
-  templateUrl: './events-log.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './events-log.component.css']
+    selector: 'hyperiot-events-log',
+    templateUrl: './events-log.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './events-log.component.css'],
+    standalone: false
 })
 export class EventsLogComponent extends BaseGenericComponent implements OnInit {
 

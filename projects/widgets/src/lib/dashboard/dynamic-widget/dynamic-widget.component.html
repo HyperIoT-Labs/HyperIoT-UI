@@ -1,125 +1,137 @@
 <!-- List of widget that can be dynamically loaded -->
 <!-- <pre>{{widget.type|json}}</pre> -->
 
-<ng-container [ngSwitch]="widget.type">
-
+  @switch (widget.type) {
+  @case ('time-chart') {
   <hyperiot-line-chart
-    *ngSwitchCase="'time-chart'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-line-chart>
+  }
 
+  @case ('multi-status') {
   <hyperiot-multi-status-widget
-    *ngSwitchCase="'multi-status'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-multi-status-widget>
+  }
 
+  @case ('dynamic-label-value') {
   <hyperiot-dynamic-label-value-widget
-    *ngSwitchCase="'dynamic-label-value'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-dynamic-label-value-widget>
+  }
 
+  @case ('ecg') {
   <hyperiot-ecg
-    *ngSwitchCase="'ecg'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-ecg>
+  }
 
+  @case ('defibrillator') {
   <hyperiot-defibrillator
-    *ngSwitchCase="'defibrillator'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-defibrillator>
+  }
 
+  @case ('bodymap') {
   <hyperiot-bodymap
-    *ngSwitchCase="'bodymap'"
     [widget]="widget"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-bodymap>
+  }
 
+  @case ('sensor-value') {
   <hyperiot-sensor-value
-    *ngSwitchCase="'sensor-value'"
     [widget]="widget"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-sensor-value>
+  }
 
+  @case ('events-log') {
   <hyperiot-events-log
-    *ngSwitchCase="'events-log'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-events-log>
+  }
 
+  @case ('production-target-widget') {
   <hyperiot-production-target
-    *ngSwitchCase="'production-target-widget'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-production-target>
+  }
 
+  @case ('offline-table') {
   <hyperiot-hpacket-table
-    *ngSwitchCase="'offline-table'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-hpacket-table>
+  }
 
+  @case ('realtime-table') {
   <hyperiot-hpacket-table
-    *ngSwitchCase="'realtime-table'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-hpacket-table>
+  }
 
+  @case ('algorithm-offline-table') {
   <hyperiot-algorithm-table
-    *ngSwitchCase="'algorithm-offline-table'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
   >
   </hyperiot-algorithm-table>
+  }
 
+  @case ('algorithm-history-table') {
   <hyperiot-algorithm-history-table
-    *ngSwitchCase="'algorithm-history-table'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
   >
   </hyperiot-algorithm-history-table>
+  }
 
+  @case ('event-offline-table') {
   <hyperiot-event-table
-    *ngSwitchCase="'event-offline-table'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
@@ -127,9 +139,10 @@
     [serviceType]="serviceType"
   >
   </hyperiot-event-table>
+  }
 
+  @case ('error-table') {
   <hyperiot-error-table
-    *ngSwitchCase="'error-table'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
@@ -137,54 +150,61 @@
     [serviceType]="serviceType"
   >
   </hyperiot-error-table>
+  }
 
+  @case ('gauge') {
   <hyperiot-gauge-chart
-    *ngSwitchCase="'gauge'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-gauge-chart>
+  }
 
+  @case ('trend-gauge') {
   <hyperiot-trend-gauge-chart
-    *ngSwitchCase="'trend-gauge'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-trend-gauge-chart>
+  }
 
+  @case ('histogram') {
   <hyperiot-histogram-chart
-    *ngSwitchCase="'histogram'"
     [widget]="widget"
     [initData]="initData"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-histogram-chart>
+  }
 
+  @case ('data-simulator') {
   <hyperiot-data-simulator
-    *ngSwitchCase="'data-simulator'"
     [widget]="widget"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-data-simulator>
+  }
 
+  @default {
   <hyperiot-default-widget
-    *ngSwitchDefault
     [widget]="widget"
     (widgetAction)="onWidgetAction($event)">
   </hyperiot-default-widget>
+  }
 
+  @case ('alarms-widget') {
   <hyperiot-alarms-widget
-    *ngSwitchCase="'alarms-widget'"
     [widget]="widget"
     [isToolbarVisible]="isToolbarVisible"
     (widgetAction)="onWidgetAction($event)"
     [serviceType]="serviceType"
   ></hyperiot-alarms-widget>
+  }
+  }
 
-</ng-container>

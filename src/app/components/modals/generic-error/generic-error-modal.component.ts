@@ -2,10 +2,11 @@ import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from 'components';
 
 @Component({
-  selector: 'hyt-generic-error-modal',
-  templateUrl: './generic-error-modal.component.html',
-  styleUrls: ['./generic-error-modal.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-generic-error-modal',
+    templateUrl: './generic-error-modal.component.html',
+    styleUrls: ['./generic-error-modal.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class GenericErrorModalComponent {
 

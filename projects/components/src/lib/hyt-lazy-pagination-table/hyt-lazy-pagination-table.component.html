@@ -3,30 +3,46 @@
         <table>
             <thead>
                 <tr>
-                    <th *ngFor="let header of headers" [matTooltip]="header.label || header.value" matTooltipPosition="above"
+                    @for (header of headers; track header) {
+                    <th [matTooltip]="header.label || header.value" matTooltipPosition="above"
                         matTooltipClass="hyt-header-tooltip">
                         {{ header.label || header.value }}
                     </th>
+                    }
                 </tr>
             </thead>
-            <tbody *ngIf="tableStatus == 1">
-                <tr class="single-row-data-elements" *ngFor="let data of pageData">
-                    <td *ngFor="let item of headers">
-                      <div *ngIf="item.type === 'FILE'" class="file-cell">
+            @if (tableStatus == 1) {
+            <tbody>
+                @for (data of pageData; track data) {
+                <tr class="single-row-data-elements">
+                    @for (item of headers; track item) {
+                    <td>
+                      @if (item.type === 'FILE') {
+                      <div class="file-cell">
                         <span class="hyt-icon icon-hyt_search" (click)="openFile(data[item.value])"></span>
                         <span class="hyt-icon icon-hyt_download" (click)="downloadFile(data[item.value])"></span>
                       </div>
-                      <ng-container *ngIf="item.type !== 'FILE'">{{ data[item.value] || "-" }}</ng-container>
+                      }
+                      @if (item.type !== 'FILE') {
+                      {{ data[item.value] || "-" }}
+                      }
                     </td>
+                    }
                 </tr>
+                }
             </tbody>
+            }
         </table>
-        <div *ngIf="tableStatus == 0">
+        @if (tableStatus == 0) {
+        <div>
             Loading
         </div>
-        <div *ngIf="tableStatus == -1">
+        }
+        @if (tableStatus == -1) {
+        <div>
             No data to show
         </div>
+        }
     </div>
     <div class="table-navigation">
         <div style="float: left;">
@@ -36,10 +52,12 @@
             </hyt-select>
         </div>
         <div style="float: right;">
-            <ng-container *ngIf="tableStatus == -1">No Data</ng-container>
-            <ng-container *ngIf="tableStatus != -1">
+            @if (tableStatus == -1) {
+            No Data
+            }
+            @if (tableStatus != -1) {
                 {{actualRowsIndexes[0] + 1}}-{{actualRowsIndexes[1]}} of {{allData.length}}
-            </ng-container>
+            }
             <hyt-button [color]="'hyt-base-icon-only'" [isDisabled]="selectedPage <= 0" (clickFn)="updatePageData(0)">
                 &lt;&lt;
             </hyt-button>

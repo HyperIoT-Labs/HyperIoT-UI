@@ -2,16 +2,17 @@ import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from 'components';
 import { Area_Service, HDevicesService, AreaDevice, HDevice, Area } from 'core';
 import { LoadingStatusEnum } from '../../project-form-entity';
-import { AREA_ICONS_OPTIONS } from 'projects/components/src/public-api';
+import { AREA_ICONS_OPTIONS } from 'components';
 
 @Component({
-  selector: 'hyt-area-device-select-dialog',
-  templateUrl: './area-device-select-dialog.component.html',
-  styleUrls: ['./area-device-select-dialog.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-area-device-select-dialog',
+    templateUrl: './area-device-select-dialog.component.html',
+    styleUrls: ['./area-device-select-dialog.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class AreaDeviceSelectDialogComponent implements OnInit {
-  projectDevices = [] as HDevice[];
+  projectDevices = [] as (HDevice & { added?: boolean; area?: string })[];
   selectedDevice: HDevice;
   loadingStatus = LoadingStatusEnum.Ready;
   LoadingStatus = LoadingStatusEnum;

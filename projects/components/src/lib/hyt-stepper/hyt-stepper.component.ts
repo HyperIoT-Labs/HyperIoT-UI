@@ -2,10 +2,11 @@ import { Component, OnInit, Input, TemplateRef, ViewChild, ElementRef, Output, E
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'hyt-stepper',
-  templateUrl: './hyt-stepper.component.html',
-  styleUrls: ['./hyt-stepper.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-stepper',
+    templateUrl: './hyt-stepper.component.html',
+    styleUrls: ['./hyt-stepper.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytStepperComponent implements OnInit {
   /** ViewChild */

@@ -18,7 +18,8 @@
 
           <h2 class="section-title" i18n="@@HYT_algorithm_required_input_fields">Algorithm required input fields</h2>
           
-          <div *ngFor="let input of inputArray" class="container-single-input-definition">
+          @for (input of inputArray; track input) {
+          <div class="container-single-input-definition">
             
             <h2 class="input-title">
               {{input.name}}
@@ -32,12 +33,15 @@
               cdkDropListSortingDisabled
               (cdkDropListDropped)="drop($event)"
               [cdkDropListEnterPredicate]="hasBeenSelected">
-              <div class="example-box" *ngFor="let hPacketField of getChosenInput(input)" 
+              @for (hPacketField of getChosenInput(input); track hPacketField) {
+              <div class="example-box"
                 cdkDragBoundary=".example-boundary" cdkDrag (cdkDragStarted)="onDragStarted($event)">{{hPacketField.name}}
               </div>
+              }
   
             </div>
           </div>
+          }
         </div> 
       
         <div class="container-field-list boundary-field">
@@ -55,24 +59,30 @@
             <div class="form-group mb-4">
               <input id="searchText" type="text" [(ngModel)]="searchText" placeholder="Search">
             </div>
-            <p *ngIf="searchText.length > 0 && (hPacketFieldList | filter: searchText).length === 0" i18n="@@HYT_no_field_found">
+            @if (searchText.length > 0 && (hPacketFieldList | filter: searchText).length === 0) {
+            <p i18n="@@HYT_no_field_found">
               No field found
             </p>
-            <p *ngIf="searchText.length === 0 && hPacketFieldList.length === 0" i18n="@@HYT_no_available_fields">
+            }
+            @if (searchText.length === 0 && hPacketFieldList.length === 0) {
+            <p i18n="@@HYT_no_available_fields">
               There are no available fields anymore
             </p>
+            }
             <div
               cdkDropList
               [cdkDropListData]="hPacketFieldList"
               class="example-list"
               cdkDropListSortingDisabled
               (cdkDropListDropped)="drop($event)">
-              <div class="example-box" *ngFor="let hPacketField of (hPacketFieldList | filter: searchText)" 
+              @for (hPacketField of (hPacketFieldList | filter: searchText); track hPacketField) {
+              <div class="example-box"
                 cdkDragBoundary=".example-boundary" cdkDrag (cdkDragStarted)="onDragStarted($event)"
               >
                 <div class="custom-placeholder" *cdkDragPlaceholder></div> <!-- to override placeholder style -->
                 {{hPacketField.name}}
               </div>
+              }
             </div>
 
           </div>

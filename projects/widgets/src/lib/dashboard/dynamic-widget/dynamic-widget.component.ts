@@ -3,10 +3,11 @@ import { PacketData } from 'core';
 import {TypeModelService, ServiceType} from '../../service/model/service-type';
 
 @Component({
-  selector: 'hyperiot-dynamic-widget',
-  templateUrl: './dynamic-widget.component.html',
-  styleUrls: ['./dynamic-widget.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyperiot-dynamic-widget',
+    templateUrl: './dynamic-widget.component.html',
+    styleUrls: ['./dynamic-widget.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class DynamicWidgetComponent implements OnInit {
   @Input()

@@ -8,10 +8,11 @@ import { HProjectService, HProject } from 'core';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 
 @Component({
-  selector: 'hyt-project-form',
-  templateUrl: './project-form.component.html',
-  styleUrls: ['./project-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-project-form',
+    templateUrl: './project-form.component.html',
+    styleUrls: ['./project-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ProjectFormComponent extends ProjectFormEntity implements AfterViewInit, OnDestroy {
 

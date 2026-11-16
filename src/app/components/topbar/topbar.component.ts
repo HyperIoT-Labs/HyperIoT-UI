@@ -11,10 +11,11 @@ import { environment } from "src/environments/environment";
 import { DashboardConfigService } from 'widgets';
 
 @Component({
-  selector: "hyt-topbar",
-  templateUrl: "./topbar.component.html",
-  styleUrls: ["./topbar.component.scss"],
-  encapsulation: ViewEncapsulation.None,
+    selector: "hyt-topbar",
+    templateUrl: "./topbar.component.html",
+    styleUrls: ["./topbar.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class TopbarComponent implements OnInit {
   feVersion = environment.version;

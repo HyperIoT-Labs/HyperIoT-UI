@@ -10,7 +10,8 @@ import { SelectOption } from 'components';
     selector: 'hyperiot-ecg-settings',
     templateUrl: './ecg-settings.component.html',
     styleUrls: ['./ecg-settings.component.scss'],
-    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
+    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+    standalone: false
 })
 export class EcgSettingsComponent implements OnInit, OnDestroy {
     @ViewChild(PacketSelectComponent, { static: true }) packetSelect: PacketSelectComponent;

@@ -63,17 +63,21 @@
 
       <div class="commands">
 
-        <div *ngIf="node.level != 0" class="button">
+        @if (node.level != 0) {
+        <div class="button">
           <span class="hyt-icon icon-hyt_pencil" (click)="modifyItem(node)"></span>
         </div>
+        }
 
         <div class="button">
           <span class="hyt-icon icon-hyt_plus" (click)="addNewItem(node)"></span>
         </div>
 
-        <div *ngIf="node.level != 0" class="button">
+        @if (node.level != 0) {
+        <div class="button">
           <span class="hyt-icon icon-hyt_cancel" (click)="removeItem(node)"></span>
         </div>
+        }
 
       </div>
 

@@ -8,30 +8,62 @@
   >
     <form [formGroup]="form">
       <fieldset [disabled]="exportInProgress">
-        <div class="row row-cols-2">
-          <div class="d-flex flex-column p-2">
+        <div class="row">
+          <div class="col-6 d-flex flex-column p-2">
             <mat-form-field
               id="startTimePicker"
               appearance="fill"
-              [ngClass]="{ 'mat-form-field-invalid': startTime.invalid }"
+              [subscriptSizing]="form.errors?.['timeRangeInvalid'] ? 'dynamic' : 'fixed'"
             >
               <mat-label i18n="@@HYT_start_time">Start Time</mat-label>
               <input
                 matInput
-                [ngxMatDatetimePicker]="startTimePicker"
-                [max]="maxValue$ | async"
+                [owlDateTime]="startTimePicker"
                 placeholder="Choose a date"
                 (click)="startTimePicker.open()"
                 formControlName="startTime"
                 readonly
                 required
               />
-              <mat-datepicker-toggle matSuffix [for]="$any(startTimePicker)">
-              </mat-datepicker-toggle>
-              <ngx-mat-datetime-picker #startTimePicker [showSeconds]="true">
-              </ngx-mat-datetime-picker>
+              <button mat-icon-button matSuffix type="button" [owlDateTimeTrigger]="startTimePicker">
+                <mat-icon>calendar_today</mat-icon>
+              </button>
+              <owl-date-time #startTimePicker [showSecondsTimer]="true"></owl-date-time>
             </mat-form-field>
+          </div>
+          <div class="col-6 d-flex flex-column p-2">
+            <mat-form-field
+              id="endTimePicker"
+              appearance="fill"
+              [subscriptSizing]="form.errors?.['timeRangeInvalid'] ? 'dynamic' : 'fixed'"
+            >
+              <mat-label i18n="@@HYT_end_time">End Time</mat-label>
+              <input
+                matInput
+                [owlDateTime]="endTimePicker"
+                placeholder="Choose a date"
+                (click)="endTimePicker.open()"
+                formControlName="endTime"
+                required
+                readonly
+              />
+              <button mat-icon-button matSuffix type="button" [owlDateTimeTrigger]="endTimePicker">
+                <mat-icon>calendar_today</mat-icon>
+              </button>
+              <owl-date-time #endTimePicker [showSecondsTimer]="true"></owl-date-time>
+            </mat-form-field>
+          </div>
+          @if (form.errors?.['timeRangeInvalid']) {
+          <div class="col-12 px-2 pb-2">
+            <div class="invalid-range-error" i18n="@@HYT_custom_default_selection_invalid_range">
+              End time must be after start time
+            </div>
+          </div>
+          }
+        </div>
 
+        <div class="row">
+          <div class="col-6 d-flex flex-column p-2">
             <mat-form-field appearance="fill">
               <mat-label i18n="@@HYT_select_export_format"
                 >Select Export Format</mat-label
@@ -51,14 +83,48 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+          </div>
+          <div class="col-6 d-flex flex-column p-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Export Name</mat-label>
+              <input
+                matInput
+                formControlName="exportName"
+                name="exportName"
+                [maxlength]="maxLength"
+                required
+              />
+              @if (exportName.hasError('charNotAllowed')) {
+              <mat-error
+                i18="@@HYT_invalid_characters"
+              >
+                Invalid characters have been entered
+              </mat-error>
+              }
+              @if (exportName.dirty && exportName.hasError('required')) {
+              <mat-error
+                i18n="@@HYT_field_required"
+              >
+                The field is required
+              </mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
 
-            <div *ngIf="loadingHPackets" class="packets-loading">
+        <div class="row">
+          <div class="col-6 d-flex flex-column p-2">
+            @if (loadingHPackets) {
+            <div class="packets-loading">
               <mat-spinner strokeWidth="3" diameter="24"></mat-spinner>
               <span i18n="@@HYT_loading_packets">Loading packets</span>
             </div>
-            <mat-error *ngIf="hPacketsLoadError" i18n="@@HYT_loading_packets_error">
+            }
+            @if (hPacketsLoadError) {
+            <mat-error i18n="@@HYT_loading_packets_error">
               Error loading packets
             </mat-error>
+            }
             <hyt-select
               [hidden]="loadingHPackets"
               #selectPackets
@@ -74,83 +140,32 @@
             >
             </hyt-select>
           </div>
-
-          <div class="d-flex flex-column p-2">
-            <mat-form-field
-              id="endTimePicker"
-              appearance="fill"
-              [ngClass]="{ 'mat-form-field-invalid': endTime?.invalid }"
-            >
-              <mat-label i18n="@@HYT_end_time">End Time</mat-label>
-              <input
-                matInput
-                [ngxMatDatetimePicker]="endTimePicker"
-                placeholder="Choose a date"
-                (click)="endTimePicker.open()"
-                formControlName="endTime"
-                required
-                readonly
-                [min]="startTime.value"
-                [max]="maxValue$ | async"
-              />
-              <mat-datepicker-toggle matSuffix [for]="$any(endTimePicker)">
-              </mat-datepicker-toggle>
-              <ngx-mat-datetime-picker #endTimePicker [showSeconds]="true">
-              </ngx-mat-datetime-picker>
-            </mat-form-field>
-            <mat-error
-              *ngIf="endTime?.invalid"
-              [ngClass]="{ 'mat-h4 mt-n3': endTime?.invalid }"
-            >
-              The date entered is invalid
-            </mat-error>
-
-            <mat-form-field appearance="fill">
-              <mat-label>Export Name</mat-label>
-              <input
-                matInput
-                formControlName="exportName"
-                name="exportName"
-                [maxlength]="maxLength"
-                required
-              />
-              <mat-error
-                *ngIf="exportName.hasError('charNotAllowed')"
-                i18="@@HYT_invalid_characters"
-              >
-                Invalid characters have been entered
-              </mat-error>
-              <mat-error
-                *ngIf="exportName.dirty && exportName.hasError('required')"
-                i18n="@@HYT_field_required"
-              >
-                The field is required
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-              <mat-label>
+          <div class="col-6 d-flex flex-column p-2">
+            <div class="selected-packets">
+              <label class="selected-packets-label">
                 {{ countSelectedPackets(hPacketListSelected.length) }}
-              </mat-label>
-              <mat-chip-list class="mat-chip-list-wrapper">
+              </label>
+              <mat-chip-set class="mat-chip-list-wrapper">
+                @for (hPacket of hPacketListSelected; track hPacket) {
                 <mat-chip
-                  *ngFor="let hPacket of hPacketListSelected"
                   class="mat-chip-custom"
                   (removed)="removeHPacket(hPacket)"
                 >
                   {{ hPacket.name }}
-                  <button matChipRemove>
+                  <button matChipRemove type="button">
                     <mat-icon>cancel</mat-icon>
                   </button>
                 </mat-chip>
-              </mat-chip-list>
-            </mat-form-field>
+                }
+              </mat-chip-set>
+            </div>
           </div>
         </div>
 
         <div class="d-flex justify-content-end">
           <button
-            class="hyt-base-btn mat-hyt-base-total-blue mat-raised-button"
+            mat-raised-button
+            class="hyt-base-btn mat-hyt-base-total-blue"
             type="button"
             (click)="resetForm()"
           >
@@ -159,11 +174,15 @@
         </div>
       </fieldset>
 
-      <div *ngIf="exportErrorList.length" class="py-2">
-        <mat-error *ngFor="let error of exportErrorList">
+      @if (exportErrorList.length) {
+      <div class="py-2">
+        @for (error of exportErrorList; track error) {
+        <mat-error>
           {{ exportDownloadError(error.hPacketId) }}
         </mat-error>
+        }
       </div>
+      }
     </form>
   </section>
 
@@ -190,9 +209,10 @@
     </hyt-button>
   </section>
 
+  @if (exportInProgress) {
   <img
-    *ngIf="exportInProgress"
     class="rocket cursor-progress"
     src="assets/images/rocket.svg"
   />
+  }
 </main>

@@ -3,9 +3,10 @@ import { DIALOG_DATA } from '../../hyt-dialog/dialog-tokens';
 import { DialogRef } from '../../hyt-dialog/dialog-ref';
 
 @Component({
-  selector: 'hyt-info-recording-action',
-  templateUrl: './hyt-info-recording-action.component.html',
-  styleUrls: ['./hyt-info-recording-action.component.scss']
+    selector: 'hyt-info-recording-action',
+    templateUrl: './hyt-info-recording-action.component.html',
+    styleUrls: ['./hyt-info-recording-action.component.scss'],
+    standalone: false
 })
 export class HytInfoRecordingActionComponent {
 

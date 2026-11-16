@@ -4,10 +4,11 @@ import { DIALOG_DATA, DialogRef, Option } from 'components';
 import { BodyMapAssociation } from '../bodymap.model';
 
 @Component({
-  selector: 'hyperiot-body-map-association',
-  templateUrl: './body-map-association.component.html',
-  styleUrls: ['./body-map-association.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyperiot-body-map-association',
+    templateUrl: './body-map-association.component.html',
+    styleUrls: ['./body-map-association.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class BodyMapAssociationComponent implements OnInit {
   ready = undefined;

@@ -1,12 +1,16 @@
 <div hyt-dialog>
-    <div *ngIf="data?.header" hyt-dialog-header>
+    @if (data?.header) {
+    <div hyt-dialog-header>
         <span>{{ data.header }}</span>
     </div>
+    }
     <div hyt-dialog-content class="confirm-dialog-content">
         <span>
             {{ data.text }}
         </span>
-        <mat-checkbox *ngIf="data.dismissable" [(ngModel)]="dismissed">{{ data.dismissable }}</mat-checkbox>
+        @if (data.dismissable) {
+        <mat-checkbox [(ngModel)]="dismissed">{{ data.dismissable }}</mat-checkbox>
+        }
     </div>
     <div hyt-dialog-footer>
         <hyt-button [color]="'hyt-base-white'" (clickFn)="reject()">

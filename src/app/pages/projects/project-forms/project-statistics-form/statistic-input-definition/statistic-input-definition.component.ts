@@ -18,9 +18,10 @@ interface FieldList {
 }
 
 @Component({
-  selector: "hyt-statistic-input-definition",
-  templateUrl: "./statistic-input-definition.component.html",
-  styleUrls: ["./statistic-input-definition.component.scss"],
+    selector: "hyt-statistic-input-definition",
+    templateUrl: "./statistic-input-definition.component.html",
+    styleUrls: ["./statistic-input-definition.component.scss"],
+    standalone: false
 })
 export class StatisticInputDefinitionComponent implements OnInit {
   @Input() project: HProject;

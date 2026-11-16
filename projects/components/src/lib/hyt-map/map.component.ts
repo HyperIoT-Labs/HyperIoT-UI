@@ -3,9 +3,10 @@ import {MapTypeKey} from "./models/map-type-key";
 import {Area, AreaDevice, Logger, LoggerService} from "core";
 
 @Component({
-  selector: 'hyt-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+    selector: 'hyt-map',
+    templateUrl: './map.component.html',
+    styleUrls: ['./map.component.scss'],
+    standalone: false
 })
 export class MapComponent implements OnInit {
 

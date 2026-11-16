@@ -62,9 +62,9 @@
               </div> <!-- Container Remember Me -->
 
               <div class="container-form-field errorMessage">
-                <ng-container *ngIf="error[2]">
+                @if (error[2]) {
                   {{error[2]}}
-                </ng-container>
+                }
               </div> <!-- Error Box -->
 
               <div class="container-form-field container-submit-btn">

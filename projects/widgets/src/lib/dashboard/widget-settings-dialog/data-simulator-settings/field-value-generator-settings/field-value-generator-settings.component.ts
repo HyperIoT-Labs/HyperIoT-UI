@@ -4,10 +4,11 @@ import { DataSimulatorSettings } from '../data-simulator.models';
 import { ControlContainer, NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'hyperiot-field-value-generator-settings',
-  templateUrl: './field-value-generator-settings.component.html',
-  styleUrls: ['./field-value-generator-settings.component.scss'],
-  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
+    selector: 'hyperiot-field-value-generator-settings',
+    templateUrl: './field-value-generator-settings.component.html',
+    styleUrls: ['./field-value-generator-settings.component.scss'],
+    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+    standalone: false
 })
 export class FieldValueGeneratorSettingsComponent implements OnInit {
 

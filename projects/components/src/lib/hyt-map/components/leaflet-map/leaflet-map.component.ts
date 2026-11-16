@@ -17,9 +17,10 @@ interface MapMarker {
 };
 
 @Component({
-  selector: 'hyt-leaflet-map',
-  templateUrl: './leaflet-map.component.html',
-  styleUrls: ['./leaflet-map.component.scss']
+    selector: 'hyt-leaflet-map',
+    templateUrl: './leaflet-map.component.html',
+    styleUrls: ['./leaflet-map.component.scss'],
+    standalone: false
 })
 export class LeafletMapComponent implements OnInit, OnDestroy {
   /**

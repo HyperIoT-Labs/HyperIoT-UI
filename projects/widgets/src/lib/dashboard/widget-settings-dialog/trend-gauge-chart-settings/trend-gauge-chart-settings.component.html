@@ -43,8 +43,8 @@
   </div>
 
   <div formArrayName="stepList">
+    @for (step of stepList.controls; track step; let i = $index; let last = $last) {
     <div
-      *ngFor="let step of stepList.controls; let i = index; let last = last"
       [formGroupName]="i"
       class="step-box"
     >
@@ -92,8 +92,8 @@
         </div>
       </div>
       <div class="add-button">
+        @if (last) {
         <button
-          *ngIf="last"
           mat-button
           type="button"
           [disabled]="
@@ -109,7 +109,9 @@
         >
           ADD
         </button>
+        }
       </div>
     </div>
+    }
   </div>
 </form>

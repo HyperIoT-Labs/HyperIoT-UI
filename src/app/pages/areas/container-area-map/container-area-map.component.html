@@ -1,5 +1,5 @@
 <div id="container-area-map">
-  <ng-container *ngIf="pageStatus === 1">
+  @if (pageStatus === 1) {
     <div
       id="container-treeview-project"
       [ngClass]="{ displayBlock: treeViewIsOpen, displayNone: !treeViewIsOpen }"
@@ -15,9 +15,11 @@
       <div id="treeViewHeader" cdkDragHandle></div>
 
       <div id="treeViewBody">
-        <div *ngIf="overlayTreeView" class="overlay-treeview">
+        @if (overlayTreeView) {
+        <div class="overlay-treeview">
           {{ overlayTreeViewMsg }}
         </div>
+        }
         <hyt-tree-view-project
           #treeView
           class="treeview"
@@ -27,11 +29,13 @@
     </div>
 
     <div id="container-map">
-      <div id="area-title" *ngIf="areaId && areaPath && areaPath.length > 0">
+      @if (areaId && areaPath && areaPath.length > 0) {
+      <div id="area-title">
         <h2>
           Area: <span id="specific-area-name">{{ areaName }}</span>
         </h2>
       </div>
+      }
 
       <div id="map-header">
         <div id="head-left">
@@ -68,22 +72,24 @@
       </div>
 
       <div id="map-body">
+        @if (areaViewType === 'IMAGE') {
         <hyt-area-map
-          *ngIf="areaViewType === 'IMAGE'"
           #map
           (itemOpen)="onMapItemClicked($event)"
         ></hyt-area-map>
+        }
 
-        <div *ngIf="areaViewType === 'BIM_XKT'" id="container-bim-viewer">
-          <ng-container *ngIf="isBimLoading; else bimLoaded">
+        @if (areaViewType === 'BIM_XKT') {
+        <div id="container-bim-viewer">
+          @if (isBimLoading) {
             <div id="bimLoading">
-              <ng-container *ngIf="!isEmptyBim; else emptyBim">
+              @if (!isEmptyBim) {
                 BIM Model Loading...
-              </ng-container>
-              <ng-template #emptyBim> No Model </ng-template>
+              } @else {
+                No Model
+              }
             </div>
-          </ng-container>
-          <ng-template #bimLoaded>
+          } @else {
             <hyt-bim
               [pathBim]="pathBim"
               [currentAreaConfiguration]="areaConfiguration"
@@ -91,10 +97,12 @@
               [areaId]="areaId"
               #map
             ></hyt-bim>
-          </ng-template>
+          }
         </div>
+        }
 
-        <div *ngIf="areaViewType === 'MAP'">
+        @if (areaViewType === 'MAP') {
+        <div>
           <hyt-map
             #map
             [mapType]="currentMapTypeKey"
@@ -102,21 +110,22 @@
             (itemOpen)="onMapItemClicked($event)"
           ></hyt-map>
         </div>
+        }
       </div>
     </div>
-  </ng-container>
+  }
 
-  <ng-container *ngIf="pageStatus === 0">
+  @if (pageStatus === 0) {
     <div class="area-map-loading">
       <h2 i18n="HYT_page_is_loading">Page is loading...</h2>
     </div>
-  </ng-container>
+  }
 
-  <ng-container *ngIf="pageStatus === -1">
+  @if (pageStatus === -1) {
     <div class="area-map-error">
       <h2 i18n="@@HYT_error_occurred_long">
         An error has occurred, contact the administrator!
       </h2>
     </div>
-  </ng-container>
+  }
 </div>

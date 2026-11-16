@@ -112,25 +112,17 @@
             }
 
             label {
-              &.mat-form-field-label {
+              &.mdc-floating-label {
                 font-size: .9em;
-                font-family: "Exo";
               }
 
-              &.mat-checkbox-layout {
-                span.mat-checkbox-label {
-                  font-size: .78em;
-                  font-family: "Exo";
+              // link inside the privacy checkbox label
+              a {
+                color: $primary-color-dark-unsaturated;
+                text-decoration: underline;
 
-                  a {
-                    color: $primary-color-dark-unsaturated;
-                    text-decoration: underline;
-
-                    &:hover {
-                      color: #105f99;
-                    }
-
-                  }
+                &:hover {
+                  color: #105f99;
                 }
               }
             }
@@ -375,16 +367,6 @@
                 font-size: 130%;
               }
 
-              label {
-                &.mat-checkbox-layout {
-                  span {
-                    &.mat-checkbox-label {
-                      font-size: .68em;
-                    }
-                  }
-                }
-              }
-
               .container-privacy-checkbox {
                 margin-top: 10px;
               }
@@ -466,26 +448,17 @@
               mat-checkbox {
                 label {
                   white-space: pre-wrap;
-                  &.mat-checkbox-layout {
-                    span {
-                      &.mat-checkbox-label {
-                        line-height: 20px;
-                      }
-                    }
-                  }
                 }
               }
 
               mat-form-field {
 
-                .mat-form-field-wrapper {
-                  .mat-form-field-subscript-wrapper {
-                    top: unset;
-                    font-size: 70%;
-                  }
+                .mat-mdc-form-field-subscript-wrapper {
+                  top: unset;
+                  font-size: 70%;
                 }
 
-                .mat-form-field-flex {
+                .mat-mdc-form-field-flex {
                   .multiError {
                     font-size: .85em;
                   }

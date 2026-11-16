@@ -92,6 +92,6 @@ export class HytDatePickerService {
   constructor() { }
 
   getContextDataByStep(step: string): CalendarContextData {
-    return (this[step]) ? this[step] : {};
+    return (this[step]) ? this[step] : {} as CalendarContextData;
   }
 }

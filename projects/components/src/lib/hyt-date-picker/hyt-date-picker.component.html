@@ -1,14 +1,14 @@
-<hyt-input-template
-    id="hyt-date-picker-input"
-    type="text"
-    [(ngModel)]="dateString"
-    name="dateInput"
-    [pattern]="pattern"
-    [placeholder]="actualMask"
-    [fieldValue]="dateString"
-    #dateInput="ngModel"
->
-</hyt-input-template>
+<mat-form-field id="hyt-date-picker-input" appearance="fill" subscriptSizing="dynamic">
+    <input
+        matInput
+        type="text"
+        [(ngModel)]="dateString"
+        name="dateInput"
+        [pattern]="pattern"
+        [placeholder]="actualMask"
+        #dateInput="ngModel"
+    >
+</mat-form-field>
 <hyt-button id="hyt-date-picker-button" class="left-btn" (clickFn)="openCal()" [color]="color">
     <span class="hyt-icon icon-hyt_tableBig"></span>
 </hyt-button>

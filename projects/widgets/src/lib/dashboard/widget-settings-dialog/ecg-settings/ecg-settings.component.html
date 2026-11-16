@@ -21,13 +21,15 @@
         (selectedFieldsChange)="onSelectedFieldsChange($event)"
       ></hyperiot-packet-select>
       <!-- TODO Set label to i18n -->
-      <div *ngFor="let field of packetSelect.selectedFields">
+      @for (field of packetSelect.selectedFields; track field) {
+      <div>
         <div class="ecg-color">
           <label class="ba-label">Select {{field.name}} color:</label>
           <hyt-input-template type="color" [(ngModel)]="widget.config.colors[field.name]" name="color-{{field.id}}">
           </hyt-input-template>
         </div>
       </div>
+      }
       <label class="ba-label" i18n="@@HYT_widget_settings_bg_color">Background color:</label>
       <hyt-select-template label-i18n="@@HYT_widget_settings_bg_color" label="Background color" name="bgColor"
           [options]="bgColorOptions" [(ngModel)]="widget.config.bgColor" style="display: block;">

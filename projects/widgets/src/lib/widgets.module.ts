@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -78,7 +78,6 @@ import { TrendGaugeChartComponent } from './widget/trend-gauge-chart/trend-gauge
   imports: [
     MatButtonModule,
     BrowserModule,
-    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
@@ -108,6 +107,7 @@ import { TrendGaugeChartComponent } from './widget/trend-gauge-chart/trend-gauge
     MatProgressSpinnerModule,
   ],
   providers: [
+    provideHttpClient(withInterceptorsFromDi()),
   ],
   exports: [
     CommonToolbarComponent,

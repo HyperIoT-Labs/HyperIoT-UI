@@ -29,10 +29,10 @@
     overflow: hidden;
     margin: 8px;
   }
-  .mat-card {
+  .mat-mdc-card {
     padding: 0;
     height: 240px !important;
-    .mat-card-header {
+    .mat-mdc-card-header {
       padding-top: 8px;
     }
     .map-image {
@@ -74,7 +74,7 @@
         }
         hyt-select {
           width: 100%;
-          .mat-form-field {
+          .mat-mdc-form-field {
             width: 100%;
           }
         }

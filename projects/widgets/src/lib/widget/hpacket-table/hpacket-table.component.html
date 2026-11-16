@@ -18,29 +18,32 @@
   </header-widget>
 
   <content-widget>
-    <div *ngIf="!isConfigured; else configured" class="configure-notice">
+    @if (!isConfigured) {
+    <div class="configure-notice">
       <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
     </div>
-    <ng-template #configured>
+    } @else {
       <!-- TODO -->
-      <hyperiot-loader
-        *ngIf="false; else loadingFinished">
+      @if (false) {
+      <hyperiot-loader>
       </hyperiot-loader>
-
-      <ng-template #loadingFinished>
-        <hyt-infinite-scrolling-table *ngIf="serviceType === serviceTypeList.OFFLINE" #tableChild
+      } @else {
+        @if (serviceType === serviceTypeList.OFFLINE) {
+        <hyt-infinite-scrolling-table #tableChild
           [headers]="tableHeaders"
           [dataLimit]="TABLE_LIMIT"
           [dataSource]="tableSource"
           (dataRequest)="dataRequest($event)">
         </hyt-infinite-scrolling-table>
-        <hyt-lazy-pagination-table *ngIf="serviceType === serviceTypeList.ONLINE" #tableChild
+        }
+        @if (serviceType === serviceTypeList.ONLINE) {
+        <hyt-lazy-pagination-table #tableChild
           [headers]="tableHeaders"
           [dataSource]="tableSource">
         </hyt-lazy-pagination-table>
-      </ng-template>
-
-    </ng-template>
+        }
+      }
+    }
   </content-widget>
 
 </hyperiot-base-widget-template>

@@ -8,10 +8,11 @@ import { interval } from 'rxjs';
 import { take} from 'rxjs/operators';
 
 @Component({
-  selector: 'hyt-add-cetegory-modal',
-  templateUrl: './add-cetegory-modal.component.html',
-  styleUrls: ['./add-cetegory-modal.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-add-cetegory-modal',
+    templateUrl: './add-cetegory-modal.component.html',
+    styleUrls: ['./add-cetegory-modal.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class AddCetegoryModalComponent implements OnInit, AfterViewInit {
 

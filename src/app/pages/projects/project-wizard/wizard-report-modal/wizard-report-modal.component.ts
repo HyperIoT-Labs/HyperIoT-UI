@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { DIALOG_DATA, DialogRef } from 'components';
 
 @Component({
-  selector: 'hyt-wizard-report-modal',
-  templateUrl: './wizard-report-modal.component.html',
-  styleUrls: ['./wizard-report-modal.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-wizard-report-modal',
+    templateUrl: './wizard-report-modal.component.html',
+    styleUrls: ['./wizard-report-modal.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class WizardReportModalComponent {
 

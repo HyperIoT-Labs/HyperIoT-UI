@@ -19,22 +19,18 @@
   </header-widget>
 
   <content-widget class="relative-content">
-    <div *ngIf="!isConfigured; else configured" class="configure-notice">
+    @if (!isConfigured) {
+    <div class="configure-notice">
       <strong i18n="@@HYT_common_not_configured">
         Click 'Settings' button to configure.
       </strong>
     </div>
-
-    <ng-template #configured>
+    } @else {
+      @if (!graph || !graph?.data || graph.data.length === 0) {
       <hyperiot-loader
-        *ngIf="
-          !graph || !graph?.data || graph.data.length === 0;
-          else loadingFinished
-        "
       >
       </hyperiot-loader>
-
-      <ng-template #loadingFinished>
+      } @else {
         <plotly-plot
           divId="widget-{{ widget.id }}{{ isToolbarVisible }}"
           [data]="graph?.data"
@@ -46,17 +42,21 @@
         >
         </plotly-plot>        
 
-        <div *ngIf="noRangeSelected()" class="loading-overlay">
+        @if (noRangeSelected()) {
+        <div class="loading-overlay">
           <p i18n="@@HYT_noRangeSelected">
             Select a range to display the graph...
           </p>
         </div>
+        }
 
-        <div *ngIf="loadingOfflineData" class="loading-overlay">
+        @if (loadingOfflineData) {
+        <div class="loading-overlay">
           <p>Loading data...</p>
           <mat-spinner strokeWidth="4" diameter="44"></mat-spinner>
         </div>
-      </ng-template>
-    </ng-template>
+        }
+      }
+    }
   </content-widget>
 </hyperiot-base-widget-template>

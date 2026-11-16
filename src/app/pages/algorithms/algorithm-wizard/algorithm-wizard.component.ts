@@ -14,10 +14,11 @@ import { AlgorithmWizardReportModalComponent } from './algorithm-wizard-report-m
 
 
 @Component({
-  selector: 'hyt-algorithm-wizard',
-  templateUrl: './algorithm-wizard.component.html',
-  styleUrls: ['./algorithm-wizard.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-algorithm-wizard',
+    templateUrl: './algorithm-wizard.component.html',
+    styleUrls: ['./algorithm-wizard.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class AlgorithmWizardComponent implements OnInit {
 

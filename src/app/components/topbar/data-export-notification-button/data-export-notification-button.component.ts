@@ -6,9 +6,10 @@ import { UserSiteSettingSelectors, Logger, LoggerService, DataExportNotification
 import { DataExportNotificationDialogComponent } from '../../dialogs/data-export-notification-notification-dialog/data-export-notification-dialog.component';
 
 @Component({
-  selector: 'hyt-data-export-notification-button',
-  templateUrl: './data-export-notification-button.component.html',
-  styleUrls: ['./data-export-notification-button.component.scss']
+    selector: 'hyt-data-export-notification-button',
+    templateUrl: './data-export-notification-button.component.html',
+    styleUrls: ['./data-export-notification-button.component.scss'],
+    standalone: false
 })
 export class DataExportNotificationButtonComponent {
   /** Notification active get from alarmWrapperService */

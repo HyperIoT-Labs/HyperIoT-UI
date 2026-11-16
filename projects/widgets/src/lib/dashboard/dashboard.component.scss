@@ -61,7 +61,7 @@
 
             &:not(.inLoading) {
 
-                .mat-button {
+                .mat-mdc-button {
                     &:hover {
                         color: #008aff;
                     }
@@ -307,18 +307,19 @@
 
     }
 
-    .mat-button {
+    .mat-mdc-button {
         padding: 0;
         font-family: 'Exo', serif;
         font-size: 16px;
         min-width: unset;
+        height: auto;
     }
 
 }
 
 mat-option {
 
-    &.mat-option {
+    &.mat-mdc-option {
 
         font-family: 'Exo';
 
@@ -470,7 +471,7 @@ mat-option {
 
                 span {
 
-                  &.mat-button-wrapper {
+                  &.mdc-button__label {
 
                     display: flex;
                     align-items: center;
@@ -688,14 +689,10 @@ mat-option {
         left: 50% !important;
         transform: translateX(-140px) !important;
 
-        .mat-select-panel-wrap {
-
-            .mat-select-panel {
-                min-width: 280px !important;
-                max-width: 280px;
-                font-size: .95em !important;
-            }
-
+        .mat-mdc-select-panel {
+            min-width: 280px !important;
+            max-width: 280px;
+            font-size: .95em !important;
         }
 
     }
@@ -708,14 +705,10 @@ mat-option {
         min-width: 250px !important;
         transform: translateX(-125px) !important;
 
-        .mat-select-panel-wrap {
-
-            .mat-select-panel {
-                min-width: 250px !important;
-                max-width: 250px;
-                font-size: .9em !important;
-            }
-
+        .mat-mdc-select-panel {
+            min-width: 250px !important;
+            max-width: 250px;
+            font-size: .9em !important;
         }
 
     }

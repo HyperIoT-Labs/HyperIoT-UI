@@ -91,7 +91,8 @@
                 >
                 </hyt-input-text>
 
-                <div [ngClass]="(entity.id) ? 'displayNone' : ''" *ngIf="!entity.id">
+                @if (!entity.id) {
+                <div [ngClass]="(entity.id) ? 'displayNone' : ''">
                     <hyt-input-text 
                         [form]="form" 
                         name="hdevice-password"
@@ -120,8 +121,10 @@
                     >
                     </hyt-input-text>
                 </div>
+                }
                 <!-- CHANGE PASSWORD FORM-->
-                <form *ngIf="entity.id && devicePasswordChangeEnabled" #cpf="ngForm" id="form-password" [formGroup]="changePasswordForm" (ngSubmit)="updatePassword()" (keydown)="keyDownFunction($event)">
+                @if (entity.id && devicePasswordChangeEnabled) {
+                <form #cpf="ngForm" id="form-password" [formGroup]="changePasswordForm" (ngSubmit)="updatePassword()" (keydown)="keyDownFunction($event)">
                     <!--form id="form-password"-->
 
                         <div class="row row-field-password">
@@ -190,6 +193,7 @@
                         </div>
 
                     </form>
+                }
                     <div>
                         <hyt-button [ngClass]="(entity.id && !devicePasswordChangeEnabled) ?  'mr-3':'displayNone' "  id ="enable-change-password-btn" (click)="enablePasswordChange($event)">
                             <ng-container i18n="@@HYT_change_password">Change password</ng-container>
@@ -224,18 +228,21 @@
         consider making a component out of it 
     -->
 
-    <div #overlayHeight *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
+    @if (loadingStatus !== LoadingStatus.Ready) {
+    <div #overlayHeight class="overlay d-flex flex-column align-items-center justify-content-center">
         
+        @if (loadingStatus === LoadingStatus.Loading) {
         <div 
-            *ngIf="loadingStatus === LoadingStatus.Loading" 
             [ngClass]="getCustomClass()"
         >
 
             <h4 i18n="@@HYT_loading_data">Loading data...</h4>
 
         </div> 
+        }
         
-        <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
+        @if (loadingStatus === LoadingStatus.Error) {
+        <div class="error-overlay d-flex flex-column justify-content-center">
             <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
 
             <hyt-button 
@@ -245,14 +252,19 @@
                 <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span> 
             </hyt-button>
         </div>
+        }
 
-        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">Saving data...</h4>
+        @if (loadingStatus === LoadingStatus.Saving) {
+        <h4 i18n="@@HYT_saving_data">Saving data...</h4>
+        }
 
+        @if (loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving) {
         <mat-progress-bar 
-            *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
             mode="indeterminate"
         ></mat-progress-bar> 
+        }
 
     </div>
+    }
 
 </div>

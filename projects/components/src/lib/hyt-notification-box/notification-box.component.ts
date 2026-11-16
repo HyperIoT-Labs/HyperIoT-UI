@@ -6,9 +6,10 @@ import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import { NotificationGlobalChannels, NotificationManagerService, Notification, NotificationSeverity, NotifyPosition } from 'core';
 @Component({
-  selector: 'hyt-notification-box',
-  templateUrl: './notification-box.component.html',
-  styleUrls: ['./notification-box.component.scss']
+    selector: 'hyt-notification-box',
+    templateUrl: './notification-box.component.html',
+    styleUrls: ['./notification-box.component.scss'],
+    standalone: false
 })
 export class HytNotificationBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 

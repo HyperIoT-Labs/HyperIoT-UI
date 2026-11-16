@@ -10,7 +10,8 @@ import { KeyValue } from '@angular/common';
     selector: 'hyperiot-defibrillator-settings',
     templateUrl: './defibrillator-settings.component.html',
     styleUrls: ['./defibrillator-settings.component.scss'],
-    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
+    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+    standalone: false
 })
 export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
     @ViewChild(PacketSelectComponent, { static: true }) packetSelect: PacketSelectComponent;

@@ -1,7 +1,6 @@
-<div [ngSwitch]="topologyActionState" id="hyt-modal-confirm-recording-action" hyt-dialog>
-
-    <ng-container *ngSwitchCase="0">
-
+<div id="hyt-modal-confirm-recording-action" hyt-dialog>
+    @switch (topologyActionState) {
+    @case (0) {
         <div id="header-row" hyt-dialog-header>
             <span i18n="@@HYT_data_recording">Data recording</span>
         </div>
@@ -26,24 +25,35 @@
             </hyt-button>
 
         </div>
-
-    </ng-container >
-
-    <ng-container *ngSwitchCase="1">
-
+    }
+    @case (1) {
         <div id="header-row" hyt-dialog-header>
             <span i18n="@@HYT_loading_request">Loading request</span>
         </div>
 
         <div id="body-row" hyt-dialog-content>
             <img src="assets/images/rocket.svg">
-            <div [ngSwitch]="topologyRequestState" id="text-request-state">
-                <span *ngSwitchCase="0" i18n="@@HYT_loading">Loading</span>
-                <span *ngSwitchCase="1" i18n="@@HYT_submitting">Submitting...</span>
-                <span *ngSwitchCase="2" i18n="@@HYT_submitting failed">Submitting failed</span>
-                <span *ngSwitchCase="3" i18n="@@HYT_connecting">Connecting...</span>
-                <span *ngSwitchCase="4" i18n="@@HYT_connection_failed">Connection failed</span>
-                <span *ngSwitchCase="5" i18n="@@HYT_connected">Connected!</span>
+            <div id="text-request-state">
+                @switch (topologyRequestState) {
+                @case (0) {
+                <span i18n="@@HYT_loading">Loading</span>
+                }
+                @case (1) {
+                <span i18n="@@HYT_submitting">Submitting...</span>
+                }
+                @case (2) {
+                <span i18n="@@HYT_submitting failed">Submitting failed</span>
+                }
+                @case (3) {
+                <span i18n="@@HYT_connecting">Connecting...</span>
+                }
+                @case (4) {
+                <span i18n="@@HYT_connection_failed">Connection failed</span>
+                }
+                @case (5) {
+                <span i18n="@@HYT_connected">Connected!</span>
+                }
+                }
             </div>
             <div class="wrapper-progressbar">
                 <ul class="progressbar">
@@ -53,7 +63,8 @@
             </div>
         </div>
 
-        <div *ngIf="topologyRequestState == 2 || topologyRequestState == 4" hyt-dialog-footer>
+        @if (topologyRequestState == 2 || topologyRequestState == 4) {
+        <div hyt-dialog-footer>
 
             <hyt-button [color]="'hyt-base-total-green'" (clickFn)="confirm()">
                 <span class="hyt-icon icon-hyt_valid"></span> 
@@ -66,25 +77,31 @@
             </hyt-button>
 
         </div>
+        }
+    }
 
-    </ng-container>
-
-    <ng-container  *ngSwitchCase="2">
-
+    @case (2) {
         <div id="header-row" hyt-dialog-header>
             <span i18n="@@HYT_data_recording">Data recording</span>
         </div>
 
         <div id="body-row" hyt-dialog-content>
-            <ng-container [ngSwitch]="topologyRequestState">
-                <p *ngSwitchCase="-1" i18n="@@HYT_request_failed">Request failed</p>
-                <p *ngSwitchCase="1" i18n="@@HYT_loading_to_off">Loading to off...</p>
-                <p *ngSwitchCase="7" i18n="@@HYT_completed">Completed</p>
-            </ng-container>
+                @switch (topologyRequestState) {
+                @case (-1) {
+                <p i18n="@@HYT_request_failed">Request failed</p>
+                }
+                @case (1) {
+                <p i18n="@@HYT_loading_to_off">Loading to off...</p>
+                }
+                @case ($any(7)) {
+                <p i18n="@@HYT_completed">Completed</p>
+                }
+                }
             <!--@I18N-->
         </div>
 
-        <div *ngIf="topologyRequestState == -1" hyt-dialog-footer>
+        @if (topologyRequestState == -1) {
+        <div hyt-dialog-footer>
 
             <hyt-button [color]="'hyt-base-total-green'" (clickFn)="confirm()">
                 <span class="hyt-icon icon-hyt_valid"></span> 
@@ -97,7 +114,7 @@
             </hyt-button>
 
         </div>
-
-    </ng-container>
-
+        }
+    }
+    }
 </div>

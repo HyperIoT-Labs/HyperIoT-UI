@@ -47,11 +47,33 @@
 }
 
 .hyt-lazy-pagination-table .table-navigation mat-form-field {
-  width: 42px;
+  width: 72px;
 }
 
-.hyt-lazy-pagination-table .table-navigation .mat-form-field-infix {
+.hyt-lazy-pagination-table .table-navigation .mat-mdc-form-field-infix {
   border-top: none;
+}
+
+/* compact version of the MDC form-field for the rows per page select (no label, no hint/error area) */
+.hyt-lazy-pagination-table .table-navigation .mat-mdc-text-field-wrapper {
+  padding: 0 8px;
+  background-color: transparent;
+}
+
+.hyt-lazy-pagination-table .table-navigation .mat-mdc-form-field-infix {
+  min-height: 0;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.hyt-lazy-pagination-table .table-navigation .mdc-floating-label,
+.hyt-lazy-pagination-table .table-navigation .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+/* the MDC fill select moves the arrow up by 8px to leave room for the floating label, which is hidden here */
+.hyt-lazy-pagination-table .table-navigation .mat-mdc-select-arrow-wrapper {
+  transform: none;
 }
 
 .hyt-lazy-pagination-table .table-navigation input {
@@ -61,6 +83,9 @@
 
 .cdk-overlay-container .hyt-header-tooltip {
   margin: 0px;
+}
+
+.cdk-overlay-container .hyt-header-tooltip .mdc-tooltip__surface {
   word-break: break-all;
   white-space: normal;
   background-color: #266dca;

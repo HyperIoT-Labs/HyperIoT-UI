@@ -2,11 +2,12 @@
 
   <mat-form-field class="hyt-full-width">
 
+    <mat-label>{{ placeholder }}</mat-label>
+
     <textarea 
       matInput 
       class="hyt-input" 
       id="{{id}}" 
-      placeholder="{{placeholder}}" 
       value="{{fieldValue}}"
       (focus)="onFocus()"
       (blur)="onBlur()" 
@@ -14,19 +15,25 @@
       [errorStateMatcher]="matcher">
     </textarea>
 
+    @if (hint) {
     <mat-hint 
-      *ngIf="hint">
+     >
       {{ hint }}
     </mat-hint>
+    }
       
+    @if (isRequired && formControl.hasError('required')) {
     <mat-error 
-      *ngIf="isRequired && formControl.hasError('required')">
+     >
       {{ errMsgRequired }}
     </mat-error>
+    }
 
-    <mat-error *ngFor="let error of getDefaultErrorList()">
+    @for (error of getDefaultErrorList(); track error) {
+    <mat-error>
       {{ error }}
     </mat-error>
+    }
   
   </mat-form-field>
 

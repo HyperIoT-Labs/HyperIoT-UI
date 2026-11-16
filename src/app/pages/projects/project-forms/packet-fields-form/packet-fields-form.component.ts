@@ -13,10 +13,11 @@ import { UnitConversionService } from 'src/app/services/unit-conversion.service'
 import { HytSelectComponent } from 'components';
 
 @Component({
-  selector: 'hyt-packet-fields-form',
-  templateUrl: './packet-fields-form.component.html',
-  styleUrls: ['./packet-fields-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-packet-fields-form',
+    templateUrl: './packet-fields-form.component.html',
+    styleUrls: ['./packet-fields-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDestroy {
 

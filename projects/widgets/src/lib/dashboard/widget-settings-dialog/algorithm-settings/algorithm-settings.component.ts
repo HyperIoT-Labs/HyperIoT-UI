@@ -5,10 +5,11 @@ import { Observable } from 'rxjs';
 
 import { AlgorithmSelectComponent } from './algorithm-select/algorithm-select.component';
 @Component({
-  selector: 'hyperiot-algorithm-settings',
-  templateUrl: './algorithm-settings.component.html',
-  styleUrls: ['./algorithm-settings.component.scss'],
-  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
+    selector: 'hyperiot-algorithm-settings',
+    templateUrl: './algorithm-settings.component.html',
+    styleUrls: ['./algorithm-settings.component.scss'],
+    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+    standalone: false
 })
 export class AlgorithmSettingsComponent implements OnInit, OnDestroy {
 

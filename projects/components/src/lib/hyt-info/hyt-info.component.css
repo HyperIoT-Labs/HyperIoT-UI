@@ -5,6 +5,9 @@
 
 .cdk-overlay-container .hyt-info-tooltip {
     margin: 5px;
+}
+
+.cdk-overlay-container .hyt-info-tooltip .mdc-tooltip__surface {
     font-size: 0.8em;
     word-break: break-word;
     white-space: normal;

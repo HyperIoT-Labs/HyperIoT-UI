@@ -11,10 +11,11 @@ import { SubmissionStatus } from '../models/pageStatus';
  * It is used to hallow the user to reset his account password.
  */
 @Component({
-  selector: 'hyt-password-reset',
-  templateUrl: './password-reset.component.html',
-  styleUrls: ['./password-reset.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-password-reset',
+    templateUrl: './password-reset.component.html',
+    styleUrls: ['./password-reset.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PasswordResetComponent implements OnInit {
 

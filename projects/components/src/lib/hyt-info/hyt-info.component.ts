@@ -1,10 +1,11 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'hyt-info',
-  templateUrl: './hyt-info.component.html',
-  styleUrls: ['./hyt-info.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-info',
+    templateUrl: './hyt-info.component.html',
+    styleUrls: ['./hyt-info.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytInfoComponent {
 

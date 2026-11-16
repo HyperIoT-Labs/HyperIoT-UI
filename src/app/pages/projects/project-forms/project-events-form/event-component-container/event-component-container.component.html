@@ -1,2 +1,6 @@
-<hyt-event-mail *ngIf="currentShownComponentId === eventComponentType.SEND_MAIL_ACTION" #currentEventComponent></hyt-event-mail>
-<hyt-event-mqtt-command *ngIf="currentShownComponentId === eventComponentType.SEND_MQTT_COMMAND_ACTION" [currentProjectId]="currentProjectId" #currentEventComponent></hyt-event-mqtt-command>
+@if (currentShownComponentId === eventComponentType.SEND_MAIL_ACTION) {
+<hyt-event-mail #currentEventComponent></hyt-event-mail>
+}
+@if (currentShownComponentId === eventComponentType.SEND_MQTT_COMMAND_ACTION) {
+<hyt-event-mqtt-command [currentProjectId]="currentProjectId" #currentEventComponent></hyt-event-mqtt-command>
+}

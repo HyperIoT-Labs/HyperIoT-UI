@@ -8,10 +8,11 @@ import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'hyt-algorithm-jar-form',
-  templateUrl: './algorithm-jar-form.component.html',
-  styleUrls: ['./algorithm-jar-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-algorithm-jar-form',
+    templateUrl: './algorithm-jar-form.component.html',
+    styleUrls: ['./algorithm-jar-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements OnInit {
 

@@ -6,9 +6,10 @@ import { ConfigModel, Step, WidgetConfig } from '../../../base/base-widget/model
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'hyperiot-trend-gauge-chart-settings',
-  templateUrl: './trend-gauge-chart-settings.component.html',
-  styleUrls: ['./trend-gauge-chart-settings.component.scss']
+    selector: 'hyperiot-trend-gauge-chart-settings',
+    templateUrl: './trend-gauge-chart-settings.component.html',
+    styleUrls: ['./trend-gauge-chart-settings.component.scss'],
+    standalone: false
 })
 export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
 

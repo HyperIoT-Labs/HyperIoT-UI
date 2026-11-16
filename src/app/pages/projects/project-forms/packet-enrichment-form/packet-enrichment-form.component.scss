@@ -17,8 +17,7 @@
         #container-radio-enrichment-active {
         border: lightgray solid 1px;
         border-radius: 4px;
-        padding-top: 9px;
-        padding-left: 9px;
+        padding: 6px;
         }
 
     }
@@ -124,7 +123,7 @@
 
                                     button {
 
-                                        &.mat-icon-button {
+                                        &.mat-mdc-icon-button {
 
                                             outline: none;
 
@@ -175,17 +174,6 @@
                             font-family: 'Exo';
 
                         }
-
-                        label {
-
-                            &.mat-form-field-label {
-
-                                font-family: 'Exo';
-
-                            }
-
-                        }
-
                     }
 
                 }
@@ -197,34 +185,10 @@
                     mat-form-field {
 
                         width: 100%;
-
-                        label {
-
-                            &.mat-form-field-label {
-
-                                font-family: 'Exo';
-
-                            }
-
-                        }
-
                     }
 
                 }
 
-                hyt-radio-button {
-
-                    mat-radio-group {
-
-                        mat-radio-button {
-
-                            font-family: 'Exo';
-
-                        }
-
-                    }
-
-                }
 
             }
 
@@ -300,7 +264,7 @@
 
 mat-option {
 
-    &.mat-option {
+    &.mat-mdc-option {
 
         font-family: 'Exo';
 

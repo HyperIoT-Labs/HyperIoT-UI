@@ -128,6 +128,9 @@
     .color {
       height: 36px;
       width: 36px;
+      border: none;
+      padding: 0;
+      background: transparent;
     }
     .line-option {
       width: 100%;
@@ -168,4 +171,9 @@
     &.error {
         color: red;
     }
+}
+
+.mat-mdc-option.line-type-option .mdc-list-item__primary-text {
+  flex: 1;
+  margin-right: 0;
 }

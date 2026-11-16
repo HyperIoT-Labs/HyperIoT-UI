@@ -101,7 +101,7 @@
             &#add-algorithm-btn {
               margin-top: 2px;
               
-              button.mat-raised-button {
+              button.mat-mdc-raised-button {
                 background-color: $primary-color-dark-unsaturated;
                 color: #fff;
                 font-family: "Exo";
@@ -322,7 +322,7 @@
   
   mat-option {
   
-    &.mat-option {
+    &.mat-mdc-option {
   
       font-family: 'Exo';
   

@@ -4,7 +4,8 @@
         <span class="add-statistic-input hyt-icon icon-hyt_plusC" (click)="addStatisticInput()"></span>
     </div>
 
-    <div *ngFor="let statisticInputForm of statisticInputForms; let i = index" class="col-12">
+    @for (statisticInputForm of statisticInputForms; track statisticInputForm; let i = $index) {
+    <div class="col-12">
         <form [formGroup]="statisticInputForm.form" autocomplete="on">
             <div class="form-group row">
 
@@ -19,25 +20,36 @@
                     </hyt-input-text>
                 </div>
 
-                <div id="algAndPackBefore" *ngIf="!canBindInputFields(statisticInputForm.leafFieldList)" class="col-5">
+                @if (!canBindInputFields(statisticInputForm.leafFieldList)) {
+                <div id="algAndPackBefore" class="col-5">
                     <p i18n="@@HYT_select_algorithm_packet_before">Select algorithm and packet before</p>
                 </div>
+                }
 
-                <div id="container-bind-input" *ngIf="canBindInputFields(statisticInputForm.leafFieldList)" class="col-5">
+                @if (canBindInputFields(statisticInputForm.leafFieldList)) {
+                <div id="container-bind-input" class="col-5">
                     <hyt-button [color]="'hyt-base-total-green'" (clickFn)="openInputFieldsModal(i)" >
-                        <ng-container *ngIf="!inputHaveBeenBounded(i)" i18n="@@HYT_bind_input_fields">Bind input fields</ng-container>
-                        <ng-container *ngIf="inputHaveBeenBounded(i)" i18n="@@HYT_input_binding_done">Input binding done</ng-container>
+                        @if (!inputHaveBeenBounded(i)) {
+                        <ng-container i18n="@@HYT_bind_input_fields">Bind input fields</ng-container>
+                        }
+                        @if (inputHaveBeenBounded(i)) {
+                        <ng-container i18n="@@HYT_input_binding_done">Input binding done</ng-container>
+                        }
                     </hyt-button>
                 </div>
+                }
 
                 <div class="container-delete-statistic-input col-2">
 
-                    <span *ngIf="i!=0" class="hyt-icon icon-hyt_cancel" (click)="removeStatisticInput(i)"></span>
+                    @if (i!=0) {
+                    <span class="hyt-icon icon-hyt_cancel" (click)="removeStatisticInput(i)"></span>
+                    }
 
                 </div> <!-- Remove packet -->
 
             </div>
         </form>
     </div>
+    }
 
 </div>

@@ -6,11 +6,12 @@ import { UnitConversionService } from 'components';
 
 
 @Component({
-  selector: 'hyperiot-algorithm-select',
-  templateUrl: './algorithm-select.component.html',
-  styleUrls: ['./algorithm-select.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ]
+    selector: 'hyperiot-algorithm-select',
+    templateUrl: './algorithm-select.component.html',
+    styleUrls: ['./algorithm-select.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+    standalone: false
 })
 export class AlgorithmSelectComponent implements OnInit {
 

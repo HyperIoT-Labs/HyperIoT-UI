@@ -5,9 +5,10 @@ import { Dashboard } from 'core';
 import { WidgetSelection } from '../model/dashboard.model';
 
 @Component({
-  selector: 'hyperiot-dashboard-view',
-  templateUrl: './dashboard-view.component.html',
-  styleUrls: ['./dashboard-view.component.css']
+    selector: 'hyperiot-dashboard-view',
+    templateUrl: './dashboard-view.component.html',
+    styleUrls: ['./dashboard-view.component.css'],
+    standalone: false
 })
 export class DashboardViewComponent implements OnInit {
   @ViewChild('WidgetsDashboardLayoutComponent') dashboardLayout;

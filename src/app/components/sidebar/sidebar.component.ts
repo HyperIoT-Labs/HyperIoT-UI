@@ -5,10 +5,11 @@ import { Subscription } from 'rxjs';
 import { InfoComponent } from '../info/info.component';
 
 @Component({
-  selector: 'hyt-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 

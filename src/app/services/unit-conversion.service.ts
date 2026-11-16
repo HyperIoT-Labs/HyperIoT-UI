@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import * as convert from 'convert-units';
+import convert from 'convert-units';
 
 @Injectable({
   providedIn: 'root'

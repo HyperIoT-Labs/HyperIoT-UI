@@ -4,9 +4,10 @@ import { ServicesService } from 'core';
 import { map, PartialObserver } from 'rxjs';
 
 @Component({
-  selector: 'hyt-info',
-  templateUrl: './info.component.html',
-  styleUrls: ['./info.component.scss']
+    selector: 'hyt-info',
+    templateUrl: './info.component.html',
+    styleUrls: ['./info.component.scss'],
+    standalone: false
 })
 export class InfoComponent implements OnInit {
   feVersion = environment.version;

@@ -7,9 +7,10 @@ import { EventComponent } from '../event-component';
 import { EventComponentType } from '../event-component-type.enum';
 
 @Component({
-  selector: 'hyt-event-mqtt-command',
-  templateUrl: './event-mqtt-command.component.html',
-  styleUrls: ['./event-mqtt-command.component.scss']
+    selector: 'hyt-event-mqtt-command',
+    templateUrl: './event-mqtt-command.component.html',
+    styleUrls: ['./event-mqtt-command.component.scss'],
+    standalone: false
 })
 export class EventMqttCommandComponent implements OnInit,EventComponent {
 

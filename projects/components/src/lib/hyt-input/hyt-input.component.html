@@ -5,12 +5,13 @@
     [ngClass]="{'errorPositionBottom': errorPosition=='bottom'}"
   >
 
+    <mat-label>{{ placeholder }}</mat-label>
+
     <input matInput #input 
       class="hyt-input form-control" 
       name="{{name}}" 
       id="{{id}}" 
       type="{{type}}"
-      placeholder="{{placeholder}}" 
       value="{{fieldValue}}"
       [attr.autocomplete]="autocomplete ? autocomplete : null"
       (focus)="onFocus()"
@@ -19,26 +20,35 @@
       [errorStateMatcher]="matcher"
     >
 
+    @if (isPassword || isInputPassword || (confirmPassword !== '')) {
     <mat-icon matSuffix
-      *ngIf="isPassword || isInputPassword || (confirmPassword !== '')"  
       (click)="this.tooglePassword()"
     >
       {{ visibilityIcon }}
     </mat-icon>
+    }
 
-    <mat-hint *ngIf="hint">
+    @if (hint) {
+    <mat-hint>
       {{ hint }}
     </mat-hint>
+    }
 
-    <div class="multiError" *ngIf="getMultiErrorList().length > 0 && inputFocused">
-      <mat-error *ngFor="let error of getMultiErrorList()">
+    @if (getMultiErrorList().length > 0 && inputFocused) {
+    <div class="multiError">
+      @for (error of getMultiErrorList(); track error) {
+      <mat-error>
         {{ error }}
       </mat-error>
+      }
     </div>
+    }
 
-    <mat-error  *ngFor="let error of getDefaultErrorList()">
+    @for (error of getDefaultErrorList(); track error) {
+    <mat-error >
       {{ error }}
     </mat-error>
+    }
 
   </mat-form-field>
 

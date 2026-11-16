@@ -5,7 +5,7 @@ import { ComponentsModule } from 'components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { ColorPickerModule } from 'ngx-color-picker';
+import { ColorPickerDirective } from 'ngx-color-picker';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
 import { GenericSummaryListComponent } from './project-detail/generic-summary-list/generic-summary-list.component';
 
@@ -35,7 +35,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatBadgeModule } from '@angular/material/badge';
 
 import { StatisticsStepComponent } from './project-wizard/statistics-step/statistics-step.component';
@@ -68,14 +68,14 @@ import { EventMqttCommandComponent } from './project-forms/project-events-form/e
 import { WidgetsModule } from 'widgets';
 import { ProjectAlarmsFormComponent } from './project-forms/project-alarms-form/project-alarms-form.component';
 import { AlarmEventsTableComponent } from './project-forms/project-alarms-form/alarm-events-table/alarm-events-table.component';
-import {MatButtonModule} from '@angular/material/button';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatCardModule} from '@angular/material/card';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatMenuModule } from '@angular/material/menu';
 import {MatRippleModule} from '@angular/material/core';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
 import { DynamicMapUserConfiguratorComponent } from './project-forms/areas-form/dynamic-map-user-configurator/dynamic-map-user-configurator.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSliderModule } from '@angular/material/slider';
@@ -132,7 +132,7 @@ import { ComputeFieldRuleComponent } from './project-forms/packet-enrichment-for
         ComputeFieldRuleComponent,
     ],
     imports: [
-        ColorPickerModule,
+        ColorPickerDirective,
         MatIconModule,
         MatButtonModule,
         MatTabsModule,

@@ -3,9 +3,10 @@ import { DashboardConfigService } from '../dashboard-config.service';
 import { Dashboard } from 'core';
 
 @Component({
-  selector: 'hyperiot-dashboards-list',
-  templateUrl: './dashboards-list.component.html',
-  styleUrls: ['./dashboards-list.component.css']
+    selector: 'hyperiot-dashboards-list',
+    templateUrl: './dashboards-list.component.html',
+    styleUrls: ['./dashboards-list.component.css'],
+    standalone: false
 })
 export class DashboardsListComponent implements OnInit {
   dashboardList: Dashboard[] = [];

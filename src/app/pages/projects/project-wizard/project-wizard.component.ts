@@ -39,10 +39,11 @@ import { WizardReportModalComponent } from "./wizard-report-modal/wizard-report-
 import { Subject } from "rxjs";
 
 @Component({
-  selector: "hyt-project-wizard",
-  templateUrl: "./project-wizard.component.html",
-  styleUrls: ["./project-wizard.component.scss"],
-  encapsulation: ViewEncapsulation.None,
+    selector: "hyt-project-wizard",
+    templateUrl: "./project-wizard.component.html",
+    styleUrls: ["./project-wizard.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ProjectWizardComponent implements OnInit {
   @ViewChild("stepper")

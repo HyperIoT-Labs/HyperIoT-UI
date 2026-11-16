@@ -32,7 +32,8 @@
 
       <ng-template #devicesTemplate>
 
-        <div *ngIf="!currentForm || !currentForm.entity.id" id="container-source" class="container">
+        @if (!currentForm || !currentForm.entity.id) {
+        <div id="container-source" class="container">
 
           <div class="row">
 
@@ -49,6 +50,7 @@
           </div>
 
         </div>
+        }
 
         <hyt-device-form #devicesForm [currentProject]="currentProject"
           (entityEvent)="onEntityEvent($event)">
@@ -137,15 +139,23 @@
 
           <div class="col-12">
 
-            <hyt-button [color]="'hyt-base-default-white'" class="toRight" *ngIf="currentForm" (clickFn)="onSaveClick($event)"
+            @if (currentForm) {
+            <hyt-button [color]="'hyt-base-default-white'" class="toRight" (clickFn)="onSaveClick($event)"
             [isDisabled]="!currentForm.isValid() || !currentForm.isDirty() || currentForm.loadingStatus != 0">
-              <ng-container *ngIf="currentForm && currentForm.isNew()" i18n="@@HYT_save">Save</ng-container>
-              <ng-container *ngIf="currentForm && !currentForm.isNew()" i18n="@@HYT_update">Update</ng-container>
+              @if (currentForm && currentForm.isNew()) {
+              <ng-container i18n="@@HYT_save">Save</ng-container>
+              }
+              @if (currentForm && !currentForm.isNew()) {
+              <ng-container i18n="@@HYT_update">Update</ng-container>
+              }
             </hyt-button>
+            }
 
-            <hyt-button [color]="'hyt-base-default-white'" class="toRight" *ngIf="currentForm && showCancel()" (clickFn)="onCancelClick($event)">
+            @if (currentForm && showCancel()) {
+            <hyt-button [color]="'hyt-base-default-white'" class="toRight" (clickFn)="onCancelClick($event)">
               <ng-container i18n="@@HYT_cancel">Cancel</ng-container>
             </hyt-button>
+            }
 
             <div class="clear"></div>
           </div>
@@ -157,7 +167,8 @@
 
         <div id="row-next-back" class="row">
 
-          <div *ngIf="currentStepIndex != 0" class="col-6">
+          @if (currentStepIndex != 0) {
+          <div class="col-6">
             <!-- <hyt-button (clickFn)="stepper.previous()">
               <ng-container i18n="@@HYT_back">Back</ng-container>
             </hyt-button> -->
@@ -166,6 +177,7 @@
             </hyt-button>
 
           </div>
+          }
 
           <div [ngClass]="{'offset-6': currentStepIndex == 0}" class="col-6">
             <!-- <hyt-button class="toRight" [isDisabled]="isNextDisabled()"
@@ -190,7 +202,8 @@
     <div id="hint-column" class="col-md-2">
 
       <!-- NEW ACCORDION -->
-      <div *ngIf="currentForm" id="section-title" (click)="togglePanel()"
+      @if (currentForm) {
+      <div id="section-title" (click)="togglePanel()"
         [ngClass]="{'clicked': panelIsVisible, 'unclicked': !panelIsVisible}" class="row">
 
         <div id="icon-title" class="col-4">
@@ -202,27 +215,34 @@
         </div>
 
       </div>
+      }
 
-      <div *ngIf="currentForm" id="section-title-panel" [ngClass]="{'panel-open': panelIsVisible}" class="row">
+      @if (currentForm) {
+      <div id="section-title-panel" [ngClass]="{'panel-open': panelIsVisible}" class="row">
         <div class="col-12">
           {{currentForm.longDefinition}}
         </div>
       </div>
+      }
 
       <hr id="title-underline">
       <!-- END NEW ACCORDION -->
 
-      <hyt-generic-summary-list *ngIf="currentForm && currentForm.summaryList"
+      @if (currentForm && currentForm.summaryList) {
+      <hyt-generic-summary-list
         [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }" [addButtonActive]="true"
         [currentDevice]="currentDeviceName"
         [enrichmentPacketId]="enrichmentPacketId"
         [summaryList]="currentForm.summaryList" (menuAction)="menuAction($event)"></hyt-generic-summary-list>
+      }
 
-      <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row">
+      @if (hintVisible) {
+      <div class="info-message m-2 mt-4 d-flex flex-row">
         <span class="text p-2 flex-grow-1">{{hintMessage}}</span>
         <mat-icon class="">info</mat-icon>
         <!--mt-2 mr-2-->
       </div>
+      }
 
     </div>
 

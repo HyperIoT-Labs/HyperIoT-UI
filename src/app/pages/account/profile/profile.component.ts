@@ -9,10 +9,11 @@ import { forkJoin, map, take, } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 @Component({
-  selector: 'hyt-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ProfileComponent implements OnInit {
 

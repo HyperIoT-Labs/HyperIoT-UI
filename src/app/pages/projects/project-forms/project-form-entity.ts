@@ -18,7 +18,8 @@ export enum LoadingStatusEnum {
 }
 
 @Component({
-    template: ''
+    template: '',
+    standalone: false
 })
 
 // tslint:disable-next-line:component-class-suffix
@@ -116,7 +117,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     }
 
     clone(entity?: any): any {
-        const cloned = { ...entity } || this.entity;
+        const cloned = { ...entity };
         cloned.id = 0;
         cloned.entityVersion = 1;
         cloned.name = `${cloned.name} (copy)`;

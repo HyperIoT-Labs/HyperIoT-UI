@@ -49,10 +49,11 @@ const TimeFormat: Record<string, DateFormat> = {
 
 /** @title Datepicker emulating a Year and month picker */
 @Component({
-  selector: 'hyt-date-picker',
-  templateUrl: 'hyt-date-picker.component.html',
-  styleUrls: ['hyt-date-picker.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-date-picker',
+    templateUrl: 'hyt-date-picker.component.html',
+    styleUrls: ['hyt-date-picker.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytDatePickerComponent implements OnInit, OnChanges {
 

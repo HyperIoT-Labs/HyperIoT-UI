@@ -9,7 +9,8 @@
         >
         </hyt-select-template>
     </div>
-    <div *ngIf="selectedPacketId != null" id="field-selection" class="d-flex flex-column">
+    @if (selectedPacketId != null) {
+    <div id="field-selection" class="d-flex flex-column">
         <!-- <hyt-select-template
             [(ngModel)]="selectedFieldName" (ngModelChange)="onFieldChange()" [isMultiple]="false" name="field-select-{{name}}"
             [label]="'Select field/s'" [options]="hpacketsFieldsOptions"
@@ -23,4 +24,5 @@
             (fieldSelectionChanged)="onPacketFieldChange($event)"
         ></hyt-inner-field-select>
     </div>
+    }
 </div>

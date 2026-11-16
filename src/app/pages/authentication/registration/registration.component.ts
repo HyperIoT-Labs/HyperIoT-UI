@@ -10,10 +10,11 @@ import { SubmissionStatus } from '../models/pageStatus';
  * It is used to hallow the user to create his own account.
  */
 @Component({
-  selector: 'hyt-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-registration',
+    templateUrl: './registration.component.html',
+    styleUrls: ['./registration.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class RegistrationComponent implements OnInit {
 

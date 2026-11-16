@@ -31,9 +31,10 @@ export interface CardEmittedValue {
 }
 
 @Component({
-  selector: "hyt-detailed-card",
-  templateUrl: "./hyt-detailed-card.component.html",
-  styleUrls: ["./hyt-detailed-card.component.scss"],
+    selector: "hyt-detailed-card",
+    templateUrl: "./hyt-detailed-card.component.html",
+    styleUrls: ["./hyt-detailed-card.component.scss"],
+    standalone: false
 })
 export class HytDetailedCardComponent {
   private logger: Logger;

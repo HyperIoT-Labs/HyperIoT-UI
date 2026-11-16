@@ -15,10 +15,11 @@ import {HYTError} from '../hyt-service/errorHandler/models/models';
  * It is used to hallow the user to login with the credentials of his account.
  */
 @Component({
-  selector: 'hyt-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytLoginComponent implements OnInit {
 

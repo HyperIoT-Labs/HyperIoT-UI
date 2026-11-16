@@ -8,8 +8,8 @@
   <div hyt-dialog-content class="icons-container">
     <div class="icon-search-container">
       <mat-form-field>
-        <input matInput [(ngModel)]="filterValue" (ngModelChange)="filterIconList()"
-          i18n-placeholder="@@HYT_search_icon" placeholder="Search icon">
+        <mat-label i18n="@@HYT_search_icon">Search icon</mat-label>
+        <input matInput [(ngModel)]="filterValue" (ngModelChange)="filterIconList()">
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
         <hyt-button (click)="deselectIcon()">
@@ -18,10 +18,16 @@
         </hyt-button>
     </div>
     <div class="grid-container">
-      <button *ngFor="let icon of filteredIcons" mat-icon-button class="icon-btn" (click)="onIconSelected(icon)">
-        <span *ngIf="!isMaterialIcon(icon)" [ngClass]="icon"></span>
-        <span *ngIf="isMaterialIcon(icon)" class="material-icons">{{icon}}</span>
+      @for (icon of filteredIcons; track icon) {
+      <button mat-icon-button class="icon-btn" (click)="onIconSelected(icon)">
+        @if (!isMaterialIcon(icon)) {
+        <span [ngClass]="icon"></span>
+        }
+        @if (isMaterialIcon(icon)) {
+        <span class="material-icons">{{icon}}</span>
+        }
       </button>
+      }
     </div>
   </div>
 </div>

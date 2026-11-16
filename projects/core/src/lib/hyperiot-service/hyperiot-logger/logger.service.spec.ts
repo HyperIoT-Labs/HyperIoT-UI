@@ -11,7 +11,7 @@ describe('LoggerService', () => {
   TestBed.configureTestingModule({
   });
 
-  service = TestBed.get(LoggerService);
+  service = TestBed.inject(LoggerService);
 
 });
 

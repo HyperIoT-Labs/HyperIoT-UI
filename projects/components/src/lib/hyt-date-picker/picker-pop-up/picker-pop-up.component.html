@@ -1,14 +1,22 @@
 <div id="hyt-picker-container">
     <table id="hyt-picker-table" class="calendar-popup" [ngClass]="{'visible': show}">
         <thead class="thead">
-            <tr *ngFor="let row of model.headRows" [ngClass]="row.class">
-                <th *ngFor="let val of row.elements" [attr.colspan]="val.colspan" (click)="val.action()" [ngClass]="val.class">{{val.label}}</th>
+            @for (row of model.headRows; track row) {
+            <tr [ngClass]="row.class">
+                @for (val of row.elements; track val) {
+                <th [attr.colspan]="val.colspan" (click)="val.action()" [ngClass]="val.class">{{val.label}}</th>
+                }
             </tr>
+            }
         </thead>
         <tbody class="tbody">
-            <tr *ngFor="let row of model.bodyRows" [ngClass]="row.class">
-                <td *ngFor="let val of row.elements" (click)="val.action()" [ngClass]="val.class">{{val.label}}</td>
+            @for (row of model.bodyRows; track row) {
+            <tr [ngClass]="row.class">
+                @for (val of row.elements; track val) {
+                <td (click)="val.action()" [ngClass]="val.class">{{val.label}}</td>
+                }
             </tr>
+            }
         </tbody>
     </table>
 </div>

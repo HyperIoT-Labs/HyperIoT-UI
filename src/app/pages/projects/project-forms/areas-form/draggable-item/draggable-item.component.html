@@ -35,7 +35,7 @@
         }}
       </h2>
 
-      <ng-container *ngIf="utilsService.isAreaDevice(itemData)">
+      @if (utilsService.isAreaDevice(itemData)) {
         <button
           mat-menu-item
           class="menu-item-flex"
@@ -82,9 +82,9 @@
           <span i18n="@@HYT_go_to_alarm_manager"> Go to Alarm Manager </span>
           <span class="mat-icon hyt-icon icon-hyt_warnC"></span>
         </button>
-      </ng-container>
+      }
 
-      <ng-container *ngIf="utilsService.isArea(itemData)">
+      @if (utilsService.isArea(itemData)) {
         <button
           mat-button
           (click)="
@@ -97,7 +97,7 @@
         >
           Go To Sub Area
         </button>
-      </ng-container>
+      }
     </div>
   </mat-menu>
 
@@ -112,9 +112,10 @@
     X
   </button>
 
+  @if ((alarmInfo$ | async)?.length) {
   <span
-    *ngIf="(alarmInfo$ | async)?.length"
     [matBadge]="(alarmInfo$ | async)?.length"
     matBadgeOverlap="false"
   ></span>
+  }
 </div>

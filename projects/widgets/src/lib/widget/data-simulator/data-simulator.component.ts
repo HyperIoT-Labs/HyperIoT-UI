@@ -15,12 +15,13 @@ enum SimulatorStatus {
 }
 
 @Component({
-  selector: "hyperiot-data-simulator",
-  templateUrl: "./data-simulator.component.html",
-  styleUrls: [
-    "../../../../../../src/assets/widgets/styles/widget-commons.css",
-    "./data-simulator.component.scss",
-  ],
+    selector: "hyperiot-data-simulator",
+    templateUrl: "./data-simulator.component.html",
+    styleUrls: [
+        "../../../../../../src/assets/widgets/styles/widget-commons.css",
+        "./data-simulator.component.scss",
+    ],
+    standalone: false
 })
 export class DataSimulatorComponent extends BaseWidgetComponent {
   wsSenderService: WsDataSenderService = new WsDataSenderService();

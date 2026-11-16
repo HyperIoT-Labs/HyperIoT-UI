@@ -3,10 +3,11 @@ import { DialogRef } from '../../hyt-dialog/dialog-ref';
 import { DIALOG_DATA } from '../../hyt-dialog/dialog-tokens';
 
 @Component({
-  selector: 'hyt-rule-error-modal',
-  templateUrl: './rule-error-modal.component.html',
-  styleUrls: ['./rule-error-modal.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-rule-error-modal',
+    templateUrl: './rule-error-modal.component.html',
+    styleUrls: ['./rule-error-modal.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class RuleErrorModalComponent {
 

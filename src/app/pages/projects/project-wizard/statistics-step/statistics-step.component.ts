@@ -6,10 +6,11 @@ import { PageStatusEnum } from '../model/pageStatusEnum';
 import { RuleEngineService, HPacket } from 'core';
 
 @Component({
-  selector: 'hyt-statistics-step',
-  templateUrl: './statistics-step.component.html',
-  styleUrls: ['./statistics-step.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-statistics-step',
+    templateUrl: './statistics-step.component.html',
+    styleUrls: ['./statistics-step.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class StatisticsStepComponent implements OnInit {
 

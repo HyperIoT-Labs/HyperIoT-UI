@@ -9,19 +9,22 @@
       <!-- button on the right side -->
       <div class="align-self-right">
   
-        <hyt-button *ngIf="pageStatus === 1" [isDisabled]="deletingInLoading" id="add-algorithm-btn-top" (clickFn)="addAlgorithm()"
+        @if (pageStatus === 1) {
+        <hyt-button [isDisabled]="deletingInLoading" id="add-algorithm-btn-top" (clickFn)="addAlgorithm()"
           [color]="'hyt-base-total-white'">
           <span class="hyt-icon icon-hyt_plusC"></span>
           <ng-container i18n="@@HYT_add_new_algorithm">Add new algorithm</ng-container>
         </hyt-button>
+        }
   
       </div>
   
     </div>
   
-    <div id="container-algorithms" [ngSwitch]="pageStatus" class="container-fluid">
-  
-      <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading" class="mt-5 d-flex flex-column align-items-center justify-content-center">
+    <div id="container-algorithms" class="container-fluid">
+      @switch (pageStatus) {
+      @case (PageStatus.Loading) {
+      <div id="loadingStatus" class="mt-5 d-flex flex-column align-items-center justify-content-center">
   
         <img id="animatedPreloaderImg" src="assets/images/hyperiot_logo_single_char_animated.svg" alt="Hyperiot Animated Logo">
         <h2 i18n="@@HYT_page_is_loading">Page is loading...</h2>
@@ -30,8 +33,10 @@
         <!-- Page is loading... -->
   
       </div> <!-- PageStatus.Loading -->
+      }
   
-      <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
+      @case (PageStatus.Standard) {
+      <div id="standardStatus" class="row">
         <!-- Standard -->
   
         <div id="container-box-algorithm" class="col-12">
@@ -64,32 +69,40 @@
   
           </div> <!-- End Row Title -->
   
-          <div *ngIf="displayMessageArea" id="row-messages-area" class="row">
+          @if (displayMessageArea) {
+          <div id="row-messages-area" class="row">
   
             <div class="col-12 alert-box"
               [ngClass]="{'alert-loading' : typeMessageArea == 'loading', 'alert-error' : typeMessageArea == 'error', 'alert-success' : typeMessageArea == 'success'}">
               <!-- alert-error | alert-success -->
               <p>{{ messageAreaText }}</p>
-              <mat-progress-bar *ngIf="typeMessageArea == 'loading'" mode="indeterminate"></mat-progress-bar>
+              @if (typeMessageArea == 'loading') {
+              <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+              }
   
-              <span *ngIf="typeMessageArea != 'loading'" class="cls-msg-area"
+              @if (typeMessageArea != 'loading') {
+              <span class="cls-msg-area"
                 [ngClass]="{'btn-error' : typeMessageArea == 'error', 'btn-success' : typeMessageArea == 'success'}"
                 (click)="hideMessageArea()">
               </span>
+              }
   
             </div>
   
           </div> <!-- END DISPLAY MESSAGE AREA -->
+          }
   
           <div id="row-cotainer-cards" [ngClass]="{'cards-blurred' : deletingInLoading}" class="row hyt-card-wrapper">
   
-            <div *ngIf="algorithmsFiltered.length == 0" class="col-12">
+            @if (algorithmsFiltered.length == 0) {
+            <div class="col-12">
               <span i18n="@@HYT_no_algorithm_found">No algorithm matching the search was found...</span>
             </div>
+            }
             
             <div class="hyt-card-container">
+              @for (p of algorithmsFiltered; track p) {
               <hyt-detailed-card 
-                *ngFor="let p of algorithmsFiltered"
                 [title]="p.name"
                 [description]="p.description"
                 btnLabel="view projects"
@@ -97,14 +110,17 @@
                 [paramEmittedOnClick]="p"
                 (deleteClick)="openDeleteDialog($event)"
               ></hyt-detailed-card>
+              }
             </div>
           </div> <!-- End Row Cards -->
   
         </div>
   
       </div> <!-- PageStatus.Standard -->
+      }
   
-      <div id="newStatus" *ngSwitchCase="PageStatus.New">
+      @case (PageStatus.New) {
+      <div id="newStatus">
         <!-- New -->
   
         <div class="mt-5 no-algorithms">
@@ -125,17 +141,22 @@
         </div> <!-- End No Algorithms Row -->
   
       </div> <!-- PageStatus.New -->
+      }
   
-      <div id="errorStatus" *ngSwitchCase="PageStatus.Error" class="mt-5 d-flex flex-column align-items-center justify-content-center">
+      @case (PageStatus.Error) {
+      <div id="errorStatus" class="mt-5 d-flex flex-column align-items-center justify-content-center">
         
         <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
   
       </div> <!-- PageStatus.Error -->
+      }
   
-      <div id="defaultStatus" *ngSwitchDefault class="mt-5 d-flex flex-column align-items-center justify-content-center">
+      @default {
+      <div id="defaultStatus" class="mt-5 d-flex flex-column align-items-center justify-content-center">
         <h2 i18n="@@HYT_error">Error!</h2>
       </div>
-  
+      }
+      }
     </div>
   
   </div>

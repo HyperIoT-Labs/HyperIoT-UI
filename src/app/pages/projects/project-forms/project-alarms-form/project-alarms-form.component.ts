@@ -15,10 +15,11 @@ import { TagStatus } from '../packet-enrichment-form/asset-tag/asset-tag.compone
 import { LoadingStatusEnum, ProjectFormEntity } from '../project-form-entity';
 
 @Component({
-  selector: 'hyt-project-alarms-form',
-  templateUrl: './project-alarms-form.component.html',
-  styleUrls: ['./project-alarms-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-project-alarms-form',
+    templateUrl: './project-alarms-form.component.html',
+    styleUrls: ['./project-alarms-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnInit, OnChanges, OnDestroy {
 

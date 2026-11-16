@@ -1,6 +1,7 @@
 <div class="hyt-badge hyt-badge-{{shape}} hyt-badge-{{size}} hyt-badge-{{gradientDirection}}">
-    <span class="hyt-icon icon-hyt_{{icon}}" *ngIf="icon; else labelBadge"></span>
-    <ng-template #labelBadge>
+    @if (icon) {
+    <span class="hyt-icon icon-hyt_{{icon}}"></span>
+    } @else {
         <span [attr.i18n]="keyLabel">{{ label }}</span>
-    </ng-template>
+    }
 </div>

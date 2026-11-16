@@ -22,7 +22,6 @@ import { HytAutocompleteComponent } from './hyt-autocomplete/hyt-autocomplete.co
 import { HytTriCheckboxComponent } from './hyt-tri-checkbox/hyt-tri-checkbox.component';
 import { HytHexagonComponent } from './hyt-hexagon/hyt-hexagon.component';
 import { HytDatePickerComponent } from './hyt-date-picker/hyt-date-picker.component';
-import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { PickerPopUpComponent } from './hyt-date-picker/picker-pop-up/picker-pop-up.component';
 import { HytLazyPaginationTableComponent } from './hyt-lazy-pagination-table/hyt-lazy-pagination-table.component';
 import { PageInputDirective } from './hyt-lazy-pagination-table/page-input.directive';
@@ -61,14 +60,13 @@ import { PlotlyModule } from 'angular-plotly.js';
 import { HytChartModalComponent } from './hyt-modal/hyt-chart-modal/hyt-chart-modal.component';
 import { MapComponent } from './hyt-map/map.component';
 import { LeafletMapComponent } from './hyt-map/components/leaflet-map/leaflet-map.component';
-import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+import {LeafletModule} from "@bluehalo/ngx-leaflet";
 
 import { HytAlarmComponent } from './hyt-alarm/hyt-alarm.component';
 import { HytNoData } from './hyt-no-data/hyt-no-data.component';
 import { CustomSelectPositionDirective } from './directives/positionSelect.directive';
 import { MapDeviceEditComponent } from './hyt-map/components/map-device-edit/map-device-edit.component';
 import { MapDeviceInfoComponent } from './hyt-map/components/map-device-info/map-device-info.component';
-export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
     declarations: [
@@ -142,7 +140,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
         FormsModule,
         ReactiveFormsModule,
         DemoMaterialModule,
-        NgxMaskModule.forRoot(options),
         RouterModule,
         PlotlyModule,
         LeafletModule,

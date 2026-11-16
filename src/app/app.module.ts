@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from '@angular/core';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
 // modules
@@ -56,8 +56,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { DashComponent } from './pages/dash/dash.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatInputModule} from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatInputModule } from '@angular/material/input';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { InfoComponent } from './components/info/info.component';
@@ -68,7 +68,7 @@ import { NotificationDialogComponent } from './components/dialogs/notification-d
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { GlobalErrorHandlerService } from '../../projects/core/src/lib/hyperiot-service/error-handler/global-error-handler.service';
+import { GlobalErrorHandlerService } from 'core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { DataExportNotificationButtonComponent } from './components/topbar/data-export-notification-button/data-export-notification-button.component';
 import { DataExportNotificationDialogComponent } from './components/dialogs/data-export-notification-notification-dialog/data-export-notification-dialog.component';
@@ -124,7 +124,6 @@ export function apiConfigFactory(): Configuration {
         RouterModule,
         BrowserModule,
         BrowserAnimationsModule,
-        HttpClientModule,
         MatIconModule,
         MatButtonModule,
         MatDialogModule,
@@ -155,6 +154,7 @@ export function apiConfigFactory(): Configuration {
             maxAge: 25,
             logOnly: environment.production,
             autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+            connectInZone: true,
         }),
         EffectsModule.forRoot(HyperiotStore.Effects),
         MomentModule
@@ -174,6 +174,7 @@ export function apiConfigFactory(): Configuration {
         { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
         { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
         BrandingService,
+        provideHttpClient(withInterceptorsFromDi()),
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]

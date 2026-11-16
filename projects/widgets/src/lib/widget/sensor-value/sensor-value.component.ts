@@ -4,9 +4,10 @@ import { BaseWidgetComponent } from '../../base/base-widget/base-widget.componen
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
 @Component({
-  selector: 'hyperiot-sensor-value',
-  templateUrl: './sensor-value.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './sensor-value.component.css']
+    selector: 'hyperiot-sensor-value',
+    templateUrl: './sensor-value.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './sensor-value.component.css'],
+    standalone: false
 })
 export class SensorValueComponent extends BaseWidgetComponent {
 

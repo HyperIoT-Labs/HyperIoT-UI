@@ -78,27 +78,30 @@
           </hyt-select>
 
         </div>
+        @if (enrichmentType=='AddTagRuleAction' || enrichmentType=='AddCategoryRuleAction' ) {
         <div 
-          *ngIf="enrichmentType=='AddTagRuleAction' || enrichmentType=='AddCategoryRuleAction' " 
           id="fstat-col-tagcat" 
           class="col-6"
         >
 
+          @if (enrichmentType=='AddTagRuleAction') {
           <hyt-asset-tag 
-            *ngIf="enrichmentType=='AddTagRuleAction'"
             [packet]="currentPacket" 
             (tagIds)="updateAssetTag($event)"
           >
           </hyt-asset-tag>
+          }
 
+          @if (enrichmentType=='AddCategoryRuleAction') {
           <hyt-asset-category 
-            *ngIf="enrichmentType=='AddCategoryRuleAction'"
             [packet]="currentPacket" 
             (categoryIds)="updateAssetCategory($event)"
           >
           </hyt-asset-category>
+          }
 
         </div>
+        }
 
       </div> <!-- END THIRD ROW -->
 

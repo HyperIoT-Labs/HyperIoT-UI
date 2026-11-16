@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { PostLoginService } from 'src/app/services/postLogin/post-login.service';
 
 @Component({
-  selector: 'hyt-account-button',
-  templateUrl: './account-button.component.html',
-  styleUrls: ['./account-button.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-account-button',
+    templateUrl: './account-button.component.html',
+    styleUrls: ['./account-button.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class AccountButtonComponent implements OnInit {
 

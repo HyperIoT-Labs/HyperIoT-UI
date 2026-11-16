@@ -3,9 +3,10 @@ import { DialogRef } from '../../hyt-dialog/dialog-ref';
 import { DIALOG_DATA } from '../../hyt-dialog/dialog-tokens';
 
 @Component({
-  selector: 'hyt-icon-picker-list',
-  templateUrl: './hyt-icon-picker-list.component.html',
-  styleUrls: ['./hyt-icon-picker-list.component.scss']
+    selector: 'hyt-icon-picker-list',
+    templateUrl: './hyt-icon-picker-list.component.html',
+    styleUrls: ['./hyt-icon-picker-list.component.scss'],
+    standalone: false
 })
 export class HytIconPickerListComponent implements OnInit {
 

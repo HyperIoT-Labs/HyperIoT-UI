@@ -1,9 +1,16 @@
+hyt-date-picker {
+  display: inline-flex;
+  align-items: center;
+}
+
 #hyt-date-picker-input {
   display: inline-block;
 }
 
-#hyt-date-picker-input .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-  display: none !important;
+#hyt-date-picker-input .mat-mdc-form-field-infix {
+  min-height: 35px;
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
 #hyt-date-picker-button,

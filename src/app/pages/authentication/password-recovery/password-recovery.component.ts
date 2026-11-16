@@ -10,10 +10,11 @@ import { HYTError } from 'src/app/services/errorHandler/models/models';
  * It is used to hallow the user to send the request to reset his account password.
  */
 @Component({
-  selector: 'hyt-password-recovery',
-  templateUrl: './password-recovery.component.html',
-  styleUrls: ['./password-recovery.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-password-recovery',
+    templateUrl: './password-recovery.component.html',
+    styleUrls: ['./password-recovery.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PasswordRecoveryComponent implements OnInit {
 

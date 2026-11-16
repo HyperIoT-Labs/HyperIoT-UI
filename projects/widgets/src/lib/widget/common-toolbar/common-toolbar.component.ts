@@ -9,7 +9,8 @@ import {ConfigButtonWidget} from "../../base/base-widget/model/widget.model";
 @Component({
     selector: 'hyperiot-common-toolbar',
     templateUrl: './common-toolbar.component.html',
-    styleUrls: ['./common-toolbar.component.scss']
+    styleUrls: ['./common-toolbar.component.scss'],
+    standalone: false
 })
 export class CommonToolbarComponent {
     @Input() widgetName: string;

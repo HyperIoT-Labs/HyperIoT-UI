@@ -13,10 +13,11 @@ export interface TreeNodeCategory {
 }
 
 @Component({
-  selector: 'hyt-tree-view-category',
-  templateUrl: './hyt-tree-view-category.component.html',
-  styleUrls: ['./hyt-tree-view-category.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-tree-view-category',
+    templateUrl: './hyt-tree-view-category.component.html',
+    styleUrls: ['./hyt-tree-view-category.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytTreeViewCategoryComponent implements OnChanges {
 

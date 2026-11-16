@@ -15,24 +15,26 @@
     </hyperiot-common-toolbar>
   </header-widget>
   <content-widget style="overflow-y: auto;height: 100%;display: block;">
-    <div *ngIf="!isConfigured; else configured" class="configure-notice">
+    @if (!isConfigured) {
+    <div class="configure-notice">
       <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
     </div>
-
-    <ng-template #configured>
+    } @else {
       <div id="modalAnchor"></div>
       <div #productionTarget id="productionTarget">
         <div id="target-container">
-          <div class="target" *ngFor="let label of widgetLabels">
+          @for (label of widgetLabels; track label) {
+          <div class="target">
             <hyt-badge [shape]="badgeShape" [size]="badgeSize" [label]="returnFieldName(label.label)" ></hyt-badge>
             <h4 class="value">{{chartData[label.value] !== undefined && chartData[label.value] !== null ? chartData[label.value] : '--'}}</h4>
           </div>
+          }
         </div>
         <div id="grap-container">
           <plotly-plot [data]="graph.data" [layout]="graph.layout" class="chart"></plotly-plot>
         </div>
       </div>
-    </ng-template>
+    }
 
   </content-widget>
 </hyperiot-base-widget-template>

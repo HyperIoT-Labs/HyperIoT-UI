@@ -7,10 +7,11 @@ import { AlgorithmService, Algorithm } from 'core';
 import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity';
 
 @Component({
-  selector: 'hyt-algorithm-info-form',
-  templateUrl: './algorithm-info-form.component.html',
-  styleUrls: ['./algorithm-info-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-algorithm-info-form',
+    templateUrl: './algorithm-info-form.component.html',
+    styleUrls: ['./algorithm-info-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements AfterViewInit,OnInit {
 

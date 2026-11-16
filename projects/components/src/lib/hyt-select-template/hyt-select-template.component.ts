@@ -23,11 +23,12 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_TEMPLATE: any = {
 };
 
 @Component({
-  selector: 'hyt-select-template',
-  templateUrl: './hyt-select-template.component.html',
-  styleUrls: ['./hyt-select-template.component.scss'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_TEMPLATE],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-select-template',
+    templateUrl: './hyt-select-template.component.html',
+    styleUrls: ['./hyt-select-template.component.scss'],
+    providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_TEMPLATE],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytSelectTemplateComponent implements OnInit, ControlValueAccessor, OnChanges {
 

@@ -7,7 +7,7 @@
     }}
   </h2>
 
-  <ng-container *ngIf="utilsService.isAreaDevice(itemData)">
+  @if (utilsService.isAreaDevice(itemData)) {
     <button
       mat-button
       (click)="
@@ -47,9 +47,8 @@
     >
       Alarm Managing
     </button>
-  </ng-container>
-
-  <ng-container *ngIf="utilsService.isArea(itemData)">
+  }
+  @if (utilsService.isArea(itemData)) {
     <button
       mat-button
       (click)="
@@ -62,5 +61,5 @@
     >
       Go To Sub Area
     </button>
-  </ng-container>
+  }
 </div>

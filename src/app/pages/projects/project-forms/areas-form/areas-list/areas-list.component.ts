@@ -25,10 +25,11 @@ import {takeUntil} from 'rxjs/operators';
 import {PageStatus} from '../../../../../models/pageStatus';
 
 @Component({
-  selector: 'hyt-areas-list',
-  templateUrl: './areas-list.component.html',
-  styleUrls: ['./areas-list.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-areas-list',
+    templateUrl: './areas-list.component.html',
+    styleUrls: ['./areas-list.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class AreasListComponent implements OnChanges, OnDestroy {
   /**

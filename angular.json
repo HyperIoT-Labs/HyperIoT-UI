@@ -20,12 +20,16 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/hyperiot",
+            "outputPath": {
+              "base": "dist/hyperiot"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "@angular/localize/init",
+              "src/polyfills.ts"
+            ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
@@ -35,15 +39,20 @@
             "styles": [
               "./node_modules/leaflet/dist/leaflet.css",
               "./node_modules/gridstack/dist/gridstack.min.css",
+              "./node_modules/@danielmoncada/angular-datetime-picker/assets/style/picker.min.css",
               "src/styles.scss"
             ],
             "scripts": [],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "browser": "src/main.ts",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "."
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -58,8 +67,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -72,15 +79,12 @@
                   "maximumError": "3mb"
                 }
               ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": "ngsw-config.json"
             },
             "it": {
               "localize": ["it"],
               "sourceMap": false,
-              "namedChunks": false,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "namedChunks": false
             },
             "development": {}
           },
@@ -93,13 +97,13 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "hyperiot:build:production"
+              "buildTarget": "hyperiot:build:production"
             },
             "it": {
-              "browserTarget": "hyperiot:build:it"
+              "buildTarget": "hyperiot:build:it"
             },
             "development": {
-              "browserTarget": "hyperiot:build:development"
+              "buildTarget": "hyperiot:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -107,7 +111,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "hyperiot:build"
+            "buildTarget": "hyperiot:build"
           }
         },
         "test": {
@@ -125,6 +129,7 @@
             "styles": [
               "./node_modules/leaflet/dist/leaflet.css",
               "./node_modules/gridstack/dist/gridstack.min.css",
+              "./node_modules/@danielmoncada/angular-datetime-picker/assets/style/picker.min.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -243,5 +248,31 @@
   },
   "cli": {
     "analytics": false
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "type": "component"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
+    }
   }
 }

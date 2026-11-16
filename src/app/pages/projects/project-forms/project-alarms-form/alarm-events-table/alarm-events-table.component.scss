@@ -1,16 +1,16 @@
 #container-alarm-events-table {
     
-    table.mat-table {
+    table.mat-mdc-table {
         display: table;
         width: 100%;
     }
 
-    th.mat-header-cell {
+    th.mat-mdc-header-cell {
         font-size: 1.1em;
         color: #fff;
-        background-color: #376caf;        
+        background-color: #376caf;
     }
-    th.mat-header-cell {
+    th.mat-mdc-header-cell {
         background-color: #fff;
         font-weight: 700;
         border-bottom: .5px solid #c7c7c7;
@@ -19,7 +19,7 @@
         font-size: 13px;
     }
     
-    td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+    td.mat-mdc-cell, td.mat-mdc-footer-cell, th.mat-mdc-header-cell {
         text-align: center;
     }
 

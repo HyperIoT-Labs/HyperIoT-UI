@@ -17,10 +17,11 @@ const animation = false;
  * It is used to build the timeline through D3.
  */
 @Component({
-  selector: 'hyperiot-time-axis',
-  templateUrl: './time-axis.component.html',
-  styleUrls: ['./time-axis.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyperiot-time-axis',
+    templateUrl: './time-axis.component.html',
+    styleUrls: ['./time-axis.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class TimeAxisComponent implements AfterViewInit {
 

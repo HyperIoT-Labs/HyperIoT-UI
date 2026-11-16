@@ -1,29 +1,36 @@
 <!-- device list -->
 <div id="area-device-select-dialog" class="dialog" hyt-dialog>
 
-    <div *ngIf="projectDevices.length > 0 && loadingStatus === LoadingStatus.Ready" class="pt-2 pb-2 d-flex flex-column">
+    @if (projectDevices.length > 0 && loadingStatus === LoadingStatus.Ready) {
+    <div class="pt-2 pb-2 d-flex flex-column">
         <h3 class="ml-3 mr-3" i18n="@@HYT_area_map_select_device">Select device</h3>
 
         <mat-list role="list" class="flex-grow-1">
-            <mat-list-item *ngFor="let device of projectDevices" role="listitem">
+            @for (device of projectDevices; track device) {
+            <mat-list-item role="listitem">
                 <button mat-button
                     [disabled]="device.added"
                     [ngClass]="{ selected: device === selectedDevice }"
                     (click)="selectedDevice = device">
                     {{ device.deviceName }}
-                    <span *ngIf="device.added && device.area">
+                    @if (device.added && device.area) {
+                    <span>
                         ({{device.area}})
                     </span>
+                    }
                 </button>
             </mat-list-item>
+            }
         </mat-list>
 
-        <div *ngIf="selectedDevice" class="d-flex flex-row align-items-center justify-content-center">
+        @if (selectedDevice) {
+        <div class="d-flex flex-row align-items-center justify-content-center">
             <hyt-select-template id="area-device-multi-selector" class="m-2"
                 [(ngModel)]="selectedDeviceIcon"
                 [options]="deviceIconOptions"
                 label="Device icon"></hyt-select-template>
         </div>
+        }
 
         <div id="buttons-container" class="ml-3 mr-3 d-flex flex-row justify-content-between">
             <hyt-button [color]="'hyt-base-default-white'" (clickFn)="close()" i18n="@@HYT_cancel">Cancel</hyt-button>
@@ -34,21 +41,28 @@
         </div>
 
     </div>
+    }
 
     <!-- no devices defined -->
-    <div *ngIf="projectDevices.length === 0 && loadingStatus === LoadingStatus.Ready">
+    @if (projectDevices.length === 0 && loadingStatus === LoadingStatus.Ready) {
+    <div>
         <!-- @I18N@ -->
         No devices defined for this project. Add a device first.
     </div>
+    }
 
     <!-- loading progress / error -->
-    <div *ngIf="loadingStatus === LoadingStatus.Loading" class="loading">
+    @if (loadingStatus === LoadingStatus.Loading) {
+    <div class="loading">
         <!-- @I18N@ -->
         Loading...
     </div>
-    <div *ngIf="loadingStatus === LoadingStatus.Error" class="loading">
+    }
+    @if (loadingStatus === LoadingStatus.Error) {
+    <div class="loading">
         <!-- @I18N@ -->
         An error occurred while loading data.
     </div>
+    }
 
 </div>

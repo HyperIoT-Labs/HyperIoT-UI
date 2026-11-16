@@ -8,9 +8,10 @@ import { PacketSelectComponent } from '../packet-select/packet-select.component'
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'hyperiot-sensor-value-settings',
-  templateUrl: './sensor-value-settings.component.html',
-  styleUrls: ['./sensor-value-settings.component.css']
+    selector: 'hyperiot-sensor-value-settings',
+    templateUrl: './sensor-value-settings.component.html',
+    styleUrls: ['./sensor-value-settings.component.css'],
+    standalone: false
 })
 export class SensorValueSettingsComponent implements OnInit, OnDestroy {
   subscription: any;

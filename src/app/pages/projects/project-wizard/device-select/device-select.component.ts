@@ -4,10 +4,11 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { SelectOption } from 'components';
 
 @Component({
-  selector: 'hyt-device-select',
-  templateUrl: './device-select.component.html',
-  styleUrls: ['./device-select.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-device-select',
+    templateUrl: './device-select.component.html',
+    styleUrls: ['./device-select.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class DeviceSelectComponent implements OnChanges {
 

@@ -30,10 +30,11 @@ enum PageStatus {
 }
 
 @Component({
-  selector: 'hyperiot-dashboard-widgets-layout',
-  templateUrl: './widgets-layout.component.html',
-  styleUrls: ['./widgets-layout.component.scss'],
-  encapsulation: ViewEncapsulation.Emulated
+    selector: 'hyperiot-dashboard-widgets-layout',
+    templateUrl: './widgets-layout.component.html',
+    styleUrls: ['./widgets-layout.component.scss'],
+    encapsulation: ViewEncapsulation.Emulated,
+    standalone: false
 })
 export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   widgetReadyCounter = 0;

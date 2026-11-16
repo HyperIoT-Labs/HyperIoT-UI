@@ -5,9 +5,10 @@ import { BaseTableComponent } from '../../base/base-table/base-table.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
 @Component({
-  selector: 'hyperiot-event-table',
-  templateUrl: './event-table.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './event-table.component.css']
+    selector: 'hyperiot-event-table',
+    templateUrl: './event-table.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './event-table.component.css'],
+    standalone: false
 })
 export class EventTableComponent extends BaseTableComponent implements AfterViewInit, OnDestroy, OnInit {
 

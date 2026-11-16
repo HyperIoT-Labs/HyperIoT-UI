@@ -16,10 +16,11 @@ import { UntypedFormControl } from '@angular/forms';
 import { ComputeFieldRuleComponent } from './compute-field-rule/compute-field-rule.component';
 
 @Component({
-  selector: 'hyt-packet-enrichment-form',
-  templateUrl: './packet-enrichment-form.component.html',
-  styleUrls: ['./packet-enrichment-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-packet-enrichment-form',
+    templateUrl: './packet-enrichment-form.component.html',
+    styleUrls: ['./packet-enrichment-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PacketEnrichmentFormComponent extends ProjectFormEntity implements OnInit, OnDestroy {
 

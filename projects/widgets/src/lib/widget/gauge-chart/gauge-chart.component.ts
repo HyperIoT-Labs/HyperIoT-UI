@@ -6,9 +6,10 @@ import { asyncScheduler } from 'rxjs';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
 @Component({
-  selector: 'hyperiot-gauge-chart',
-  templateUrl: './gauge-chart.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './gauge-chart.component.css']
+    selector: 'hyperiot-gauge-chart',
+    templateUrl: './gauge-chart.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './gauge-chart.component.css'],
+    standalone: false
 })
 export class GaugeChartComponent extends BaseGenericComponent implements OnInit {
   /**

@@ -5,9 +5,10 @@ import {Subject} from 'rxjs';
 import { AutoUpdateConfigStatus, ConfigModel } from '../../base/base-widget/model/widget.model';
 
 @Component({
-  selector: 'hyperiot-widget-settings-dialog',
-  templateUrl: './widget-settings-dialog.component.html',
-  styleUrls: ['./widget-settings-dialog.component.scss']
+    selector: 'hyperiot-widget-settings-dialog',
+    templateUrl: './widget-settings-dialog.component.html',
+    styleUrls: ['./widget-settings-dialog.component.scss'],
+    standalone: false
 })
 export class WidgetSettingsDialogComponent implements OnInit {
 

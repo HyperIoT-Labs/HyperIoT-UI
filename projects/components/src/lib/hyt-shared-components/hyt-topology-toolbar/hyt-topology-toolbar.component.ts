@@ -9,10 +9,11 @@ import {
 import { DialogService } from '../../hyt-dialog/dialog.service';
 
 @Component({
-  selector: 'hyt-topology-toolbar',
-  templateUrl: './hyt-topology-toolbar.component.html',
-  styleUrls: ['./hyt-topology-toolbar.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-topology-toolbar',
+    templateUrl: './hyt-topology-toolbar.component.html',
+    styleUrls: ['./hyt-topology-toolbar.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytTopologyToolbarComponent implements OnInit {
 

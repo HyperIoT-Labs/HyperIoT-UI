@@ -6,7 +6,7 @@ describe('ToggleSidebarService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: ToggleSidebarService = TestBed.get(ToggleSidebarService);
+    const service: ToggleSidebarService = TestBed.inject(ToggleSidebarService);
     expect(service).toBeTruthy();
   });
 });

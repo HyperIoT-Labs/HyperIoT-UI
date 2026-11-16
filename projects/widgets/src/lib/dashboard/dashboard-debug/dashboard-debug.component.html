@@ -1,25 +1,39 @@
-<div *ngIf="data.length > 0" class="debug-container">
+@if (data.length > 0) {
+<div class="debug-container">
   <hr>
   <h3>Debug console: </h3>
-  <div *ngFor="let d of data; let idx = index">
-    <div [ngSwitch]="getType(d)">
-      <div *ngSwitchCase="'object'">
+  @for (d of data; track d; let idx = $index) {
+  <div>
+    <div>
+      @switch (getType(d)) {
+      @case ('object') {
+      <div>
         <dt>Object <button (click)="toggleItem(idx)">+</button></dt>
         <dd [ngClass]="{'hidden': idx !== itemSelected}"><pre>{{d|json}}</pre></dd>
       </div>
-      <div *ngSwitchCase="'number'">
+      }
+      @case ('number') {
+      <div>
         <dt>Number <button (click)="toggleItem(idx)">+</button></dt>
         <dd [ngClass]="{'hidden': idx !== itemSelected}"><pre>{{d}}</pre></dd>
       </div>
-      <div *ngSwitchCase="'string'">
+      }
+      @case ('string') {
+      <div>
         <dt>String <button (click)="toggleItem(idx)">+</button></dt>
         <dd [ngClass]="{'hidden': idx !== itemSelected}"><pre>{{d}}</pre></dd>
       </div>
-      <div *ngSwitchDefault>
+      }
+      @default {
+      <div>
         <dt>Unknown <button (click)="toggleItem(idx)">+</button></dt>
         <dd [ngClass]="{'hidden': idx !== itemSelected}"><pre>{{d}}</pre></dd>
       </div>
+      }
+      }
     </div>
   </div>
+  }
   <hr>
 </div>
+}

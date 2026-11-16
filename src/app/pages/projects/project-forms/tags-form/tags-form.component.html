@@ -6,14 +6,17 @@
 
   <div class="tag-logic-container row">
 
-    <div id="container-loading-tags" *ngIf="tagStatus == 0" class="col-12"> <!-- tagStatus==0 -->
+    @if (tagStatus == 0) {
+    <div id="container-loading-tags" class="col-12"> <!-- tagStatus==0 -->
       
       <span class="text-loading" i18n="@@HYT_loading_tags">Loading Tags</span>
       <div class="loader"></div>
 
     </div>
+    }
 
-    <div id="container-tags" *ngIf="tagStatus == 1" class="col-12"> <!-- tagStatus==1 -->
+    @if (tagStatus == 1) {
+    <div id="container-tags" class="col-12"> <!-- tagStatus==1 -->
 
       <div id="container-form-tags">
 
@@ -79,29 +82,38 @@
 
       <div id="tag-box" class="row">
 
-        <div id="no-tags-found" class="col-12" *ngIf="filteredTags.length == 0"> 
+        @if (filteredTags.length == 0) {
+        <div id="no-tags-found" class="col-12">
           <span i18n="@@HYT_no_tags_found">No tags found, create one!</span>
         </div>
+        }
 
-        <div id="tags-container" class="col-12" *ngIf="filteredTags.length > 0">
+        @if (filteredTags.length > 0) {
+        <div id="tags-container" class="col-12">
 
           <p id="subtitle-tags" i18n="@@HYT_list_tags">List of Tags</p>
           <hyt-tag-list>
-            <hyt-tag *ngFor="let tag of filteredTags" [selectable]="true" [selected]="true" [removable]="true"
+            @for (tag of filteredTags; track tag) {
+            <hyt-tag [selectable]="true" [selected]="true" [removable]="true"
               [editable]="true" (removed)="delete(tag)" (edited)="editTagModal(tag)" [value]="tag.name" [color]="tag.color">
             </hyt-tag>
+            }
           </hyt-tag-list>
 
         </div>
+        }
 
       </div>
 
     </div>
+    }
 
-    <div id="container-error-tags" *ngIf="tagStatus == -1" class="col-12"> <!-- tagStatus==-1 -->
+    @if (tagStatus == -1) {
+    <div id="container-error-tags" class="col-12"> <!-- tagStatus==-1 -->
 
       <span class="text-error" i18n="@@HYT_error_loading_tags_data">Error loading tags data</span>
     </div>
+    }
 
   </div>
 

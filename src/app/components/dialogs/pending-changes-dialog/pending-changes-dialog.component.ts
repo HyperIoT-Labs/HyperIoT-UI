@@ -2,9 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from 'components';
 
 @Component({
-  selector: 'hyt-pending-changes-dialog',
-  templateUrl: './pending-changes-dialog.component.html',
-  styleUrls: ['./pending-changes-dialog.component.scss']
+    selector: 'hyt-pending-changes-dialog',
+    templateUrl: './pending-changes-dialog.component.html',
+    styleUrls: ['./pending-changes-dialog.component.scss'],
+    standalone: false
 })
 export class PendingChangesDialogComponent {
 

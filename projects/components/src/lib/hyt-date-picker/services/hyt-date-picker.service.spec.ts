@@ -6,7 +6,7 @@ describe('HytDatePickerService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: HytDatePickerService = TestBed.get(HytDatePickerService);
+    const service: HytDatePickerService = TestBed.inject(HytDatePickerService);
     expect(service).toBeTruthy();
   });
 });

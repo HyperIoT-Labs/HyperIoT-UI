@@ -5,12 +5,13 @@
       [ngClass]="{'errorPositionBottom': errorPosition=='bottom'}"
     >
   
+      <mat-label>{{ placeholder }}</mat-label>
+
       <input matInput #input 
         class="hyt-input form-control" 
         name="{{name}}" 
         id="{{id}}" 
         type="{{type}}"
-        placeholder="{{placeholder}}" 
         value="{{fieldValue}}" 
         (blur)="onBlur()"
         [required]="isRequired"
@@ -20,9 +21,11 @@
         [errorStateMatcher]="matcher"
       >
   
-      <mat-hint *ngIf="hint">
+      @if (hint) {
+      <mat-hint>
         {{ hint }}
       </mat-hint>
+      }
   
     </mat-form-field>
   

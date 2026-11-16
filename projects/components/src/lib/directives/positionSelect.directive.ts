@@ -18,7 +18,8 @@ import { Subject } from 'rxjs';
  * In our case pass the [positionSelect]=true to the hyt-select component
  */
 @Directive({
-  selector: '[positionSelect]'
+    selector: '[positionSelect]',
+    standalone: false
 })
 export class CustomSelectPositionDirective implements OnDestroy {
   private readonly destroy$ = new Subject<void>();

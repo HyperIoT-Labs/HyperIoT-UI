@@ -5,8 +5,8 @@
   class=""
   aria-label="label"
 >
+  @for (option of options; track option) {
   <mat-radio-button
-    *ngFor="let option of options"
     class="hyt-radio-button"
     value="{{ option.value }}"
     checked="{{ option.checked == true }}"
@@ -15,8 +15,11 @@
   >
     {{ option.label }}
   </mat-radio-button>
+  }
 
-  <mat-error *ngFor="let error of getErrorList()">
+  @for (error of getErrorList(); track error) {
+  <mat-error>
     {{ error }}
   </mat-error>
+  }
 </mat-radio-group>

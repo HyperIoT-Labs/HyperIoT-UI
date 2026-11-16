@@ -5,9 +5,10 @@ import { BaseWidgetComponent } from '../../base/base-widget/base-widget.componen
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
 @Component({
-  selector: 'hyperiot-dynamic-label-value-widget',
-  templateUrl: './dynamic-label-value-widget.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './dynamic-label-value-widget.component.scss']
+    selector: 'hyperiot-dynamic-label-value-widget',
+    templateUrl: './dynamic-label-value-widget.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './dynamic-label-value-widget.component.scss'],
+    standalone: false
 })
 export class DynamicLabelValueWidgetComponent extends BaseWidgetComponent implements OnInit, OnDestroy {
   /**

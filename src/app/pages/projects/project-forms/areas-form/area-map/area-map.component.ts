@@ -37,9 +37,10 @@ import { takeUntil } from 'rxjs/operators';
 import { MapItemAction } from 'components';
 
 @Component({
-  selector: 'hyt-area-map',
-  templateUrl: './area-map.component.html',
-  styleUrls: ['./area-map.component.scss']
+    selector: 'hyt-area-map',
+    templateUrl: './area-map.component.html',
+    styleUrls: ['./area-map.component.scss'],
+    standalone: false
 })
 
 

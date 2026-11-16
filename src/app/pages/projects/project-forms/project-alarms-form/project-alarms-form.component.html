@@ -1,8 +1,10 @@
 <div id="container-alarms" class="container">
 
-  <div *ngIf="!editMode" id="alarms-edit-mode" class="form-group row">
+  @if (!editMode) {
+  <div id="alarms-edit-mode" class="form-group row">
 
-    <div id="btn-edit-mode" class="col-12" *ngIf="!editMode">
+    @if (!editMode) {
+    <div id="btn-edit-mode" class="col-12">
 
       <hyt-button [color]="'hyt-base-default-white'" (clickFn)="addAlarm()">
         <span class="hyt-icon icon-hyt_plus"></span>
@@ -11,7 +13,9 @@
       </hyt-button>
 
     </div>
+    }
   </div>
+  }
   <form [formGroup]="form" [ngClass]="{ hidden: !editMode }" class="alarms-form rule-form" autocomplete="on">
     <div class="form-group row align-items-end">
 
@@ -40,7 +44,8 @@
               i18n="@@HYT_severity_list">Severity List</th>
           <tbody>
             <!-- real event list -->
-            <tr *ngFor="let event of eventListMap.get(selectedId); let i = index"
+            @for (event of eventListMap.get(selectedId); track event; let i = $index) {
+            <tr
               [ngClass]="{ hidden: selectedId == 0 || eventListMap.get(selectedId).length == 0}">
               <td style="padding: 5px 7px 5px 10px; cursor: pointer;">
                 <span (click)="loadEvent(event, i)">{{event.event.name}}</span>
@@ -50,6 +55,7 @@
                 <span (click)="duplicateEvent(event)" class="hyt-icon icon-hyt_duplicate"></span>
               </td>
             </tr>
+            }
             <!-- message when there are no event in table-->
             <tr [ngClass]="{ hidden: selectedId != 0 }">
               <td colspan="2" style="padding: 5px 7px 5px 10px;"><ng-container i18n="@@HYT_alarmSeverity_message">At least
@@ -81,29 +87,39 @@
     </div>
   </form>
 
-  <div *ngIf="loadingStatus !== LoadingStatus.Ready"
+  @if (loadingStatus !== LoadingStatus.Ready) {
+  <div
     class="overlay d-flex flex-column align-items-center justify-content-center">
 
-    <div *ngIf="loadingStatus === LoadingStatus.Loading">
+    @if (loadingStatus === LoadingStatus.Loading) {
+    <div>
 
       <h4 i18n="@@HYT_loading_data">Loading data...</h4>
 
     </div>
+    }
 
-    <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
+    @if (loadingStatus === LoadingStatus.Error) {
+    <div class="error-overlay d-flex flex-column justify-content-center">
       <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
 
       <hyt-button [color]="'hyt-base-default-white'" (click)="loadingStatus = LoadingStatus.Ready">
         <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span>
       </hyt-button>
     </div>
+    }
 
-    <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">Saving data...</h4>
+    @if (loadingStatus === LoadingStatus.Saving) {
+    <h4 i18n="@@HYT_saving_data">Saving data...</h4>
+    }
 
-    <mat-progress-bar *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
+    @if (loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving) {
+    <mat-progress-bar
       mode="indeterminate"></mat-progress-bar>
+    }
 
   </div>
+  }
 
   <h3 id="form-title" [ngClass]="{ hidden: !addEventMode }" class="ng-star-inserted" i18n="@@HYT_severity_settings">Severity Settings</h3>
 
@@ -134,12 +150,13 @@
 
       <div id="falarm-col-container-rules" class="col-12">
 
+        @if (allPackets) {
         <hyt-rule-definition
-          *ngIf="allPackets"
           #alarmDef
           formControlName="ruleDefinition"
           [allPackets]="allPackets"
         ></hyt-rule-definition>
+        }
 
       </div> <!-- Field RuleDefinition -->
 
@@ -150,24 +167,30 @@
         <!-- TODO remove warning on FormControl -->
         <mat-form-field class="tag-selection">
           <mat-label>Selected tag</mat-label>
-          <mat-chip-list #chipList>
-            <mat-chip *ngFor="let tag of selectedTags" [selectable]="true" [removable]="true" (removed)="remove()"
-              [style.backgroundColor]="tag.color">
+          <mat-chip-grid #chipList>
+            @for (tag of selectedTags; track tag) {
+            <mat-chip-row [removable]="true" (removed)="remove()"
+              [style.--mat-chip-elevated-container-color]="tag.color">
               {{tag.name}}
               <mat-icon matChipRemove>cancel</mat-icon>
-            </mat-chip>
+            </mat-chip-row>
+            }
             <input placeholder="Select tag" #tagInput [formControl]="tagCtrl" [matAutocomplete]="auto"
               [matChipInputFor]="chipList" (matChipInputTokenEnd)="add($event)" #trigger="matAutocompleteTrigger"
               (keydown.enter)="$event.target.blur(); trigger.closePanel()">
-          </mat-chip-list>
+          </mat-chip-grid>
           <mat-autocomplete (click)="openAutocompletePanel()" #auto="matAutocomplete"
             (optionSelected)="selected($event)">
-            <mat-option *ngFor="let tag of allTags" [value]="tag">
+            @for (tag of allTags; track tag) {
+            <mat-option [value]="tag">
               {{tag.name}}
             </mat-option>
+            }
           </mat-autocomplete>
         </mat-form-field>
-        <label *ngIf="tagRetrievalError !== ''" i18n="@@HYT_error_tag_retrieval" class="tagError">{{ tagRetrievalError }}</label>
+        @if (tagRetrievalError !== '') {
+        <label i18n="@@HYT_error_tag_retrieval" class="tagError">{{ tagRetrievalError }}</label>
+        }
       </div> <!-- Tag selection -->
       <div id="falarm-col-container-rules" class="col-6">
         <hyt-select [form]="formEvent" i18n-label="@@HYT_alarm_severity_severity" label="Severity" name="event-severity"
@@ -180,8 +203,12 @@
     <div id="btn-edit-mode" class="col-12">
       <hyt-button [color]="'hyt-base-default-white'" (clickFn)="saveEvent()" [isDisabled]="isSeverityInvalid()">
         <span class="hyt-icon icon-hyt_save"></span>
-        <ng-container *ngIf="!this.updateLabel" i18n="@@HYT_save_severity">Save Severity</ng-container>
-        <ng-container *ngIf="this.updateLabel" i18n="@@HYT_update_severity">Update Severity</ng-container>
+        @if (!this.updateLabel) {
+        <ng-container i18n="@@HYT_save_severity">Save Severity</ng-container>
+        }
+        @if (this.updateLabel) {
+        <ng-container i18n="@@HYT_update_severity">Update Severity</ng-container>
+        }
       </hyt-button>
       <hyt-checkbox [(ngModel)]="addAnother" [ngModelOptions]="{standalone: true}" name="another_event" type="checkbox"
         id="another_event">

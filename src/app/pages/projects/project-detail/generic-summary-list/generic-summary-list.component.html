@@ -3,18 +3,19 @@
     <div class="row">
         <div class="col-12 header-table">
             {{summaryList.title}}
-            <span *ngIf="addButtonActive" class="hyt-icon icon-hyt_plusC" (click)="onOptionClick('add')"></span>
+            @if (addButtonActive) {
+            <span class="hyt-icon icon-hyt_plusC" (click)="onOptionClick('add')"></span>
+            }
         </div>
     </div>
 
     <div  class="container-body-table-elements">
 
-        <ng-container [ngSwitch]="summaryList.title">
-
-            <ng-container *ngSwitchCase="'Packets'">
-                <ng-container *ngIf="filteredElementList.length > 0; else emptyPacketBox">
-
-                    <div class="row-table-element" *ngFor="let item of filteredElementList; let i = index">
+        @switch (summaryList.title) {
+            @case ('Packets') {
+                @if (filteredElementList.length > 0) {
+                    @for (item of filteredElementList; track item; let i = $index) {
+                    <div class="row-table-element">
 
                         <div class="name-table-element" (click)="onOptionClick('edit', item)">
                             {{item.name}}
@@ -27,23 +28,18 @@
                         </div>
 
                     </div>
-
-                </ng-container>
-
-                <ng-template #emptyPacketBox>
-
+                    }
+                } @else {
                     <div id="row-table-no-element" i18n="@@HYT_summary_list_no_packets">
                         No Packets
                     </div>
+                }
+            } <!-- DISPLAY FILTERED PACKETS ELEMENTS -->
 
-                </ng-template>
-            </ng-container> <!-- DISPLAY FILTERED PACKETS ELEMENTS -->
-
-            <ng-container *ngSwitchCase="'Packet Enrichments'">
-
-                <ng-container *ngIf="filteredElementList.length > 0; else emptyPacketBox">
-
-                    <div class="row-table-element" *ngFor="let item of filteredElementList; let i = index">
+            @case ('Packet Enrichments') {
+                @if (filteredElementList.length > 0) {
+                    @for (item of filteredElementList; track item; let i = $index) {
+                    <div class="row-table-element">
 
                         <div class="name-table-element" (click)="onOptionClick('edit', item)">
                             {{item.name}}
@@ -56,24 +52,18 @@
                         </div>
 
                     </div>
-
-                </ng-container>
-
-                <ng-template #emptyPacketBox>
-
+                    }
+                } @else {
                     <div id="row-table-no-element" i18n="@@HYT_summary_list_no_packets">
                         No Enrichment
                     </div>
+                }
+            } <!-- DISPLAY FILTERED ENRICHMENTS ELEMENTS -->
 
-                </ng-template>
-
-            </ng-container> <!-- DISPLAY FILTERED ENRICHMENTS ELEMENTS -->
-
-          <ng-container *ngSwitchCase="'Packet Events'">
-
-            <ng-container *ngIf="filteredElementList.length > 0; else emptyEventBox">
-
-              <div class="row-table-element" *ngFor="let item of filteredElementList; let i = index">
+          @case ('Packet Events') {
+            @if (filteredElementList.length > 0) {
+              @for (item of filteredElementList; track item; let i = $index) {
+              <div class="row-table-element">
 
                 <div class="name-table-element" (click)="onOptionClick('edit', item)">
                   {{item?.name}}
@@ -86,24 +76,18 @@
                 </div>
 
               </div>
-
-            </ng-container>
-
-            <ng-template #emptyEventBox>
-
+              }
+            } @else {
               <div id="row-table-no-element" i18n="@@HYT_summary_list_no_packets">
                 No events
               </div>
+            }
+          } <!-- DISPLAY FILTERED Events ELEMENTS -->
 
-            </ng-template>
-
-          </ng-container> <!-- DISPLAY FILTERED Events ELEMENTS -->
-
-            <ng-container *ngSwitchDefault>
-
-                <ng-container *ngIf="summaryList.list.length > 0; else emptyGenericBox">
-
-                    <div  class="row-table-element" *ngFor="let item of summaryList.list; let i = index">
+            @default {
+                @if (summaryList.list.length > 0) {
+                    @for (item of summaryList.list; track item; let i = $index) {
+                    <div  class="row-table-element">
 
                         <div class="name-table-element" (click)="onOptionClick('edit', item)">
                             {{item?.name}}
@@ -116,20 +100,14 @@
                         </div>
 
                     </div>
-
-                </ng-container>
-
-                <ng-template #emptyGenericBox>
-
+                    }
+                } @else {
                     <div id="row-table-no-element" i18n="@@HYT_summary_list_no_packets">
                         No {{summaryList.title}}
                     </div>
-
-                </ng-template>
-
-            </ng-container> <!-- DISPLAY ALL LIST ELEMENTS -->
-
-        </ng-container>
+                }
+            } <!-- DISPLAY ALL LIST ELEMENTS -->
+        }
 
     </div>
 

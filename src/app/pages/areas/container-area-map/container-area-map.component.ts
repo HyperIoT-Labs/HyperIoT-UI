@@ -9,9 +9,10 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'hyt-container-area-map',
-  templateUrl: './container-area-map.component.html',
-  styleUrls: ['./container-area-map.component.scss']
+    selector: 'hyt-container-area-map',
+    templateUrl: './container-area-map.component.html',
+    styleUrls: ['./container-area-map.component.scss'],
+    standalone: false
 })
 export class ContainerAreaMapComponent implements OnInit, OnChanges, OnDestroy {
   /**

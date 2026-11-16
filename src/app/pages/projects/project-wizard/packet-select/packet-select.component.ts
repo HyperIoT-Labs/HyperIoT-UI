@@ -4,10 +4,11 @@ import { SelectOption } from 'components';
 import { HDevice, HPacket } from 'core';
 
 @Component({
-  selector: 'hyt-pw-packet-select',
-  templateUrl: './packet-select.component.html',
-  styleUrls: ['./packet-select.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-pw-packet-select',
+    templateUrl: './packet-select.component.html',
+    styleUrls: ['./packet-select.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PacketSelectComponent implements OnInit {
 

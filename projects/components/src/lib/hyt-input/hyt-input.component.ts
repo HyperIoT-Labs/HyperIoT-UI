@@ -60,11 +60,12 @@ export class CustomErrorStateMatcher implements ErrorStateMatcher {
  * isInputPassword: password without validators
  */
 @Component({
-  selector: "hyt-input-text",
-  templateUrl: "./hyt-input.component.html",
-  styleUrls: ["./hyt-input.component.scss"],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_INPUT],
-  encapsulation: ViewEncapsulation.None,
+    selector: "hyt-input-text",
+    templateUrl: "./hyt-input.component.html",
+    styleUrls: ["./hyt-input.component.scss"],
+    providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_INPUT],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HytInputComponent implements OnInit, ControlValueAccessor {
   private logger: Logger;

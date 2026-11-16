@@ -6,7 +6,7 @@ describe('AuthenticationHttpErrorHandlerService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: AuthenticationHttpErrorHandlerService = TestBed.get(AuthenticationHttpErrorHandlerService);
+    const service: AuthenticationHttpErrorHandlerService = TestBed.inject(AuthenticationHttpErrorHandlerService);
     expect(service).toBeTruthy();
   });
 });

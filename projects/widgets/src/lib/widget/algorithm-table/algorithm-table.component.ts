@@ -7,9 +7,10 @@ import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
 
 @Component({
-  selector: 'hyperiot-algorithm-table',
-  templateUrl: './algorithm-table.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './algorithm-table.component.css']
+    selector: 'hyperiot-algorithm-table',
+    templateUrl: './algorithm-table.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './algorithm-table.component.css'],
+    standalone: false
 })
 export class AlgorithmTableComponent extends BaseTableComponent implements AfterViewInit, OnInit {
 

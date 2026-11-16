@@ -32,8 +32,7 @@
 
             </div>
 
-            <ng-container *ngIf="pageStatus == 0"> 
-                
+            @if (pageStatus == 0) {
                 <div id="container-loading">
 
                     <!-- Loading... -->
@@ -47,18 +46,15 @@
                     </div>
 
                 </div>
+            }
 
-            </ng-container>
-
-            <ng-container *ngIf="pageStatus == -2"> 
-                
+            @if (pageStatus == -2) {
                 <div id="container-error">
                     
                     {{nameError}}
 
                 </div>
-
-            </ng-container>
+            }
 
         </form>
 

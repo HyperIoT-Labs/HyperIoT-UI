@@ -4,17 +4,18 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 @Component({
-  selector: 'hyt-autocomplete',
-  exportAs: 'hytAutocomplete',
-  templateUrl: './hyt-autocomplete.component.html',
-  styleUrls: ['./hyt-autocomplete.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => HytAutocompleteComponent),
-      multi: true
-    }
-  ]
+    selector: 'hyt-autocomplete',
+    exportAs: 'hytAutocomplete',
+    templateUrl: './hyt-autocomplete.component.html',
+    styleUrls: ['./hyt-autocomplete.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => HytAutocompleteComponent),
+            multi: true
+        }
+    ],
+    standalone: false
 })
 
 export class HytAutocompleteComponent implements OnInit {

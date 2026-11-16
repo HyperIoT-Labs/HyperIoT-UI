@@ -1,24 +1,26 @@
-<div id="widget-settings-dialog" [ngSwitch]="dialogDataState" hyt-dialog>
-
-    <ng-container *ngSwitchCase="0">
+<div id="widget-settings-dialog" hyt-dialog>
+    @switch (dialogDataState) {
+    @case (0) {
         <div id="title-modal" i18n="@@HYT_widget_settings_title" hyt-dialog-header>Widget Settings</div>
         <div hyt-dialog-content>
             <div class="loader"></div>
         </div>
-    </ng-container>
-
-    <ng-container *ngSwitchCase="1">
-
+    }
+    @case (1) {
         <div id="title-modal" i18n="@@HYT_widget_settings_title" hyt-dialog-header>Widget Settings</div>
 
         <div class="dialog-form-content" hyt-dialog-content>
 
-            <div *ngIf="autoUpdateConfigStatus === 'SUCCESS'" class="auto-update-config-warn" i18n="@@HYT_auto_update_config_warn">
+            @if (autoUpdateConfigStatus === 'SUCCESS') {
+            <div class="auto-update-config-warn" i18n="@@HYT_auto_update_config_warn">
                 Attention! An automatic update has been applied to the widget configuration to make it compatible with the latest updates. Save the configuration to make the change effective.
             </div>
-            <div *ngIf="autoUpdateConfigStatus === 'ERROR'" class="auto-update-config-error" i18n="@@HYT_auto_update_config_error">
+            }
+            @if (autoUpdateConfigStatus === 'ERROR') {
+            <div class="auto-update-config-error" i18n="@@HYT_auto_update_config_error">
                 Error! Unable to update the widget configuration automatically. The widget may not function correctly after the latest updates. It is recommended to delete the widget and set up a new one.
             </div>
+            }
 
             <form class="content flex-grow-1" #settingsForm="ngForm">
 
@@ -41,91 +43,127 @@
 
                 </div>
 
-                <div class="custom-settings" [ngSwitch]="widget.type">
-                    <div *ngSwitchCase="'sensor-value'">
+                <div class="custom-settings">
+                    @switch (widget.type) {
+                    @case ('sensor-value') {
+                    <div>
                         <hyperiot-sensor-value-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-sensor-value-settings>
                     </div>
-                    <div *ngSwitchCase="'offline-table'">
+                    }
+                    @case ('offline-table') {
+                    <div>
                         <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
-                    <div *ngSwitchCase="'production-target-widget'">
+                    }
+                    @case ('production-target-widget') {
+                    <div>
                         <hyperiot-production-target-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-production-target-settings>
                     </div>
-                    <div class="container-widget-type" *ngSwitchCase="'realtime-table'">
+                    }
+                    @case ('realtime-table') {
+                    <div class="container-widget-type">
                         <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
+                    }
 
-                    <div *ngSwitchCase="'gauge'">
+                    @case ('gauge') {
+                    <div>
                         <hyperiot-gauge-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-gauge-settings>
                     </div>
+                    }
                     
-                    <div *ngSwitchCase="'trend-gauge'">
+                    @case ('trend-gauge') {
+                    <div>
                         <hyperiot-trend-gauge-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-trend-gauge-chart-settings>
                     </div>
+                    }
 
-                    <div *ngSwitchCase="'histogram'">
+                    @case ('histogram') {
+                    <div>
                         <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
-                    <div *ngSwitchCase="'time-chart'">
+                    }
+                    @case ('time-chart') {
+                    <div>
                         <hyperiot-time-chart-settings [checkbox]="true" [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
-                    <div *ngSwitchCase="'bodymap'">
+                    }
+                    @case ('bodymap') {
+                    <div>
                       <hyperiot-bodymap-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                                                [settingsForm]="settingsForm"></hyperiot-bodymap-settings>
                     </div>
-                    <div *ngSwitchCase="'ecg'">
+                    }
+                    @case ('ecg') {
+                    <div>
                       <hyperiot-ecg-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                                                     [settingsForm]="settingsForm">
                       </hyperiot-ecg-settings>
                     </div>
-                    <div *ngSwitchCase="'defibrillator'">
+                    }
+                    @case ('defibrillator') {
+                    <div>
                         <hyperiot-defibrillator-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                                                       [settingsForm]="settingsForm">
                         </hyperiot-defibrillator-settings>
                       </div>
-                    <div *ngSwitchCase="'algorithm-offline-table'">
+                    }
+                    @case ('algorithm-offline-table') {
+                    <div>
                         <hyperiot-algorithm-settings [widget]="widget" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-algorithm-settings>
                     </div>
-                    <div *ngSwitchCase="'algorithm-history-table'">
+                    }
+                    @case ('algorithm-history-table') {
+                    <div>
                         <hyperiot-algorithm-settings [widget]="widget" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-algorithm-settings>
                     </div>
-                    <div *ngSwitchCase="'data-simulator'">
+                    }
+                    @case ('data-simulator') {
+                    <div>
                         <hyperiot-data-simulator-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm"></hyperiot-data-simulator-settings>
                     </div>
+                    }
 
-                    <div *ngSwitchCase="'multi-status'">
+                    @case ('multi-status') {
+                    <div>
                         <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply"
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
+                    }
 
-                    <div *ngSwitchCase="'dynamic-label-value'">
+                    @case ('dynamic-label-value') {
+                    <div>
                         <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
-                    <div *ngSwitchDefault></div>
+                    }
+                    @default {
+                    <div></div>
+                    }
+                    }
                 </div>
 
             </form>
@@ -142,14 +180,12 @@
                 <span i18n="@@HYT_cancel">Cancel</span>
             </hyt-button>
         </div>
-
-    </ng-container>
-
-    <ng-container *ngSwitchCase="-1">
+    }
+    @case (-1) {
         <div id="title-modal" i18n="@@HYT_widget_settings_title" hyt-dialog-header>Widget Settings</div>
         <div class="d-flex flex-column align-items-center justify-content-center" hyt-dialog-content>
             <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
         </div>
-    </ng-container>
-
+    }
+    }
 </div>

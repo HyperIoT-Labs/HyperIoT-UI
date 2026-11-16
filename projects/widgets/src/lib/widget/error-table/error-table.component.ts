@@ -5,9 +5,10 @@ import { BaseTableComponent } from '../../base/base-table/base-table.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
 @Component({
-  selector: 'hyperiot-error-table',
-  templateUrl: './error-table.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './error-table.component.css']
+    selector: 'hyperiot-error-table',
+    templateUrl: './error-table.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './error-table.component.css'],
+    standalone: false
 })
 export class ErrorTableComponent extends BaseTableComponent implements AfterViewInit, OnInit {
 

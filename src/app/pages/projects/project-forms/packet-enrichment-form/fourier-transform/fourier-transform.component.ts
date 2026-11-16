@@ -4,9 +4,10 @@ import { HPacket, HProject, HPacketService, HPacketField } from 'core';
 import { EnrichmentType } from '../enrichment-type.enum';
 
 @Component({
-  selector: 'hyt-fourier-transform',
-  templateUrl: './fourier-transform.component.html',
-  styleUrls: ['./fourier-transform.component.scss']
+    selector: 'hyt-fourier-transform',
+    templateUrl: './fourier-transform.component.html',
+    styleUrls: ['./fourier-transform.component.scss'],
+    standalone: false
 })
 export class FourierTransformComponent implements OnInit {
 

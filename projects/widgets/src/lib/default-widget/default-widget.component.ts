@@ -3,9 +3,10 @@ import { LoggerService } from 'core';
 import { BaseWidgetComponent } from '../base/base-widget/base-widget.component';
 
 @Component({
-  selector: 'hyperiot-default-widget',
-  templateUrl: './default-widget.component.html',
-  styleUrls: ['./default-widget.component.css']
+    selector: 'hyperiot-default-widget',
+    templateUrl: './default-widget.component.html',
+    styleUrls: ['./default-widget.component.css'],
+    standalone: false
 })
 export class DefaultWidgetComponent extends BaseWidgetComponent {
 

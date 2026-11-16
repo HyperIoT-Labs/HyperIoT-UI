@@ -12,26 +12,24 @@ import {
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
-  selector: "hyt-share-projects",
-  templateUrl: "./share-projects.component.html",
-  styleUrls: ["./share-projects.component.scss"],
-  providers: [SharedEntityService],
-  animations: [
-    trigger("enterTrigger", [
-      state(
-        "fadeIn",
-        style({
-          opacity: "1",
-        })
-      ),
-      transition("void => *", [
-        style({
-          opacity: "0",
-        }),
-        animate("500ms"),
-      ]),
-    ]),
-  ],
+    selector: "hyt-share-projects",
+    templateUrl: "./share-projects.component.html",
+    styleUrls: ["./share-projects.component.scss"],
+    providers: [SharedEntityService],
+    animations: [
+        trigger("enterTrigger", [
+            state("fadeIn", style({
+                opacity: "1",
+            })),
+            transition("void => *", [
+                style({
+                    opacity: "0",
+                }),
+                animate("500ms"),
+            ]),
+        ]),
+    ],
+    standalone: false
 })
 export class ShareProjectsComponent implements OnInit, OnDestroy {
   /** Identify components to show by the state:

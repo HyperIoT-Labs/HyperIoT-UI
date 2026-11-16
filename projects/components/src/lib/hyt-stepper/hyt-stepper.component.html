@@ -3,9 +3,9 @@
     (selectionChange)="change($event)"
    >
     
+    @for (template of stepArray; track template; let i = $index) {
     <mat-step
 
-      *ngFor="let template of stepArray; let i = index" 
       [completed]="completed[i]"
 
     >
@@ -24,5 +24,6 @@
       </ng-container>
 
     </mat-step>
+    }
 
   </mat-horizontal-stepper>

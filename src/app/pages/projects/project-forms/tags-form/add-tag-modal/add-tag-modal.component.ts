@@ -6,10 +6,11 @@ import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-error-handler.service';
 
 @Component({
-  selector: 'hyt-add-tag-modal',
-  templateUrl: './add-tag-modal.component.html',
-  styleUrls: ['./add-tag-modal.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-add-tag-modal',
+    templateUrl: './add-tag-modal.component.html',
+    styleUrls: ['./add-tag-modal.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class AddTagModalComponent implements OnInit,AfterViewInit {
 

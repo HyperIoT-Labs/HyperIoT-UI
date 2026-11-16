@@ -13,15 +13,15 @@
                         <mat-label i18n="@@HYT_start_time">Start Time</mat-label>
                         <input
                             matInput
-                            [ngxMatDatetimePicker]="startTimePicker"
+                            [owlDateTime]="startTimePicker"
                             placeholder="Choose a date"
                             (click)="startTimePicker.open()"
                             formControlName="startTime"
                         />
-                        <mat-datepicker-toggle matSuffix [for]="startTimePicker">
-                        </mat-datepicker-toggle>
-                        <ngx-mat-datetime-picker #startTimePicker [showSeconds]="true">
-                        </ngx-mat-datetime-picker>
+                        <button mat-icon-button matSuffix type="button" [owlDateTimeTrigger]="startTimePicker">
+                            <mat-icon>calendar_today</mat-icon>
+                        </button>
+                        <owl-date-time #startTimePicker [showSecondsTimer]="true"></owl-date-time>
                     </mat-form-field>
                 </div>
 
@@ -31,15 +31,15 @@
                         <mat-label i18n="@@HYT_end_time">End Time</mat-label>
                         <input
                             matInput
-                            [ngxMatDatetimePicker]="endTimePicker"
+                            [owlDateTime]="endTimePicker"
                             placeholder="Choose a date"
                             (click)="endTimePicker.open()"
                             formControlName="endTime"
                         />
-                        <mat-datepicker-toggle matSuffix [for]="endTimePicker">
-                        </mat-datepicker-toggle>
-                        <ngx-mat-datetime-picker #endTimePicker [showSeconds]="true">
-                        </ngx-mat-datetime-picker>
+                        <button mat-icon-button matSuffix type="button" [owlDateTimeTrigger]="endTimePicker">
+                            <mat-icon>calendar_today</mat-icon>
+                        </button>
+                        <owl-date-time #endTimePicker [showSecondsTimer]="true"></owl-date-time>
                     </mat-form-field>
                     
                     <mat-checkbox formControlName="endTimeCurrentTime" i18n="@@HYT_end_time_current_time">End Date must be current time</mat-checkbox>
@@ -48,9 +48,11 @@
 
             </div>
 
-            <div *ngIf="customRangeForm.errors?.['timeRangeInvalid'] && customRangeForm.touched" class="invalid-range-error" i18n="@@HYT_custom_default_selection_invalid_range">
+            @if (customRangeForm.errors?.['timeRangeInvalid'] && customRangeForm.touched) {
+            <div class="invalid-range-error" i18n="@@HYT_custom_default_selection_invalid_range">
                 End time must be after start time
             </div>
+            }
 
         </form>
 

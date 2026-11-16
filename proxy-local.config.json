@@ -1,132 +1,132 @@
 {
-  "/hyperiot/authentication/*": {
+  "/hyperiot/authentication": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/husers/*": {
+  "/hyperiot/husers": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/roles/*": {
+  "/hyperiot/roles": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/permissions/*": {
+  "/hyperiot/permissions": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/hprojects/*": {
+  "/hyperiot/hprojects": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/hdevices/*": {
+  "/hyperiot/hdevices": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/hpackets/*": {
+  "/hyperiot/hpackets": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/rules/*": {
+  "/hyperiot/rules": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/alarms/*": {
+  "/hyperiot/alarms": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/alarmevents/*": {
+  "/hyperiot/alarmevents": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/dashboards/*": {
+  "/hyperiot/dashboards": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/dashboardwidgets/*": {
+  "/hyperiot/dashboardwidgets": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/assets/*": {
+  "/hyperiot/assets": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/widgets/*": {
+  "/hyperiot/widgets": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/ws/*": {
+  "/hyperiot/ws": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "ws": true,
     "changeOrigin": true
   },
-  "/hyperiot/storm/*": {
+  "/hyperiot/storm": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/areas/*": {
+  "/hyperiot/areas": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/hbaseconnectors/*": {
+  "/hyperiot/hbaseconnectors": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/algorithms/*": {
+  "/hyperiot/algorithms": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/hprojectalgorithms/*": {
+  "/hyperiot/hprojectalgorithms": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/services/*": {
+  "/hyperiot/services": {
     "target": "http://localhost:8181",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/hyperiot/llm/ws/*": {
+  "/hyperiot/llm/ws": {
     "target": "ws://localhost:1865",
     "secure": false,
     "logLevel": "debug",

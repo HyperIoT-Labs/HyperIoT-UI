@@ -2,9 +2,10 @@ import { Component, AfterContentInit, Input, ContentChildren, QueryList } from '
 import { HytAccordionItem } from './hyt-directives/hyt-accordion-item.directive';
 
 @Component({
-  selector: 'hyt-accordion-group',
-  templateUrl: './hyt-accordion-group.component.html',
-  styleUrls: ['./hyt-accordion-group.component.scss']
+    selector: 'hyt-accordion-group',
+    templateUrl: './hyt-accordion-group.component.html',
+    styleUrls: ['./hyt-accordion-group.component.scss'],
+    standalone: false
 })
 export class HytAccordionGroupComponent implements AfterContentInit {
   @Input() collapsing = true;

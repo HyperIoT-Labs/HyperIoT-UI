@@ -5,7 +5,8 @@
         <div id="ffield-col-tree" class="col-12">
 
             <!-- i18n TODO -->
-            <hyt-tree-view-editable *ngIf="entity" class="flex-fill" #treeViewFields
+            @if (entity) {
+            <hyt-tree-view-editable class="flex-fill" #treeViewFields
                 i18n-deviceName="@@HYT_algorithm_output_field"
                 deviceName="Output Field"
                 [treeData]="outputFieldsTree"
@@ -14,6 +15,7 @@
                 (editFn)="editField($event)"
             >
             </hyt-tree-view-editable>
+            }
 
         </div>
 
@@ -93,17 +95,19 @@
         consider making a component out of it 
     -->
 
-    <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
+    @if (loadingStatus !== LoadingStatus.Ready) {
+    <div class="overlay d-flex flex-column align-items-center justify-content-center">
         
-        <div 
-            *ngIf="loadingStatus === LoadingStatus.Loading" 
-        >
+        @if (loadingStatus === LoadingStatus.Loading) {
+        <div>
 
             <h4 i18n="@@HYT_loading_data">Loading data...</h4>
         
         </div> 
+        }
         
-        <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
+        @if (loadingStatus === LoadingStatus.Error) {
+        <div class="error-overlay d-flex flex-column justify-content-center">
             <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
 
             <hyt-button 
@@ -113,15 +117,20 @@
                 <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span> 
             </hyt-button>
         </div> 
+        }
 
-        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">Saving data...</h4>
+        @if (loadingStatus === LoadingStatus.Saving) {
+        <h4 i18n="@@HYT_saving_data">Saving data...</h4>
+        }
 
+        @if (loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving) {
         <mat-progress-bar 
-            *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
             mode="indeterminate"
         ></mat-progress-bar> 
+        }
 
     </div>
+    }
 
 </div>
 

@@ -9,10 +9,11 @@ export interface PacketField extends HPacketField {
 }
 
 @Component({
-  selector: 'hyperiot-packet-fields-select',
-  templateUrl: './packet-fields-select.component.html',
-  styleUrls: ['./packet-fields-select.component.css'],
-  viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ]
+    selector: 'hyperiot-packet-fields-select',
+    templateUrl: './packet-fields-select.component.html',
+    styleUrls: ['./packet-fields-select.component.css'],
+    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+    standalone: false
 })
 
 export class PacketFieldsSelectComponent implements OnInit {

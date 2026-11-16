@@ -13,10 +13,11 @@ import { SummaryListItem } from '../../project-detail/generic-summary-list/gener
 import { StatisticInputDefinitionComponent } from './statistic-input-definition/statistic-input-definition.component';
 
 @Component({
-  selector: "hyt-project-statistics-form",
-  templateUrl: "./project-statistics-form.component.html",
-  styleUrls: ["./project-statistics-form.component.scss"],
-  encapsulation: ViewEncapsulation.None,
+    selector: "hyt-project-statistics-form",
+    templateUrl: "./project-statistics-form.component.html",
+    styleUrls: ["./project-statistics-form.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ProjectStatisticsFormComponent
   extends ProjectFormEntity

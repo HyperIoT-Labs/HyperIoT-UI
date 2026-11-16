@@ -6,9 +6,10 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 
 @Component({
-  selector: 'hyt-notification-button',
-  templateUrl: './notification-button.component.html',
-  styleUrls: ['./notification-button.component.scss'],
+    selector: 'hyt-notification-button',
+    templateUrl: './notification-button.component.html',
+    styleUrls: ['./notification-button.component.scss'],
+    standalone: false
 })
 export class NotificationButtonComponent {
   /** Notification active get from alarmWrapperService */

@@ -5,10 +5,11 @@ import { DIALOG_DATA, DialogRef } from 'components';
 import { WidgetSelection } from '../model/dashboard.model';
 
 @Component({
-  selector: 'hyperiot-add-widget-dialog',
-  templateUrl: './add-widget-dialog.component.html',
-  styleUrls: ['./add-widget-dialog.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyperiot-add-widget-dialog',
+    templateUrl: './add-widget-dialog.component.html',
+    styleUrls: ['./add-widget-dialog.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class AddWidgetDialogComponent implements OnInit {
 

@@ -14,27 +14,30 @@
           [disabled]="disabled"
         >
 
+          @for (group of groups; track group) {
           <mat-optgroup
-            *ngFor="let group of groups"
             [label]="group.name"
             [disabled]="group.disabled"
           >
 
+            @for (option of group.options; track option) {
             <mat-option
-              *ngFor="let option of group.options"
               [value]="option.value"
             >
               {{ option.label }}
             </mat-option>
+            }
 
           </mat-optgroup>
+          }
 
+          @for (option of options; track option) {
           <mat-option
-            *ngFor="let option of options"
             [value]="option.value"
           >
             {{ option.label }}
           </mat-option>
+          }
 
         </mat-select>
 

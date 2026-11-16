@@ -1,6 +1,8 @@
 <div class="map-container" #mapBoundary>
-  <div *ngIf="overlayIsVisible" class="overlay-media">
+  @if (overlayIsVisible) {
+  <div class="overlay-media">
     <div class="overlay-text">{{overlayMsg}}</div>
   </div>
+  }
   <ng-template hytMapHost></ng-template>
 </div>

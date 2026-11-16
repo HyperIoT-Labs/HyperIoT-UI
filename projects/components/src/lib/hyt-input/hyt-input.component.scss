@@ -7,32 +7,36 @@
       width: 100%;
     }
 
-    .mat-form-field-infix {
+    .mat-mdc-form-field-infix {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
       position: inherit;
     }
 
-    .mat-form-field-subscript-wrapper {
+    .mat-mdc-form-field-subscript-wrapper {
       input.hyt-input {
         width: 100%;
-      }
-
-      &[ng-reflect-ng-switch=error] {
-        top: -9px;
-        text-align: right;
       }
     }
 
     &.errorPositionBottom {
- 
+
+        .mat-mdc-text-field-wrapper {
+          overflow: visible;
+        }
+
+        &.mat-focused .mat-mdc-text-field-wrapper {
+          z-index: 10;
+        }
+
         .multiError {
           font-size: 14px;
           background-color: #ffffff;
           //border: 1px solid #ff00001a;
           position: absolute;
-          top: 45px;
+          top: 100%;
+          left: 0;
           padding: 12px 10px;
           width: 100%;
           z-index: 9999;
@@ -52,28 +56,11 @@
 
     }
 
-    .mat-form-field-label{
-      top: 30px;
-    }
-
     textarea {
       padding: 10px;
-      ~ .mat-form-field-label-wrapper .mat-form-field-label{
-        top: 30px;
-        left: 0;
-        &.mat-empty{
-          top: 45px;
-          left: 15px;
-        }
-      }
     }
 
-    &.mat-focused textarea ~ .mat-form-field-label-wrapper .mat-form-field-label{
-      top: 30px !important;
-      left: 0 !important;
-    }
-
-    .mat-form-field-wrapper {
+    .mat-mdc-text-field-wrapper {
       mat-icon {
         cursor: pointer;
       }

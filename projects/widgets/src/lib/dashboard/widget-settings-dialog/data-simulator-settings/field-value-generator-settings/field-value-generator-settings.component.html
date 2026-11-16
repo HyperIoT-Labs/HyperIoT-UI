@@ -1,24 +1,26 @@
 <div class="field-value-generator-settings">
 
-    <ng-container *ngIf="ruleOptions.length > 0">
-
+    @if (ruleOptions.length > 0) {
         <mat-form-field>
             <mat-label i18n="@@HYT_generation_type">Generation Type</mat-label>
             <mat-select [name]="'genType' + field.id" [(ngModel)]="genType" (ngModelChange)="onGenTypeChange()">
-                <mat-option *ngFor="let typeOption of ruleOptions" [value]="typeOption.value">
+                @for (typeOption of ruleOptions; track typeOption) {
+                <mat-option [value]="typeOption.value">
                     {{ typeOption.label }}
                 </mat-option>
+                }
             </mat-select>
         </mat-form-field>
 
         <div class="generation-settings">
 
-            <ng-container *ngIf="genType === 'fixed'">
+            @if (genType === 'fixed') {
                 <div class="rule-info" i18n="@@HYT_fixed_value_description">
                     Emit a fixed value
                 </div>
                 <div class="rule-input">
-                    <div class="simulator-switch-container" *ngIf="isBooleanField">
+                    @if (isBooleanField) {
+                    <div class="simulator-switch-container">
                         <span class="falseTrueLabel {{!rule.value && 'focusedSwitch'}}">False</span>
                         <label class="simulator-switch">
                             <input 
@@ -30,14 +32,16 @@
                         </label>
                         <span class="falseTrueLabel {{rule.value && 'focusedSwitch'}}">True</span>
                     </div>
-                    <mat-form-field class="example-full-width" *ngIf="!isBooleanField">
+                    }
+                    @if (!isBooleanField) {
+                    <mat-form-field class="example-full-width">
                         <mat-label i18n="@@HYT_value">Value</mat-label>
                         <input matInput [name]="'value' + field.id" [(ngModel)]="rule.value">
                     </mat-form-field>
+                    }
                 </div>
-            </ng-container>
-
-            <ng-container *ngIf="genType === 'range'">
+            }
+            @if (genType === 'range') {
                 <div class="rule-info" i18n="@@HYT_range_value_description">
                     Emit a random value between two numbers
                 </div>
@@ -51,9 +55,8 @@
                         <input matInput [name]="'rangeMax' + field.id" type="number" [(ngModel)]="rule.max">
                     </mat-form-field>
                 </div>
-            </ng-container>
-
-            <ng-container *ngIf="genType === 'dataset'">
+            }
+            @if (genType === 'dataset') {
                 <div class="rule-info" i18n="@@HYT_dataset_value_description">
                     <span>Emit values of a dataset</span>
                     <ul>
@@ -67,9 +70,8 @@
                         <input matInput [name]="'dataset' + field.id" [(ngModel)]="rule.values" />
                     </mat-form-field>
                 </div>
-            </ng-container>
-
-            <ng-container *ngIf="genType === 'expression'">
+            }
+            @if (genType === 'expression') {
                 <div class="rule-info">
                     Emit a value computed through an expression.
                     <ul>
@@ -84,20 +86,20 @@
                         <input matInput [name]="'expression' + field.id" type="text" [(ngModel)]="rule.expression">
                     </mat-form-field>
                 </div>
-            </ng-container> 
+            }
 
         </div>
+    }
 
-    </ng-container>
-
+    @if (ruleOptions.length === 0) {
     <div
-        *ngIf="ruleOptions.length === 0"
         class="field-value-generator-type"
     >
         <div class="no-rule-warn" i18n="@@HYT_data_simultaor_type_not_supported">
             Type {{ field.type }} {{ field.multiplicity }} currently not supported
         </div>
     </div>
+    }
 
     
 

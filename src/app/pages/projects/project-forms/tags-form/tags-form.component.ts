@@ -14,10 +14,11 @@ export enum TagStatus {
 }
 
 @Component({
-  selector: 'hyt-tags-form',
-  templateUrl: './tags-form.component.html',
-  styleUrls: ['./tags-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-tags-form',
+    templateUrl: './tags-form.component.html',
+    styleUrls: ['./tags-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class TagsFormComponent extends ProjectFormEntity implements OnInit {
 

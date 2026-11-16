@@ -1,9 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'hyperiot-dashboard-debug',
-  templateUrl: './dashboard-debug.component.html',
-  styleUrls: ['./dashboard-debug.component.css']
+    selector: 'hyperiot-dashboard-debug',
+    templateUrl: './dashboard-debug.component.html',
+    styleUrls: ['./dashboard-debug.component.css'],
+    standalone: false
 })
 export class DashboardDebugComponent implements OnInit {
 

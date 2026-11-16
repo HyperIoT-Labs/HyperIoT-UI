@@ -1,4 +1,5 @@
-<div *ngIf="ready" class="body-association-form">
+@if (ready) {
+<div class="body-association-form">
     <div class="body-association-fields">
         <div class="body-association-muscle">
             <label class="ba-label">Muscles:</label>
@@ -31,11 +32,16 @@
     </div>
     <div class="body-association-submit-section">
         <hyt-button [isDisabled]="isButtonDisabled()" (clickFn)="saveAndExit()">
-            <span *ngIf="!isEditMode" i18n="@@HYT_button_save">Save</span>
-            <span *ngIf="isEditMode" i18n="@@HYT_button_edit">Edit</span>
+            @if (!isEditMode) {
+            <span i18n="@@HYT_button_save">Save</span>
+            }
+            @if (isEditMode) {
+            <span i18n="@@HYT_button_edit">Edit</span>
+            }
         </hyt-button>
         <hyt-button (clickFn)="cancelAndExit()">
             <span i18n="@@HYT_button_cancel">Cancel</span>
         </hyt-button>
     </div>
 </div>
+}

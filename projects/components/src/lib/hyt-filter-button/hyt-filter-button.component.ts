@@ -42,16 +42,17 @@ export interface HytFilterButtonFilter {
  * Component for render filter with faster usability for the user than a dropdown, my reccomandation is to use it when you have max 6 different options
  */
 @Component({
-  selector: "hyt-filter-button",
-  templateUrl: "./hyt-filter-button.component.html",
-  styleUrls: ["./hyt-filter-button.component.scss"],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => HytFilterButtonComponent),
-      multi: true,
-    },
-  ],
+    selector: "hyt-filter-button",
+    templateUrl: "./hyt-filter-button.component.html",
+    styleUrls: ["./hyt-filter-button.component.scss"],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => HytFilterButtonComponent),
+            multi: true,
+        },
+    ],
+    standalone: false
 })
 export class HytFilterButtonComponent implements ControlValueAccessor {
   private logger: Logger;

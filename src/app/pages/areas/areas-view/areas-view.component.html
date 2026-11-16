@@ -9,16 +9,19 @@
 
     </div>
 
-    <div class="toolbar" *ngIf="pageStatus === PageStatus.Ready">
+    @if (pageStatus === PageStatus.Ready) {
+    <div class="toolbar">
 
         <div class="row no-gutters">
 
             <div class="col-4 left-tools">
 
-                <div id="areas-btn" *ngIf="areaId" class="button" [routerLink]="['/areas', projectId]">
+                @if (areaId) {
+                <div id="areas-btn" class="button" [routerLink]="['/areas', projectId]">
                     <span class="hyt-icon hyt-icon icon-hyt_map"></span>
                     <p>Areas List</p>
                 </div>
+                }
             </div>
 
             <div class="col-4 center-tools">
@@ -38,44 +41,49 @@
 
             <div class="col-4 right-tools">
 
+                @if (areaId) {
                 <div id="dashboard-btn"
-                     *ngIf="areaId"
                      class="button"
                      [routerLink]="['/areas', projectId, areaId, 'dashboards']"
                 >
                     <span class="hyt-icon hyt-icon icon-hyt_dash"></span>
                     <p>Dashboard</p>
                 </div>
+                }
 
             </div>
 
         </div>
 
     </div>
+    }
 
     <!-- New -->
+    @if (pageStatus === PageStatus.New) {
     <hyt-empty-project-list-view
-        *ngIf="pageStatus === PageStatus.New"
         title="There are no projects!"
         message="To add a project click the button below."
     ></hyt-empty-project-list-view>
+    }
 
     <div id="area-body" class="content">
+        @if (projectId && !areaId) {
         <hyt-areas-list
-            *ngIf="projectId && !areaId"
             [projectId]="projectId"
             (itemSelected)="onMainAreaClick($event)">
         </hyt-areas-list>
+        }
 
+        @if (projectId && areaId) {
         <hyt-container-area-map
-          *ngIf="projectId && areaId"
           [areaId]="areaId"
           [projectId]="projectId"
         ></hyt-container-area-map>
+        }
       <!-- Loading Status -->
+      @if (pageStatus === PageStatus.Loading) {
       <div
           id="area-view-loading"
-          *ngIf="pageStatus === PageStatus.Loading"
           class="loading-status mt-5 d-flex flex-column row align-items-center justify-content-center"
       >
 
@@ -84,15 +92,17 @@
           <h2 i18n="@@HYT_page_is_loading">Page is loading...</h2>
           <mat-progress-bar mode="indeterminate"></mat-progress-bar>
       </div>
+      }
 
       <!-- Loading Error -->
+      @if (pageStatus === PageStatus.Error) {
       <div
           id="area-view-error"
-          *ngIf="pageStatus === PageStatus.Error"
           class="loading-status mt-5 d-flex flex-column row align-items-center justify-content-center"
       >
           <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
       </div>
+      }
 
 
   </div>

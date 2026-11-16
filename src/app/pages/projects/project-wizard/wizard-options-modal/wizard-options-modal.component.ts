@@ -3,10 +3,11 @@ import { DialogRef } from 'components';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 
 @Component({
-  selector: 'hyt-wizard-options-modal',
-  templateUrl: './wizard-options-modal.component.html',
-  styleUrls: ['./wizard-options-modal.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-wizard-options-modal',
+    templateUrl: './wizard-options-modal.component.html',
+    styleUrls: ['./wizard-options-modal.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class WizardOptionsModalComponent {
 

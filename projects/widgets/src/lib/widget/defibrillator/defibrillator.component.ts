@@ -14,9 +14,10 @@ import { KeyValue } from '@angular/common';
 import { DefibrillatorSettings } from '../../dashboard/widget-settings-dialog/defibrillator-settings/defibrillator-settings.model';
 
 @Component({
-  selector: 'hyperiot-defibrillator',
-  templateUrl: './defibrillator.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './defibrillator.component.scss'],
+    selector: 'hyperiot-defibrillator',
+    templateUrl: './defibrillator.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './defibrillator.component.scss'],
+    standalone: false
 })
 export class DefibrillatorComponent extends BaseTableComponent implements OnInit {
   ChannelType = DefibrillatorSettings.Type;
@@ -132,7 +133,11 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
     TEMP: { },
   }
 
-  graphs = {
+  graphs: {
+    summary: { [key: string]: { chart: any; source: string; index?: number } };
+    standard: { [key: string]: { chart: any; source: string; index?: number } };
+    derivations: { [key: string]: { chart: any; source: string; index?: number } };
+  } = {
     summary: {
       chart0: {
         chart: { },

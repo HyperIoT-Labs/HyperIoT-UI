@@ -30,9 +30,10 @@ interface ExecutionRow {
 }
 
 @Component({
-  selector: 'hyperiot-algorithm-history-table',
-  templateUrl: './algorithm-history-table.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './algorithm-history-table.component.css']
+    selector: 'hyperiot-algorithm-history-table',
+    templateUrl: './algorithm-history-table.component.html',
+    styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './algorithm-history-table.component.css'],
+    standalone: false
 })
 export class AlgorithmHistoryTableComponent extends BaseTableComponent implements OnInit, OnDestroy {
 

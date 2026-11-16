@@ -28,10 +28,10 @@
   </div>
   <!-- End Row Box Photo -->
 
+  @if (isCompany) {
   <div
     id="row-box-company"
     class="row row-box"
-    *ngIf="isCompany; else rowBoxPlan"
   >
     <div id="container-box-company" class="col-12">
       <div class="title-box">
@@ -51,15 +51,14 @@
     </div>
   </div>
   <!--End Row Box Company -->
-
-  <ng-template #rowBoxPlan>
+  } @else {
     <div class="row row-box" style="display: none">
       <div class="col-12" id="ciccio">
         DA MODIFICARE
         <!--TODO-->
       </div>
     </div>
-  </ng-template>
+  }
 
   <div id="row-box-plan" class="row row-box">
     <div id="container-box-plan" class="col-12">
@@ -175,13 +174,14 @@
           <div class="row row-field-branding">
             <div class="col-12">
               <h3 i18n="@@HYT_logo">Logo</h3>
+              @if (!isBrandedTheme && !fileToUpload) {
               <p
-                *ngIf="!isBrandedTheme && !fileToUpload"
                 style="color: red; font-size: small"
                 i18n="@@HYT_logo_is_required_for_the_first_theme_customization"
               >
                 * Logo is required for the first theme customization
               </p>
+              }
             </div>
             <div class="container-form-field col-12">
               <span i18n="@@HYT_upload_your_logo" id="upload-logo-text"
@@ -199,7 +199,7 @@
               <hyt-button (clickFn)="initUpload()">
                 <ng-container i18n="@@HYT_upload">Upload</ng-container>
               </hyt-button>
-              <ng-container *ngIf="fileToUpload != null">
+              @if (fileToUpload != null) {
                 <button
                   mat-icon-button
                   aria-label="reset logo button"
@@ -207,10 +207,10 @@
                 >
                   <mat-icon>clear</mat-icon>
                 </button>
-              </ng-container>
+              }
             </div>
+            @if (fileToUpload != null) {
             <div
-              *ngIf="fileToUpload != null"
               class="container-form-field col-12"
             >
               <p i18n="@@HYT_preview">Preview</p>
@@ -220,6 +220,7 @@
                 [logoMobilePath]="logoMobilePath"
               ></hyt-topbar>
             </div>
+            }
 
             <div class="container-form-field col-12">
               <hr />
@@ -243,7 +244,7 @@
               </mat-form-field>
             </div>
 
-            <ng-container *ngIf="this.brandingForm.dirty">
+            @if (this.brandingForm.dirty) {
               <button
                 mat-icon-button
                 aria-label="reset logo button"
@@ -251,7 +252,7 @@
               >
                 <mat-icon>clear</mat-icon>
               </button>
-            </ng-container>
+            }
 
             <div class="container-form-field col-12">
               <div class="btn-group">
@@ -278,20 +279,21 @@
               </div>
             </div>
 
-            <ng-container *ngIf="logoErrorMessage.showError">
+            @if (logoErrorMessage.showError) {
               <div class="container-form-field col-12">
                 <div id="logo-error-container">
                   {{ logoErrorMessage.message }}
                 </div>
               </div>
-            </ng-container>
+            }
           </div>
         </form>
       </div>
     </div>
   </div>
 
-  <div *ngIf="defaultDashboardSettings" class="row row-box">
+  @if (defaultDashboardSettings) {
+  <div class="row row-box">
     <div class="col-12 mt-2">
       <div class="title-box">
         <p i18n="@@HYT_default_dashboard_settings">
@@ -345,18 +347,25 @@
       </div>
     </div>
   </div>
+  }
 
-  <div *ngIf="wentWrong" class="row" (click)="updatePassword()">
+  @if (wentWrong) {
+  <div class="row" (click)="updatePassword()">
     <p style="color: red">{{ errMsg }}</p>
   </div>
+  }
 
-  <div *ngIf="passwordChanged" class="row" (click)="updatePassword()">
+  @if (passwordChanged) {
+  <div class="row" (click)="updatePassword()">
     <p style="color: green">{{ succesMsgPwd }}</p>
   </div>
+  }
 
-  <div *ngIf="personalInfoUpdated" class="row" (click)="updatePersonalInfo()">
+  @if (personalInfoUpdated) {
+  <div class="row" (click)="updatePersonalInfo()">
     <p style="color: green">{{ successMsg }}</p>
   </div>
+  }
 
   <div id="row-box-details" class="row row-box">
     <div id="container-box-details" class="col-6">

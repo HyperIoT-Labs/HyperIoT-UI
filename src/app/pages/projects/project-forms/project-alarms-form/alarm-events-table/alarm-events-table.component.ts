@@ -3,9 +3,10 @@ import { AlarmEvent } from 'core';
 import { Option } from 'components';
 
 @Component({
-  selector: 'hyt-alarm-events-table',
-  templateUrl: './alarm-events-table.component.html',
-  styleUrls: ['./alarm-events-table.component.scss']
+    selector: 'hyt-alarm-events-table',
+    templateUrl: './alarm-events-table.component.html',
+    styleUrls: ['./alarm-events-table.component.scss'],
+    standalone: false
 })
 export class AlarmEventsTableComponent implements OnChanges {
 

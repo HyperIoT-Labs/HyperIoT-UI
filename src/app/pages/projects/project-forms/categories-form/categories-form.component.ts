@@ -9,10 +9,11 @@ import { Observable } from 'rxjs';
 import { AddCetegoryModalComponent } from './add-cetegory-modal/add-cetegory-modal.component';
 
 @Component({
-  selector: 'hyt-categories-form',
-  templateUrl: './categories-form.component.html',
-  styleUrls: ['./categories-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hyt-categories-form',
+    templateUrl: './categories-form.component.html',
+    styleUrls: ['./categories-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class CategoriesFormComponent extends ProjectFormEntity implements OnInit {
 
