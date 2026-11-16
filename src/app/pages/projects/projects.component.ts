@@ -84,7 +84,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   /**
    * This is a scroll window event listener
    */
-  @HostListener("document:scroll", ["$event"])
+  @HostListener("document:scroll")
   onScroll() {
     this.scrollTop = document.documentElement.scrollTop;
 
