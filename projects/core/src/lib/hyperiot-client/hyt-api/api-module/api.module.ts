@@ -24,6 +24,7 @@ import { KafkaConnectorService } from './api/kafkaConnector.service';
 import { KitService } from './api/kit.service';
 import { MailTemplatesService } from './api/mailTemplates.service';
 import { PermissionsService } from './api/permissions.service';
+import { RolesService } from './api/roles.service';
 import { RuleEngineService } from './api/ruleEngine.service';
 import { ServicesService } from './api/services.service';
 import { SharedEntityService } from './api/sharedEntity.service';
@@ -59,6 +60,7 @@ import { ZookeeperConnectorService } from './api/zookeeperConnector.service';
     KitService,
     MailTemplatesService,
     PermissionsService,
+    RolesService,
     RuleEngineService,
     ServicesService,
     SharedEntityService,
