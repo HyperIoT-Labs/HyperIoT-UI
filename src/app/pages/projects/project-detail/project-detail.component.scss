@@ -1,5 +1,3 @@
-@import "src/assets/styles/abstracts/_variables.scss";
-
 #single-project-page {
 
     position: relative;
@@ -11,7 +9,7 @@
     min-height: 700px;
 
     .header {
-        border-bottom: 1px solid $primary-color;
+        border-bottom: 1px solid var(--mat-sys-primary);
         min-height: 50px;
 
         .breadcrumb {
@@ -303,7 +301,7 @@
                     justify-content: center;
                     width: 25px;
                     height: 25px;
-                    background-color: $primary-color;
+                    background-color: var(--mat-sys-primary);
                     text-align: center;
                     position: absolute;
                     top: -6px;
@@ -335,7 +333,7 @@
                 #treeViewHeader {
 
                     height: 25px;
-                    background-color: $primary-color;
+                    background-color: var(--mat-sys-primary);
                     cursor: move;
                     border-radius: 5px 5px 0 0;
 

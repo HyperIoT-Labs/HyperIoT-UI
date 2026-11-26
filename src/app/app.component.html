@@ -3,8 +3,8 @@
   @if (showToolBars()) {
   <div id="hyt-container-topbar">
     <hyt-topbar
-      [logoPath]="(logoPaths | async)?.standard"
-      [logoMobilePath]="(logoPaths | async)?.mobile"
+      [logoPath]="logoPaths().standard"
+      [logoMobilePath]="logoPaths().mobile"
     ></hyt-topbar>
   </div>
   }

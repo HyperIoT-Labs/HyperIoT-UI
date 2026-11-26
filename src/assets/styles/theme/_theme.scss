@@ -1,0 +1,92 @@
+// HyperIoT global theme (Material 3). Emits CSS: load it only once, from src/styles.scss.
+
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use './theme-colors';
+@use './brand';
+@use './neutral-palette';
+@use './elevation';
+
+$_primary-palette: neutral-palette.with-grey-neutrals(theme-colors.$primary-palette);
+$_tertiary-palette: neutral-palette.with-grey-neutrals(theme-colors.$tertiary-palette);
+
+$_shape-overrides: (
+  corner-full: 4px,
+  corner-extra-large: 8px,
+  corner-large: 8px,
+);
+
+// White page and surfaces, as in the M2 theme.
+$_surface-overrides: (
+  background: var(--mat-sys-surface-container-lowest),
+  surface: var(--mat-sys-surface-container-lowest),
+);
+
+// Only the font weights shipped in src/assets/fonts.
+$_typography: (
+  plain-family: Exo,
+  brand-family: Exo,
+  bold-weight: 600,
+  medium-weight: 600,
+  regular-weight: 400,
+);
+
+// Used only by color-variants-backwards-compatibility.
+$_compat-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: $_primary-palette,
+    tertiary: $_tertiary-palette,
+    use-system-variables: true,
+  ),
+));
+
+html {
+  @include brand.defaults;
+
+  color-scheme: light;
+
+  @include mat.theme((
+    color: (
+      primary: $_primary-palette,
+      tertiary: $_tertiary-palette,
+      theme-type: light,
+    ),
+    typography: $_typography,
+    density: 0,
+  ), $overrides: map.merge(
+    map.merge(brand.$system-color-overrides, $_surface-overrides),
+    $_shape-overrides
+  ));
+
+  @include mat.select-overrides((panel-background-color: var(--mat-sys-surface-container-lowest)));
+  @include mat.autocomplete-overrides((background-color: var(--mat-sys-surface-container-lowest)));
+  @include mat.menu-overrides((container-color: var(--mat-sys-surface-container-lowest)));
+
+  // Not surface-variant: it is also the track of progress bars, sliders and slide toggles.
+  @include mat.form-field-overrides((filled-container-color: var(--mat-sys-surface-container-low)));
+
+  @include mat.card-overrides((
+    elevated-container-color: var(--mat-sys-surface-container-lowest),
+    outlined-container-color: var(--mat-sys-surface-container-lowest),
+    elevated-container-shape: 4px,
+    outlined-container-shape: 4px,
+    filled-container-shape: 4px,
+  ));
+
+  @include mat.chips-overrides((
+    container-shape-radius: 16px,
+    outline-width: 0,
+    label-text-font: var(--mat-sys-body-medium-font),
+    label-text-size: var(--mat-sys-body-medium-size),
+    label-text-weight: var(--mat-sys-body-medium-weight),
+  ));
+
+  // The default (secondary) color has too little contrast on white.
+  @include mat.strong-focus-indicators((border-color: var(--mat-sys-primary)));
+}
+
+@include elevation.elevation-classes;
+
+// Keeps the M2 `color` input (primary / accent / warn) working.
+@include mat.color-variants-backwards-compatibility($_compat-theme);

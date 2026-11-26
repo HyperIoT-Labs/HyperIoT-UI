@@ -1,0 +1,42 @@
+// Pure greys instead of the generated neutral palettes, which are
+// tinted with the default blue and would not follow the brand color.
+// For surfaces tinted with the brand color, as M3 intends, the neutral
+// roles should instead be computed from --hyt-brand-primary
+
+@use 'sass:map';
+
+$grey: (
+  0: #000000,
+  4: #0e0e0e,
+  6: #131313,
+  10: #1b1b1b,
+  12: #1f1f1f,
+  17: #2a2a2a,
+  20: #303030,
+  22: #353535,
+  24: #393939,
+  25: #3b3b3b,
+  30: #474747,
+  35: #525252,
+  40: #5e5e5e,
+  50: #777777,
+  60: #919191,
+  70: #ababab,
+  80: #c6c6c6,
+  87: #dadada,
+  90: #e2e2e2,
+  92: #e8e8e8,
+  94: #eeeeee,
+  95: #f1f1f1,
+  96: #f3f3f3,
+  98: #f9f9f9,
+  99: #fcfcfc,
+  100: #ffffff,
+);
+
+// Material accepts only the standard tones in the neutral-variant palette.
+$grey-variant: map.remove($grey, 4, 6, 12, 17, 22, 24, 87, 92, 94, 96);
+
+@function with-grey-neutrals($palette) {
+  @return map.merge($palette, (neutral: $grey, neutral-variant: $grey-variant));
+}

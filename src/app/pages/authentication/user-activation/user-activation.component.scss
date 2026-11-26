@@ -1,5 +1,3 @@
-@import "src/assets/styles/abstracts/_variables.scss";
-
 #container-act {
   position: absolute;
   width: 100%;
@@ -65,7 +63,7 @@
       a {
         font-size: 1.2em;
         font-style: italic;
-        color: $primary-color-dark-unsaturated;
+        color: var(--hyt-primary-dark-unsaturated);
 
         &:hover {
           color: #105f99;
@@ -140,7 +138,7 @@
       a {
         font-size: 1.2em;
         font-style: italic;
-        color: $primary-color-dark-unsaturated;
+        color: var(--hyt-primary-dark-unsaturated);
 
         &:hover {
           color: #105f99;

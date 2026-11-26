@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BrandingActions, BrandingService, HDeviceActions, HPacketActions, HProject, HProjectActions, HProjectService, LiveAlarmActions, RuleActions, UserSiteSettingActions } from 'core';
+import { HDeviceActions, HPacketActions, HProject, HProjectActions, HProjectService, LiveAlarmActions, RuleActions, UserSiteSettingActions } from 'core';
+import { BrandingService } from '../branding/branding.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class PostLoginService {
 
   loadDataPostLogin() {
     if (!this._isLogged) {
-      this.brandingService.loadThemeBranding();
+      this.brandingService.load();
 
       this.fetchProjectsDetails();
       this.store.dispatch(UserSiteSettingActions.load());
@@ -28,7 +29,7 @@ export class PostLoginService {
   }
 
   actionsAtLogout() {
-    this.store.dispatch(BrandingActions.unset());
+    this.brandingService.clear();
     this.store.dispatch(HProjectActions.clearHProjects());
     this.store.dispatch(HDeviceActions.clearHDevices());
     this.store.dispatch(HPacketActions.clearHPackets());

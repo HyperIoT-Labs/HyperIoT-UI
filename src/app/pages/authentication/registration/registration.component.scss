@@ -1,4 +1,3 @@
-@import "src/assets/styles/abstracts/_variables.scss";
 @import '../../../../assets/styles/abstracts/mixins';
 
 #container-registration {
@@ -118,7 +117,7 @@
 
               // link inside the privacy checkbox label
               a {
-                color: $primary-color-dark-unsaturated;
+                color: var(--hyt-primary-dark-unsaturated);
                 text-decoration: underline;
 
                 &:hover {

@@ -1,5 +1,3 @@
-
-@import "src/assets/styles/abstracts/_variables.scss";
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
 #hyt-sidebar {
@@ -19,14 +17,14 @@
         user-select:none;
 
         &.main-menu {
-            border-right: 1px solid $primary-color-dark;
+            border-right: 1px solid var(--hyt-primary-dark);
             position:fixed;
             top:0px;
             bottom:0;
             height:100%;
             left:0;
             z-index: 999;
-            background-color: $primary-color;
+            background-color: var(--mat-sys-primary);
 
             -webkit-transition: left .15s ease-in-out;
             -moz-transition: left .15s ease-in-out;
@@ -40,7 +38,7 @@
                 height: 100%;
                 padding-top: 65px;
                 overflow: hidden;
-                background: $primary-color;
+                background: var(--mat-sys-primary);
                 -webkit-transition: width .1s ease-in-out;
                 -moz-transition: width .1s ease-in-out;
                 transition: width .1s ease-in-out;
@@ -89,19 +87,19 @@
                 &.selected {
                     // border-bottom: solid 1px #ffffff;
                     //background-color: #003679;
-                    background-color: $primary-color-dark;
+                    background-color: var(--hyt-primary-dark);
                 }
 
                 &:hover:not(.selected) {
 
                     a {
                         color: #f9f9f9;
-                        background-color: $primary-color-light;
+                        background-color: var(--hyt-primary-light);
                     }
                 }
 
                 &:active {
-                    background-color: $primary-color-light;
+                    background-color: var(--hyt-primary-light);
                 }
 
                 a {

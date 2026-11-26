@@ -3,7 +3,6 @@ import {
   ActionReducerMap,
 } from '@ngrx/store';
 
-import { BrandingStore } from "./branding/branding.reducer";
 import { LiveAlarmStore } from './live-alarms/live-alarms.reducer';
 import { NotificationStore } from './notification/notification.reducer';
 import { HProjectStore } from './hProjects/hProjects.reducer';
@@ -12,7 +11,6 @@ import { HPacketStore } from './hPackets/hPackets.reducer';
 import { RuleStore } from './rules/rules.reducer';
 import { UserSiteSettingStore } from './user-site-setting/user-site-setting.reducer';
 
-import { BrandingEffects } from './branding';
 import { RulesEffects } from './rules';
 import { HProjectsEffects } from './hProjects';
 import { HDevicesEffects } from './hDevices';
@@ -21,7 +19,6 @@ import { LiveAlarmsEffects } from './live-alarms';
 import { NotificationEffects } from './notification';
 import { DataExportNotificationStore } from './data-export-notification';
 
-export * from './branding';
 export * from './hDevices';
 export * from './hPackets';
 export * from './hProjects';
@@ -33,7 +30,6 @@ export * from './data-export-notification';
 
 export namespace HyperiotStore {
   export interface State {
-    branding: BrandingStore.State,
     liveAlarms: LiveAlarmStore.State;
     rules: RuleStore.State,
     hProjects: HProjectStore.State,
@@ -45,7 +41,6 @@ export namespace HyperiotStore {
   };
 
   export const Reducers: ActionReducerMap<State> = {
-    branding: BrandingStore.reducer,
     liveAlarms: LiveAlarmStore.reducer,
     rules: RuleStore.reducer,
     hProjects: HProjectStore.reducer,
@@ -57,7 +52,6 @@ export namespace HyperiotStore {
   };
 
   export const Effects = [
-    BrandingEffects,
     RulesEffects,
     HProjectsEffects,
     HDevicesEffects,

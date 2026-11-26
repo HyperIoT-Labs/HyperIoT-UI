@@ -1,0 +1,47 @@
+// Brand colors: the user picks only the primary color, everything else is derived here.
+
+@mixin defaults {
+  // ThemeService overrides it at runtime; keep in sync with DEFAULT_THEME_COLORS.
+  --hyt-brand-primary: #0956b6;
+  --hyt-brand-secondary: oklch(from var(--hyt-brand-primary) min(l + 0.2, 0.85) c h);
+  --hyt-brand-tertiary: var(--hyt-brand-primary);
+
+  // White or black text, whichever has more contrast.
+  --hyt-brand-on-primary: oklch(from var(--hyt-brand-primary) clamp(0, (0.565 - l) * 1000, 1) 0 0);
+  --hyt-brand-on-secondary: oklch(from var(--hyt-brand-secondary) clamp(0, (0.565 - l) * 1000, 1) 0 0);
+  --hyt-brand-on-tertiary: oklch(from var(--hyt-brand-tertiary) clamp(0, (0.565 - l) * 1000, 1) 0 0);
+
+  // Approximations of the M3 tones: 90 for containers, 30 for the text on them, 80 for inverse.
+  --hyt-brand-primary-container: color-mix(in srgb, var(--hyt-brand-primary) 15%, white);
+  --hyt-brand-on-primary-container: oklch(from var(--hyt-brand-primary) 0.4 c h);
+  --hyt-brand-inverse-primary: color-mix(in srgb, var(--hyt-brand-primary) 40%, white);
+  --hyt-brand-secondary-container: color-mix(in srgb, var(--hyt-brand-secondary) 15%, white);
+  --hyt-brand-on-secondary-container: oklch(from var(--hyt-brand-secondary) 0.4 c h);
+  --hyt-brand-tertiary-container: color-mix(in srgb, var(--hyt-brand-tertiary) 15%, white);
+  --hyt-brand-on-tertiary-container: oklch(from var(--hyt-brand-tertiary) 0.4 c h);
+
+  // HyperIoT shades with no Material 3 equivalent.
+  --hyt-primary-dark: hsl(from var(--hyt-brand-primary) h 100% 24%);
+  --hyt-primary-dark-unsaturated: hsl(from var(--hyt-brand-primary) calc(h - 7) 78% 24%);
+  --hyt-primary-light: hsl(from var(--hyt-brand-primary) h 43% 46%);
+  --hyt-secondary-dark: hsl(from var(--hyt-brand-secondary) h s 40%);
+  --hyt-secondary-unsaturated: hsl(from var(--hyt-brand-secondary) h 63% l);
+}
+
+// M3 roles bound to the brand colors, passed to the $overrides of mat.theme.
+$system-color-overrides: (
+  primary: var(--hyt-brand-primary),
+  on-primary: var(--hyt-brand-on-primary),
+  primary-container: var(--hyt-brand-primary-container),
+  on-primary-container: var(--hyt-brand-on-primary-container),
+  inverse-primary: var(--hyt-brand-inverse-primary),
+  surface-tint: var(--hyt-brand-primary),
+  secondary: var(--hyt-brand-secondary),
+  on-secondary: var(--hyt-brand-on-secondary),
+  secondary-container: var(--hyt-brand-secondary-container),
+  on-secondary-container: var(--hyt-brand-on-secondary-container),
+  tertiary: var(--hyt-brand-tertiary),
+  on-tertiary: var(--hyt-brand-on-tertiary),
+  tertiary-container: var(--hyt-brand-tertiary-container),
+  on-tertiary-container: var(--hyt-brand-on-tertiary-container),
+);

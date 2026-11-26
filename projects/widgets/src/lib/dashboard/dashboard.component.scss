@@ -1,6 +1,5 @@
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 @import url(//fonts.googleapis.com/icon?family=Material+Icons&display=block);
-@import "src/assets/styles/abstracts/_variables.scss";
 
 #dashboard-page {
     font-family: 'Exo';
@@ -17,7 +16,7 @@
     }
 
     .header {
-      border-bottom: 1px solid $primary-color;
+      border-bottom: 1px solid var(--mat-sys-primary);
       min-height: 50px;
 
       .breadcrumb {
@@ -582,7 +581,7 @@ mat-option {
               width: 100%;
               max-width: 100%;
               align-items: center;
-              border-bottom: 1px solid $primary-color;
+              border-bottom: 1px solid var(--mat-sys-primary);
               margin-bottom: 10px;
 
               a {

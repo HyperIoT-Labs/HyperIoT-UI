@@ -1,0 +1,14 @@
+// Replaces mat.elevation-classes(): in M3 its shadows are invalid CSS (no shadow at all), and
+// mat-card ignores the classes (https://github.com/angular/components/issues/26094).
+
+@use '@angular/material' as mat;
+
+@mixin elevation-classes {
+  @for $z from 0 through 24 {
+    .mat-elevation-z#{$z},
+    .mat-mdc-elevation-specific.mat-elevation-z#{$z},
+    .mat-mdc-card.mat-elevation-z#{$z} {
+      @include mat.elevation($z);
+    }
+  }
+}

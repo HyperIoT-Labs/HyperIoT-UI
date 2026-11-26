@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef, Injector, effect } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
-import { HUserService, HUser, HDevicesService, Area_Service, HProjectService, BrandingService, BrandingActions, BrandingSelectors, Dashboard, UserSiteSettingSelectors, UserSiteSettingActions } from 'core';
+import { HUserService, HUser, HDevicesService, Area_Service, HProjectService, Dashboard, UserSiteSettingSelectors, UserSiteSettingActions } from 'core';
+import { BrandingService } from '../../../services/branding/branding.service';
+import { ThemeService } from '../../../services/theme/theme.service';
 import { AuthenticationHttpErrorHandlerService } from '../../../services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { Router } from '@angular/router';
@@ -123,11 +125,11 @@ export class ProfileComponent implements OnInit {
   };
 
   get isBrandedTheme() {
-    return this.brandingService.isBrandedTheme;
+    return this.brandingService.isBranded();
   }
 
   get canNotSaveTheme() {
-    if (this.brandingService.isBrandedTheme) {
+    if (this.brandingService.isBranded()) {
       return !this.fileToUpload && !this.brandingForm.dirty;
     } else {
       return !this.fileToUpload;
@@ -151,6 +153,8 @@ export class ProfileComponent implements OnInit {
     private areasService: Area_Service,
     private hProjectService: HProjectService,
     private brandingService: BrandingService,
+    private themeService: ThemeService,
+    private injector: Injector,
     private store: Store
   ) {
   }
@@ -165,7 +169,6 @@ export class ProfileComponent implements OnInit {
 
     this.brandingForm = this.fb.group({
       primaryColor: [''],
-      secondaryColor: [''],
     });
 
     this.store.select(UserSiteSettingSelectors.selectUserSiteSetting)
@@ -345,13 +348,26 @@ export class ProfileComponent implements OnInit {
     this.brandingForm.markAsPristine();
   }
 
+  setBrandingColor(controlName: 'primaryColor', color: string): void {
+    const control = this.brandingForm.get(controlName);
+    control?.setValue(color);
+    control?.markAsDirty();
+  }
+
   restoreDefaultTheme(logoFileInput) {
     this.logoErrorMessage = {
       showError: false,
       message: ''
     };
-    if (this.brandingService.isBrandedTheme) {
-      this.store.dispatch(BrandingActions.reset());
+    if (this.brandingService.isBranded()) {
+      this.brandingService.restoreDefaults().subscribe({
+        error: () => {
+          this.logoErrorMessage = {
+            showError: true,
+            message: $localize`:@@HYT_restoring_default_theme_error:Restoring default theme error`
+          };
+        }
+      });
     } else {
       this.logoPath = HyperiotLogoPath;
       this.logoMobilePath = HyperiotLogoMobilePath;
@@ -368,26 +384,19 @@ export class ProfileComponent implements OnInit {
       message: ''
     };
 
-    const colorSchema = this.brandingForm.value;
+    const { primaryColor } = this.brandingForm.value;
 
-    if (this.fileToUpload) {
-      this.store.dispatch(BrandingActions.updateAll({
-        brandingTheme: {
-          file: this.fileToUpload,
-          fileBase64: this.logoPath,
-          colorSchema,
-        }
-      }));
-    } else {
-      this.store.dispatch(BrandingActions.updateAll({
-        brandingTheme: {
-          fileBase64: this.logoPath,
-          colorSchema,
-        }
-      }));
-
-    }
-
+    this.brandingService.save({
+      colors: { primary: primaryColor },
+      logo: this.fileToUpload ?? undefined,
+    }).subscribe({
+      error: () => {
+        this.logoErrorMessage = {
+          showError: true,
+          message: $localize`:@@HYT_saving_branding_theme_error:Saving branding theme error`
+        };
+      }
+    });
   }
 
   loadGeneralData() {
@@ -401,45 +410,24 @@ export class ProfileComponent implements OnInit {
       }
     });
 
-    this.brandingService.logoPath$.subscribe({
-      next: ({ standard, mobile }) => {
-        this.initialLogoPath = standard;
-        this.initialLogoMobilePath = mobile;
-        this.logoPath = standard;
-        this.logoMobilePath = mobile;
-        this.fileToUpload = null;
-        (document.getElementById('logo-file-input') as HTMLInputElement).value = null;
-      },
-    });
-
-    this.store.select(BrandingSelectors.selectThemeColorSchema).subscribe({
-      next: (colorSchema) => {
-        this.initialBrandingForm = this.fb.group({
-          primaryColor: [colorSchema.primaryColor],
-          secondaryColor: [colorSchema.secondaryColor],
-        });
-        this.resetColorSchema();
+    // Shows the saved logo and colors, again after every load, save or restore.
+    effect(() => {
+      const { standard, mobile } = this.brandingService.logo();
+      const { primary } = this.themeService.colors();
+      this.initialLogoPath = standard;
+      this.initialLogoMobilePath = mobile;
+      this.logoPath = standard;
+      this.logoMobilePath = mobile;
+      this.fileToUpload = null;
+      const logoFileInput = document.getElementById('logo-file-input') as HTMLInputElement | null;
+      if (logoFileInput) {
+        logoFileInput.value = '';
       }
-    });
-
-    this.store.select(BrandingSelectors.selectError).subscribe({
-      next: (error) => {
-        switch (error?.action) {
-          case BrandingActions.updateFailure.type:
-            this.logoErrorMessage = {
-              showError: true,
-              message: $localize`:@@HYT_saving_branding_theme_error:Saving branding theme error`
-            };
-            break;
-          case BrandingActions.resetFailure.type:
-            this.logoErrorMessage = {
-              showError: true,
-              message: $localize`:@@HYT_restoring_default_theme_error:Restoring default theme error`
-            };
-            break;
-        }
-      }
-    });
+      this.initialBrandingForm = this.fb.group({
+        primaryColor: [primary],
+      });
+      this.resetColorSchema();
+    }, { injector: this.injector });
   }
 
 }
