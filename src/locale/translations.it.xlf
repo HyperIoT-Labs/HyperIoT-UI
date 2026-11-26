@@ -2428,9 +2428,13 @@
         <source>Primary Color</source>
         <target>Colore primario</target>
       </trans-unit>
-      <trans-unit id="HYT_secondary_color" datatype="html">
-        <source>Secondary Color</source>
-        <target>Colore Secondario</target>
+      <trans-unit id="HYT_color_low_contrast" datatype="html">
+        <source>Hard to read as text on white: contrast <x id="INTERPOLATION" equiv-text="{{ contrast() | number: &apos;1.1-1&apos; }}"/>:1, at least <x id="INTERPOLATION_1" equiv-text="{{ minContrast | number: &apos;1.1-1&apos; }}"/>:1 is recommended.</source>
+        <target>Poco leggibile come testo su bianco: contrasto <x id="INTERPOLATION" equiv-text="{{ contrast() | number: &apos;1.1-1&apos; }}"/>:1, si consiglia almeno <x id="INTERPOLATION_1" equiv-text="{{ minContrast | number: &apos;1.1-1&apos; }}"/>:1.</target>
+      </trans-unit>
+      <trans-unit id="HYT_color_use_darker" datatype="html">
+        <source>Use <x id="INTERPOLATION" equiv-text="{{ suggested }}"/></source>
+        <target>Usa <x id="INTERPOLATION" equiv-text="{{ suggested }}"/></target>
       </trans-unit>
       <trans-unit id="HYT_restore_default" datatype="html">
         <source>Restore default</source>

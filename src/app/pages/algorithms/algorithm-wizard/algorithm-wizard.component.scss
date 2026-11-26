@@ -1,11 +1,9 @@
-@import "src/assets/styles/abstracts/_variables.scss";
-
 #container-algorithm-wizard {
 
     padding: 15px;
   
     .header {
-      border-bottom: 1px solid $primary-color;
+      border-bottom: 1px solid var(--mat-sys-primary);
       min-height: 50px;
   
       .breadcrumb {

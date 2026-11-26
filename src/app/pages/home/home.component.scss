@@ -1,6 +1,3 @@
-
-@import "src/assets/styles/abstracts/_variables.scss";
-
 #home-page {
 
   font-family: "Exo";
@@ -12,7 +9,7 @@
   
     
   .header {
-    border-bottom: 1px solid $primary-color;
+    border-bottom: 1px solid var(--mat-sys-primary);
     min-height: 50px;
   
     .breadcrumb {
@@ -50,7 +47,7 @@
         &#welcome-title {
           font-size: 2.2em;
           text-transform: uppercase;
-          color: $primary-color-dark-unsaturated;
+          color: var(--hyt-primary-dark-unsaturated);
           margin-bottom: 0px;
         }
       }
@@ -58,7 +55,7 @@
       h4 {
         &#welcome-subtitle {
           font-size: 1.1em;
-          color: $secondary-color-unsaturated;
+          color: var(--hyt-secondary-unsaturated);
           margin-bottom: 60px;
           font-style: italic;
         }
@@ -153,7 +150,7 @@
           width: 100%;
           max-width: 100%;
           align-items: center;
-          border-bottom: 1px solid $primary-color;
+          border-bottom: 1px solid var(--mat-sys-primary);
           margin-bottom: 10px;
           flex-wrap: wrap;
           line-height: 30px;

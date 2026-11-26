@@ -1,5 +1,3 @@
-@import "src/assets/styles/abstracts/_variables.scss";
-
 @mixin title {
     font-size: 19px;
     width: 100%;
@@ -44,7 +42,7 @@
         margin: 1em 0;
 
         .area-label {
-            color: $primary-color;
+            color: var(--mat-sys-primary);
         }
     }
 
@@ -78,7 +76,7 @@
     align-items: center;
     gap: 12px;
     label {
-        color: $primary-color;
+        color: var(--mat-sys-primary);
     }
 }
 

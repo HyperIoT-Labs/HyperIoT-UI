@@ -1,12 +1,10 @@
-@import "src/assets/styles/abstracts/_variables.scss";
-
 #hyt-topbar {
   display: flex;
   justify-content: space-between;
   height: 64px;
 
   background-color: #fdfdfd;
-  color: $primary-color;
+  color: var(--mat-sys-primary);
   text-transform: uppercase;
   border-bottom: 1px solid #dadada;
 
@@ -100,7 +98,7 @@
 
             span {
 
-              background-color: $primary-color;
+              background-color: var(--mat-sys-primary);
               position: absolute;
               border-radius: 2px;
               transition: .2s cubic-bezier(.8, .5, .2, 1.4);

@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@use "./assets/styles/theme/theme";
 @import "./assets/styles/main";
 
 #bodyMap {
@@ -180,7 +180,7 @@ pre.hyt-code {
 
     .overlay-badge {
         height: 32px;
-        background: $overlay-blu;
+        background: #0d416d;
         color: #fff;
         border-radius: 6px;
     }
@@ -211,12 +211,12 @@ pre.hyt-code {
             box-shadow: 2px 2px 0px 1px #041a2d;
 
             &.overlay-badge-error {
-                background: $hyt-error ;
+                background: #F44336 ;
                 box-shadow: 2px 2px 0px 1px #b6291f;
             }
 
             &.overlay-badge-success {
-                background: $hyt-success ;
+                background: #4CAF50 ;
                 box-shadow: 2px 2px 0px 1px #266f29;
             }
 

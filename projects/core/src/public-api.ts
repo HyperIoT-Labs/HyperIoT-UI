@@ -43,5 +43,4 @@ export * from './lib/models';
 
 export * from './lib/store';
 
-export * from './lib/services/branding/branding.service'
 export * from './lib/constants/http-context-tokens';

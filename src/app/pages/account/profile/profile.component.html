@@ -234,14 +234,10 @@
                 <mat-label i18n="@@HYT_primary_color">Primary Color</mat-label>
                 <input matInput formControlName="primaryColor" type="color" />
               </mat-form-field>
-            </div>
-            <div class="container-form-field col-3">
-              <mat-form-field>
-                <mat-label i18n="@@HYT_secondary_color"
-                  >Secondary Color</mat-label
-                >
-                <input matInput formControlName="secondaryColor" type="color" />
-              </mat-form-field>
+              <hyt-color-contrast-warning
+                [color]="brandingForm.get('primaryColor')?.value"
+                (apply)="setBrandingColor('primaryColor', $event)"
+              />
             </div>
 
             @if (this.brandingForm.dirty) {

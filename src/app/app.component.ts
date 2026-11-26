@@ -13,9 +13,9 @@ import {
   LoggerService,
   RealtimeDataService,
   UserSiteSettingSelectors,
-  BrandingService,
   NotificationSelectors,
 } from "core";
+import { BrandingService } from "./services/branding/branding.service";
 import { ToastrService } from "ngx-toastr";
 import {Subject, Subscription, filter, takeUntil, map} from "rxjs";
 import { environment } from "../environments/environment";
@@ -49,7 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   private logger: Logger;
 
-  logoPaths = this.brandingService.logoPath$;
+  logoPaths = this.brandingService.logo;
 
   constructor(
     private activatedRoute: ActivatedRoute,

@@ -1,4 +1,3 @@
-@import "src/assets/styles/abstracts/_variables.scss";
 @import "../../../../assets/styles/abstracts/mixins";
 
 #container-profile {
@@ -7,7 +6,7 @@
 
   .title-box {
     font-size: 1.6em;
-    border-bottom: 1px solid $primary-color;
+    border-bottom: 1px solid var(--mat-sys-primary);
   }
 
   .row-box {
@@ -87,13 +86,13 @@
         font-size: 2.6em;
         margin-bottom: 0px;
         text-transform: capitalize;
-        color: $primary-color-dark-unsaturated;
+        color: var(--hyt-primary-dark-unsaturated);
       }
 
       h4#username-profile {
         font-size: 1.4em;
         font-style: italic;
-        color: $secondary-color-dark;
+        color: var(--hyt-secondary-dark);
       }
     }
   }
@@ -142,7 +141,7 @@
             margin-left: 15px;
             font-style: italic;
             font-weight: bold;
-            color: $secondary-color-dark;
+            color: var(--hyt-secondary-dark);
           }
         }
       }
@@ -203,7 +202,7 @@
 
             .firstNumber {
               font-weight: bold;
-              color: $secondary-color-dark;
+              color: var(--hyt-secondary-dark);
             }
 
             .slash {
@@ -239,14 +238,14 @@
               margin-left: auto;
 
               button {
-                background-color: $primary-color-dark-unsaturated;
+                background-color: var(--hyt-primary-dark-unsaturated);
                 color: #fff;
                 font-family: "Exo";
                 font-size: 1em;
                 font-weight: 200;
 
                 &:hover {
-                  background-color: $primary-color-light;
+                  background-color: var(--hyt-primary-light);
                   box-shadow: none;
                 }
               }
@@ -336,7 +335,7 @@
 
               hyt-button {
                 button.mat-mdc-raised-button {
-                  background-color: $primary-color-dark-unsaturated;
+                  background-color: var(--hyt-primary-dark-unsaturated);
                   color: #fff;
                   font-family: "Exo";
                   font-size: 1em;
@@ -344,7 +343,7 @@
                   text-transform: uppercase;
 
                   &:hover {
-                    background-color: $primary-color-light;
+                    background-color: var(--hyt-primary-light);
                     box-shadow: none;
                   }
 
@@ -378,7 +377,7 @@
   }
 
   .mat-button-toggle-checked {
-    background-color: $primary-color;
+    background-color: var(--mat-sys-primary);
 
     .mat-button-toggle-button {
       color: white;
