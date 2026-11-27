@@ -1,0 +1,110 @@
+<div class="admin-page">
+  <hyt-admin-page-header [items]="breadcrumb">
+    <a mat-flat-button color="primary" routerLink="/admin/roles/new">
+      <mat-icon aria-hidden="true">add</mat-icon>
+      <ng-container i18n="@@HYT_admin_role_new">New role</ng-container>
+    </a>
+  </hyt-admin-page-header>
+
+  <h1 class="admin-title" i18n="@@HYT_admin_roles">Roles</h1>
+
+  @switch (status()) {
+    @case ('loading') {
+      <mat-progress-bar mode="indeterminate" i18n-aria-label="@@HYT_admin_roles_loading" aria-label="Loading roles" />
+    }
+
+    @case ('error') {
+      <div class="state-message" role="alert">
+        <p i18n="@@HYT_admin_roles_load_error">Unable to load the roles.</p>
+        <button mat-stroked-button type="button" (click)="load()" i18n="@@HYT_admin_retry">Retry</button>
+      </div>
+    }
+
+    @case ('ready') {
+      @if (sortedRoles().length === 0) {
+        <p class="state-message" i18n="@@HYT_admin_roles_empty">There are no roles.</p>
+      } @else if (isPhone()) {
+        <ul class="role-cards">
+          @for (role of sortedRoles(); track role.id) {
+            <li>
+              <mat-card appearance="outlined">
+                <mat-card-header>
+                  <mat-card-title>{{ role.name }}</mat-card-title>
+                </mat-card-header>
+                @if (role.description) {
+                  <mat-card-content>
+                    <p>{{ role.description }}</p>
+                  </mat-card-content>
+                }
+                <mat-card-actions align="end">
+                  <a mat-button [routerLink]="['/admin/roles', role.id]" [attr.aria-label]="editLabel(role)">
+                    <mat-icon aria-hidden="true">edit</mat-icon>
+                    <ng-container i18n="@@HYT_admin_edit">Edit</ng-container>
+                  </a>
+                  <button
+                    mat-button
+                    color="warn"
+                    type="button"
+                    [disabled]="deletingId() === role.id"
+                    [attr.aria-label]="deleteLabel(role)"
+                    (click)="confirmDelete(role)"
+                  >
+                    <mat-icon aria-hidden="true">delete</mat-icon>
+                    <ng-container i18n="@@HYT_delete">Delete</ng-container>
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+            </li>
+          }
+        </ul>
+      } @else {
+        <div class="table-container">
+          <table
+            mat-table
+            [dataSource]="sortedRoles()"
+            [trackBy]="trackById"
+            matSort
+            matSortDisableClear
+            matSortActive="name"
+            [matSortDirection]="sortDirection()"
+            (matSortChange)="onSortChange($event)"
+          >
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@HYT_admin_role_name">Name</th>
+              <td mat-cell *matCellDef="let role">{{ role.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef i18n="@@HYT_admin_role_description">Description</th>
+              <td mat-cell *matCellDef="let role">{{ role.description }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>
+                <span class="cdk-visually-hidden" i18n="@@HYT_admin_users_col_actions">Actions</span>
+              </th>
+              <td mat-cell *matCellDef="let role" class="actions-cell">
+                <a mat-icon-button [routerLink]="['/admin/roles', role.id]" [attr.aria-label]="editLabel(role)">
+                  <mat-icon aria-hidden="true">edit</mat-icon>
+                </a>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  type="button"
+                  [disabled]="deletingId() === role.id"
+                  [attr.aria-label]="deleteLabel(role)"
+                  (click)="confirmDelete(role)"
+                >
+                  <mat-icon aria-hidden="true">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let role; columns: displayedColumns"></tr>
+          </table>
+        </div>
+      }
+    }
+  }
+</div>

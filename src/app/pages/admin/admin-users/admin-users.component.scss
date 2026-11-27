@@ -1,0 +1,97 @@
+.admin-page {
+  padding: 15px;
+}
+
+.admin-title {
+  font-size: 1.5em;
+  margin: 24px 0 16px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-bottom: 8px;
+}
+
+.search {
+  flex: 1 1 280px;
+  max-width: 480px;
+}
+
+.phone-sort {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+
+  mat-form-field {
+    flex: 1;
+  }
+}
+
+.count {
+  margin: 8px 0;
+}
+
+.state-message {
+  margin: 24px 0;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.actions-cell {
+  width: 1%;
+  white-space: nowrap;
+  text-align: end;
+}
+
+.badge {
+  display: inline-block;
+  margin: 2px 4px 2px 0;
+  padding: 0 8px;
+  border: 1px solid currentColor;
+  border-radius: 12px;
+  font-size: 0.85em;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.badge-muted {
+  border-style: dashed;
+}
+
+.user-cards {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+
+  mat-card-title {
+    overflow-wrap: anywhere;
+  }
+
+  .email {
+    overflow-wrap: anywhere;
+  }
+
+  p {
+    margin: 4px 0;
+  }
+
+  .label {
+    font-weight: 500;
+  }
+
+  button {
+    min-height: 44px;
+  }
+}

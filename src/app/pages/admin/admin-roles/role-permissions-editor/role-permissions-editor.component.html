@@ -1,0 +1,117 @@
+<div class="editor">
+  <ng-template #searchField>
+    <div class="search-row">
+      <mat-form-field class="search" subscriptSizing="dynamic">
+        <mat-label i18n="@@HYT_admin_role_resource_search">Search resources</mat-label>
+        <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+        <!-- Enter must not submit the role form -->
+        <input matInput type="search" autocomplete="off" [formControl]="search" (keydown.enter)="$event.preventDefault()" />
+      </mat-form-field>
+      <!-- outside the field, so a click does not focus the input -->
+      <button
+        mat-icon-button
+        type="button"
+        class="sort-trigger"
+        [matMenuTriggerFor]="sortMenu"
+        i18n-aria-label="@@HYT_admin_role_resource_sort"
+        aria-label="Sort resources"
+        i18n-matTooltip="@@HYT_admin_role_resource_sort"
+        matTooltip="Sort resources"
+      >
+        <mat-icon aria-hidden="true">sort</mat-icon>
+      </button>
+    </div>
+  </ng-template>
+  <mat-menu #sortMenu="matMenu">
+    <button mat-menu-item type="button" role="menuitemradio" [attr.aria-checked]="sortBy() === 'name'" (click)="sortBy.set('name')">
+      <mat-icon aria-hidden="true">{{ sortBy() === 'name' ? 'check' : '' }}</mat-icon>
+      <span i18n="@@HYT_admin_role_resource_sort_name">Name</span>
+    </button>
+    <button mat-menu-item type="button" role="menuitemradio" [attr.aria-checked]="sortBy() === 'granted'" (click)="sortBy.set('granted')">
+      <mat-icon aria-hidden="true">{{ sortBy() === 'granted' ? 'check' : '' }}</mat-icon>
+      <span i18n="@@HYT_admin_role_resource_sort_granted">Granted actions</span>
+    </button>
+  </mat-menu>
+  <ng-template #noMatch>
+    <p class="no-match" role="status" i18n="@@HYT_admin_role_resources_no_match">No resource matches the search.</p>
+  </ng-template>
+
+  @if (isPhone()) {
+    <div class="resources">
+      <ng-container [ngTemplateOutlet]="searchField" />
+      @if (visibleResources().length === 0) {
+        <ng-container [ngTemplateOutlet]="noMatch" />
+      } @else {
+        <mat-form-field class="resource-select">
+          <mat-label i18n="@@HYT_admin_role_resource">Resource</mat-label>
+          <mat-select [value]="selected()?.resourceName" (valueChange)="select($event)">
+            @for (resource of visibleResources(); track resource.resourceName) {
+              <mat-option [value]="resource.resourceName">
+                {{ resource.shortName }} ({{ granted(resource) }}/{{ resource.actions.length }})
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+    </div>
+  } @else {
+    <div class="resource-list">
+      <div class="search-bar">
+        <ng-container [ngTemplateOutlet]="searchField" />
+      </div>
+      @if (visibleResources().length === 0) {
+        <ng-container [ngTemplateOutlet]="noMatch" />
+      } @else {
+        <nav i18n-aria-label="@@HYT_admin_role_resources" aria-label="Resources">
+          <mat-action-list>
+            @for (resource of visibleResources(); track resource.resourceName) {
+              <button
+                mat-list-item
+                type="button"
+                [activated]="resource === selected()"
+                [attr.aria-current]="resource === selected() ? 'true' : null"
+                (click)="select(resource.resourceName)"
+              >
+                <span matListItemTitle>{{ resource.shortName }}</span>
+                <span matListItemMeta>
+                  <span class="count" [class.has-granted]="granted(resource) > 0">{{ granted(resource) }}/{{ resource.actions.length }}</span>
+                </span>
+              </button>
+            }
+          </mat-action-list>
+        </nav>
+      }
+    </div>
+  }
+
+  @if (selected(); as resource) {
+    <mat-card appearance="outlined" class="detail">
+      <mat-card-content>
+        <div class="detail-header">
+          <div class="detail-title">
+            <h3>{{ resource.shortName }}</h3>
+            <code class="fqn">{{ resource.resourceName }}</code>
+            <p class="summary" aria-live="polite" i18n="@@HYT_admin_role_actions_granted">{{ granted(resource) }} of {{ resource.actions.length }} actions granted</p>
+          </div>
+          <div class="bulk-actions">
+            <button mat-stroked-button type="button" (click)="selectAll(resource)" i18n="@@HYT_admin_role_select_all">Select all</button>
+            <button mat-stroked-button type="button" (click)="selectNone(resource)" i18n="@@HYT_admin_role_select_none">None</button>
+          </div>
+        </div>
+
+        <fieldset class="actions">
+          <legend class="cdk-visually-hidden" i18n="@@HYT_admin_role_actions_of">Actions of {{ resource.shortName }}</legend>
+          @for (action of resource.actions; track action.id) {
+            <mat-checkbox [checked]="isGranted(resource, action)" (change)="toggle(resource, action, $event.checked)">
+              <code class="action-name">{{ action.name }}</code>
+              @if (description(resource.shortName, action.name); as text) {
+                <!-- the separator is in the interpolation: whitespace between elements is removed -->
+                <span class="action-description">{{ ' – ' + text }}</span>
+              }
+            </mat-checkbox>
+          }
+        </fieldset>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

@@ -25,12 +25,11 @@ import { ProjectEventsFormComponent } from '../pages/projects/project-forms/proj
 import { HomeComponent } from '../pages/home/home.component';
 import { AreasFormComponent } from '../pages/projects/project-forms/areas-form/areas-form.component';
 import { AreasViewComponent } from '../pages/areas/areas-view/areas-view.component';
-import { AlgorithmsComponent } from '../pages/algorithms/algorithms.component';
-import { AlgorithmWizardComponent } from '../pages/algorithms/algorithm-wizard/algorithm-wizard.component';
 import { ProjectStatisticsFormComponent } from '../pages/projects/project-forms/project-statistics-form/project-statistics-form.component';
 import { ProjectAlarmsFormComponent } from '../pages/projects/project-forms/project-alarms-form/project-alarms-form.component';
 import {DashComponent} from '../pages/dash/dash.component';
 import { PostLoginService } from '../services/postLogin/post-login.service';
+import { adminAreaGuard } from '../pages/admin/admin-access.guard';
 
 export enum HytRoutesDataFields {
   IGNORE_HTTP_ERROR_NOTIFY = 'ignoreHttpErrorNotify'
@@ -48,40 +47,6 @@ export class LoggedInGuard  {
       return true;
     }
     this.router.navigate(['/auth/login'], { state: { returnUrl: state.url } });
-    return false;
-  }
-
-}
-
-
-/**
- * This guard checks if user is admin or he has access the permission to do something on a resource
- */
-@Injectable()
-export class IsProtectedResourceGuard  {
-
-  constructor(private router: Router, private cookieService: CookieService) {}
-
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-    Observable<boolean> | Promise<boolean> | boolean {
-    if (localStorage.getItem('userInfo')) {
-      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-      if (userInfo.authenticable.admin ||
-        this.hasControlPanelAccess(userInfo.profile, route.data.resourceName, route.data.action)) {
-        return true;
-      }
-    }
-    this.router.navigate(['/notFound'], { state: { returnUrl: state.url } });
-    return false;
-  }
-
-  private hasControlPanelAccess(profile: any, resourceName: string, action: string): boolean {
-    if(profile.hasOwnProperty(resourceName)) {
-      const permissions: string[] = profile[resourceName].permissions;
-      if (permissions.includes(action)) {
-        return true;
-      }
-    }
     return false;
   }
 
@@ -309,36 +274,27 @@ const hyperiotRoutes: Routes = [
     }
   },
   {
-    path: 'algorithms',
-    component: AlgorithmsComponent,
-    canActivate: [LoggedInGuard, IsProtectedResourceGuard],
+    path: 'admin',
+    canActivate: [LoggedInGuard, adminAreaGuard],
+    loadChildren: () => import('../pages/admin/admin.routes').then(m => m.ADMIN_ROUTES),
     data: {
       showToolBar: true,
-      resourceName: 'it.acsoftware.hyperiot.algorithm.model.Algorithm',
-      action: 'control_panel'
     }
+  },
+  // old algorithm URLs, now in the admin area
+  {
+    path: 'algorithms',
+    redirectTo: 'admin/algorithms',
+    pathMatch: 'full',
   },
   {
     path: 'algorithm-wizard',
-    component: AlgorithmWizardComponent,
-    canActivate: [LoggedInGuard, IsProtectedResourceGuard],
-    canDeactivate: [CanDeactivateGuard],
-    data: {
-      showToolBar: true,
-      resourceName: 'it.acsoftware.hyperiot.algorithm.model.Algorithm',
-      action: 'control_panel'
-    }
+    redirectTo: 'admin/algorithms/wizard',
+    pathMatch: 'full',
   },
   {
     path: 'algorithm-wizard/:id',
-    component: AlgorithmWizardComponent,
-    canActivate: [LoggedInGuard, IsProtectedResourceGuard],
-    canDeactivate: [CanDeactivateGuard],
-    data: {
-      showToolBar: true,
-      resourceName: 'it.acsoftware.hyperiot.algorithm.model.Algorithm',
-      action: 'control_panel'
-    }
+    redirectTo: 'admin/algorithms/wizard/:id',
   },
   {
     path: 'account/profile',
@@ -361,6 +317,6 @@ const hyperiotRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(hyperiotRoutes)],
   exports: [RouterModule],
-  providers: [LoggedInGuard, IsProtectedResourceGuard, CanDeactivateGuard]
+  providers: [LoggedInGuard, CanDeactivateGuard]
 })
 export class HytRoutingModule { }

@@ -1,0 +1,170 @@
+<div class="admin-page">
+  <hyt-admin-page-header [items]="breadcrumb()" />
+
+  <h1 class="admin-title">{{ title }}</h1>
+
+  @switch (status()) {
+    @case ('loading') {
+      <mat-progress-bar mode="indeterminate" i18n-aria-label="@@HYT_admin_user_loading" aria-label="Loading user" />
+    }
+
+    @case ('error') {
+      <div class="state-message" role="alert">
+        <p i18n="@@HYT_admin_user_load_error">Unable to load the user.</p>
+        <div class="actions">
+          <a mat-stroked-button routerLink="/admin/users" i18n="@@HYT_admin_back_to_users">Back to users</a>
+          @if (userId !== null) {
+            <button mat-flat-button type="button" (click)="load()" i18n="@@HYT_admin_retry">Retry</button>
+          }
+        </div>
+      </div>
+    }
+
+    @case ('ready') {
+      <form class="user-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        @if (generalErrors().length > 0) {
+          <div class="general-errors" role="alert">
+            @for (message of generalErrors(); track $index) {
+              <p>{{ message }}</p>
+            }
+          </div>
+        }
+
+        <fieldset>
+          <legend i18n="@@HYT_admin_user_section_account">Account</legend>
+          <div class="fields">
+            <mat-form-field>
+              <mat-label i18n="@@HYT_admin_users_col_username">Username</mat-label>
+              <input matInput formControlName="username" autocomplete="off" required />
+              @if (form.controls.username.hasError('required')) {
+                <mat-error i18n="@@HYT_admin_field_required">This field is required</mat-error>
+              } @else if (serverError('username')) {
+                <mat-error>{{ serverError('username') }}</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label i18n="@@HYT_admin_users_col_email">Email</mat-label>
+              <input matInput type="email" formControlName="email" autocomplete="off" required />
+              @if (form.controls.email.hasError('required')) {
+                <mat-error i18n="@@HYT_admin_field_required">This field is required</mat-error>
+              } @else if (form.controls.email.hasError('email')) {
+                <mat-error i18n="@@HYT_admin_invalid_email">Enter a valid email address</mat-error>
+              } @else if (serverError('email')) {
+                <mat-error>{{ serverError('email') }}</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label i18n="@@HYT_admin_user_name">Name</mat-label>
+              <input matInput formControlName="name" autocomplete="off" required />
+              @if (form.controls.name.hasError('required')) {
+                <mat-error i18n="@@HYT_admin_field_required">This field is required</mat-error>
+              } @else if (serverError('name')) {
+                <mat-error>{{ serverError('name') }}</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label i18n="@@HYT_admin_user_lastname">Last name</mat-label>
+              <input matInput formControlName="lastname" autocomplete="off" required />
+              @if (form.controls.lastname.hasError('required')) {
+                <mat-error i18n="@@HYT_admin_field_required">This field is required</mat-error>
+              } @else if (serverError('lastname')) {
+                <mat-error>{{ serverError('lastname') }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </fieldset>
+
+        @if (isNew) {
+          <fieldset>
+            <legend i18n="@@HYT_admin_user_section_password">Password</legend>
+            <div class="fields">
+              <mat-form-field>
+                <mat-label i18n="@@HYT_admin_user_password">Password</mat-label>
+                <input
+                  matInput
+                  [type]="hidePassword() ? 'password' : 'text'"
+                  formControlName="password"
+                  autocomplete="new-password"
+                  aria-describedby="password-rules"
+                  required
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  type="button"
+                  (click)="hidePassword.set(!hidePassword())"
+                  [attr.aria-pressed]="!hidePassword()"
+                  i18n-aria-label="@@HYT_admin_user_show_password"
+                  aria-label="Show password"
+                >
+                  <mat-icon aria-hidden="true">{{ hidePassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
+                </button>
+                @if (form.controls.password.hasError('required')) {
+                  <mat-error i18n="@@HYT_admin_field_required">This field is required</mat-error>
+                } @else if (form.controls.password.invalid) {
+                  <mat-error i18n="@@HYT_admin_user_password_invalid">The password does not meet the rules</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label i18n="@@HYT_admin_user_password_confirm">Confirm password</mat-label>
+                <input
+                  matInput
+                  [type]="hidePassword() ? 'password' : 'text'"
+                  formControlName="passwordConfirm"
+                  autocomplete="new-password"
+                  required
+                />
+                @if (form.controls.passwordConfirm.hasError('required')) {
+                  <mat-error i18n="@@HYT_admin_field_required">This field is required</mat-error>
+                } @else if (form.controls.passwordConfirm.hasError('passwordMismatch')) {
+                  <mat-error i18n="@@HYT_admin_user_password_mismatch">The passwords do not match</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <ul id="password-rules" class="password-rules">
+              <li [class.met]="!form.controls.password.hasError('passwordMinLength') && !!form.controls.password.value"
+                  i18n="@@HYT_admin_user_password_rule_length">At least {{ passwordMinLength }} characters</li>
+              <li [class.met]="!form.controls.password.hasError('passwordCase') && !!form.controls.password.value"
+                  i18n="@@HYT_admin_user_password_rule_case">A lowercase and an uppercase letter</li>
+              <li [class.met]="!form.controls.password.hasError('passwordNumber') && !!form.controls.password.value"
+                  i18n="@@HYT_admin_user_password_rule_number">A number</li>
+              <li [class.met]="!form.controls.password.hasError('passwordSpecialChar') && !!form.controls.password.value"
+                  i18n="@@HYT_admin_user_password_rule_special">A special character</li>
+            </ul>
+          </fieldset>
+        }
+
+        <fieldset>
+          <legend i18n="@@HYT_admin_user_section_permissions">Permissions</legend>
+          <div class="fields">
+            <mat-form-field>
+              <mat-label i18n="@@HYT_admin_users_col_roles">Roles</mat-label>
+              <mat-select formControlName="roleIds" multiple>
+                <mat-select-trigger>{{ roleNames(form.controls.roleIds.value) }}</mat-select-trigger>
+                @for (role of allRoles(); track role.id) {
+                  <mat-option [value]="role.id">{{ role.name }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <a mat-stroked-button routerLink="/admin/users" i18n="@@HYT_cancel">Cancel</a>
+          <button mat-flat-button color="primary" type="submit" [disabled]="saving()">
+            @if (saving()) {
+              <ng-container i18n="@@HYT_admin_saving">Saving…</ng-container>
+            } @else {
+              <ng-container i18n="@@HYT_admin_save">Save</ng-container>
+            }
+          </button>
+        </div>
+      </form>
+    }
+  }
+</div>

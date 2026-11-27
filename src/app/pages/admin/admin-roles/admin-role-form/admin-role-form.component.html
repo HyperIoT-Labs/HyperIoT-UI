@@ -1,0 +1,74 @@
+<div class="admin-page">
+  <hyt-admin-page-header [items]="breadcrumb()" />
+
+  <h1 class="admin-title">{{ title }}</h1>
+
+  @switch (status()) {
+    @case ('loading') {
+      <mat-progress-bar mode="indeterminate" i18n-aria-label="@@HYT_admin_role_loading" aria-label="Loading role" />
+    }
+
+    @case ('error') {
+      <div class="state-message" role="alert">
+        <p i18n="@@HYT_admin_role_load_error">Unable to load the role.</p>
+        <div class="actions">
+          <a mat-stroked-button routerLink="/admin/roles" i18n="@@HYT_admin_back_to_roles">Back to roles</a>
+          @if (isNew || roleId !== null) {
+            <button mat-flat-button type="button" (click)="load()" i18n="@@HYT_admin_retry">Retry</button>
+          }
+        </div>
+      </div>
+    }
+
+    @case ('ready') {
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        @if (generalErrors().length > 0) {
+          <div class="general-errors" role="alert">
+            @for (message of generalErrors(); track $index) {
+              <p>{{ message }}</p>
+            }
+          </div>
+        }
+
+        <fieldset>
+          <legend i18n="@@HYT_admin_role_section_details">Details</legend>
+          <div class="fields">
+            <mat-form-field>
+              <mat-label i18n="@@HYT_admin_role_name">Name</mat-label>
+              <input matInput formControlName="name" autocomplete="off" required />
+              @if (form.controls.name.hasError('required')) {
+                <mat-error i18n="@@HYT_admin_field_required">This field is required</mat-error>
+              } @else if (serverError('name')) {
+                <mat-error>{{ serverError('name') }}</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field class="description">
+              <mat-label i18n="@@HYT_admin_role_description">Description</mat-label>
+              <textarea matInput formControlName="description" rows="2"></textarea>
+              @if (serverError('description')) {
+                <mat-error>{{ serverError('description') }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend i18n="@@HYT_admin_role_section_permissions">Permissions</legend>
+          <hyt-role-permissions-editor [resources]="resources()" [(masks)]="masks" />
+        </fieldset>
+
+        <div class="form-actions">
+          <a mat-stroked-button routerLink="/admin/roles" i18n="@@HYT_cancel">Cancel</a>
+          <button mat-flat-button color="primary" type="submit" [disabled]="saving()">
+            @if (saving()) {
+              <ng-container i18n="@@HYT_admin_saving">Saving…</ng-container>
+            } @else {
+              <ng-container i18n="@@HYT_admin_save">Save</ng-container>
+            }
+          </button>
+        </div>
+      </form>
+    }
+  }
+</div>

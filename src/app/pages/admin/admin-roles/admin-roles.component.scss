@@ -1,0 +1,44 @@
+.admin-page {
+  padding: 15px;
+}
+
+.admin-title {
+  font-size: 1.5em;
+  margin: 24px 0 16px;
+}
+
+.state-message {
+  margin: 24px 0;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.actions-cell {
+  width: 1%;
+  white-space: nowrap;
+  text-align: end;
+}
+
+.role-cards {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  p {
+    margin: 4px 0;
+    overflow-wrap: anywhere;
+  }
+
+  a,
+  button {
+    min-height: 44px;
+  }
+}

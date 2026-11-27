@@ -1,0 +1,209 @@
+<div class="admin-page">
+  <hyt-admin-page-header [items]="breadcrumb">
+    <a mat-flat-button color="primary" routerLink="/admin/users/new">
+      <mat-icon aria-hidden="true">person_add</mat-icon>
+      <ng-container i18n="@@HYT_admin_user_new">New user</ng-container>
+    </a>
+  </hyt-admin-page-header>
+
+  <h1 class="admin-title" i18n="@@HYT_admin_users">Users</h1>
+
+  @switch (status()) {
+    @case ('loading') {
+      <mat-progress-bar mode="indeterminate" i18n-aria-label="@@HYT_admin_users_loading" aria-label="Loading users" />
+    }
+
+    @case ('error') {
+      <div class="state-message" role="alert">
+        <p i18n="@@HYT_admin_users_load_error">Unable to load the users.</p>
+        <button mat-stroked-button type="button" (click)="load()" i18n="@@HYT_admin_retry">Retry</button>
+      </div>
+    }
+
+    @case ('ready') {
+      <div class="toolbar">
+        <mat-form-field class="search" subscriptSizing="dynamic">
+          <mat-label i18n="@@HYT_admin_users_search">Search users</mat-label>
+          <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+          <input matInput type="search" autocomplete="off" [formControl]="search" />
+        </mat-form-field>
+
+        @if (isPhone()) {
+          <div class="phone-sort">
+            <mat-form-field subscriptSizing="dynamic">
+              <mat-label i18n="@@HYT_admin_users_sort_by">Sort by</mat-label>
+              <mat-select [value]="sort().field" (valueChange)="setSortField($event)">
+                @for (field of sortFields; track field.value) {
+                  <mat-option [value]="field.value">{{ field.label }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <button
+              mat-icon-button
+              type="button"
+              (click)="toggleSortDirection()"
+              [attr.aria-label]="sort().direction === 'asc' ? ascendingLabel : descendingLabel"
+            >
+              <mat-icon aria-hidden="true">{{ sort().direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+
+      <p class="count" aria-live="polite" i18n="@@HYT_admin_users_count">Users found: {{ filteredUsers().length }}</p>
+
+      @if (filteredUsers().length === 0) {
+        <p class="state-message">
+          @if (users().length === 0) {
+            <ng-container i18n="@@HYT_admin_users_empty">There are no users.</ng-container>
+          } @else {
+            <ng-container i18n="@@HYT_admin_users_no_match">No user matches the search.</ng-container>
+          }
+        </p>
+      } @else if (isPhone()) {
+        <ul class="user-cards">
+          @for (user of pageUsers(); track user.id) {
+            <li>
+              <mat-card appearance="outlined">
+                <mat-card-header>
+                  <mat-card-title>
+                    {{ displayName(user) }}
+                    @if (isCurrentUser(user)) {
+                      <span class="badge" i18n="@@HYT_admin_users_you">You</span>
+                    }
+                  </mat-card-title>
+                  <mat-card-subtitle>{{ user.username }}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <p class="email">{{ user.email }}</p>
+                  @if (user.admin || user.active !== undefined) {
+                    <p class="badges">
+                      <ng-container *ngTemplateOutlet="statusBadges; context: { $implicit: user }" />
+                    </p>
+                  }
+                  @if (showRoles() && roleNames(user)) {
+                    <p>
+                      <span class="label" i18n="@@HYT_admin_users_col_roles">Roles</span>: {{ roleNames(user) }}
+                    </p>
+                  }
+                </mat-card-content>
+                <mat-card-actions align="end">
+                  <a mat-button [routerLink]="['/admin/users', user.id]" [attr.aria-label]="editLabel(user)">
+                    <mat-icon aria-hidden="true">edit</mat-icon>
+                    <ng-container i18n="@@HYT_admin_edit">Edit</ng-container>
+                  </a>
+                  @if (!isCurrentUser(user)) {
+                    <button
+                      mat-button
+                      color="warn"
+                      type="button"
+                      [disabled]="deletingId() === user.id"
+                      [attr.aria-label]="deleteLabel(user)"
+                      (click)="confirmDelete(user)"
+                    >
+                      <mat-icon aria-hidden="true">delete</mat-icon>
+                      <ng-container i18n="@@HYT_delete">Delete</ng-container>
+                    </button>
+                  }
+                </mat-card-actions>
+              </mat-card>
+            </li>
+          }
+        </ul>
+      } @else {
+        <div class="table-container">
+          <table
+            mat-table
+            [dataSource]="pageUsers()"
+            [trackBy]="trackById"
+            matSort
+            matSortDisableClear
+            [matSortActive]="sort().field"
+            [matSortDirection]="sort().direction"
+            (matSortChange)="onSortChange($event)"
+          >
+            <ng-container matColumnDef="username">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@HYT_admin_users_col_username">Username</th>
+              <td mat-cell *matCellDef="let user">{{ user.username }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@HYT_admin_users_col_name">Name</th>
+              <td mat-cell *matCellDef="let user">
+                {{ displayName(user) }}
+                @if (isCurrentUser(user)) {
+                  <span class="badge" i18n="@@HYT_admin_users_you">You</span>
+                }
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@HYT_admin_users_col_email">Email</th>
+              <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef i18n="@@HYT_admin_users_col_status">Status</th>
+              <td mat-cell *matCellDef="let user">
+                <ng-container *ngTemplateOutlet="statusBadges; context: { $implicit: user }" />
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="roles">
+              <th mat-header-cell *matHeaderCellDef i18n="@@HYT_admin_users_col_roles">Roles</th>
+              <td mat-cell *matCellDef="let user">{{ roleNames(user) }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>
+                <span class="cdk-visually-hidden" i18n="@@HYT_admin_users_col_actions">Actions</span>
+              </th>
+              <td mat-cell *matCellDef="let user" class="actions-cell">
+                <a mat-icon-button [routerLink]="['/admin/users', user.id]" [attr.aria-label]="editLabel(user)">
+                  <mat-icon aria-hidden="true">edit</mat-icon>
+                </a>
+                @if (!isCurrentUser(user)) {
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    type="button"
+                    [disabled]="deletingId() === user.id"
+                    [attr.aria-label]="deleteLabel(user)"
+                    (click)="confirmDelete(user)"
+                  >
+                    <mat-icon aria-hidden="true">delete</mat-icon>
+                  </button>
+                }
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+            <tr mat-row *matRowDef="let user; columns: displayedColumns()"></tr>
+          </table>
+        </div>
+      }
+
+      @if (filteredUsers().length > 0) {
+        <mat-paginator
+          [length]="filteredUsers().length"
+          [pageIndex]="pageIndex()"
+          [pageSize]="pageSize()"
+          [pageSizeOptions]="pageSizeOptions"
+          (page)="onPage($event)"
+        />
+      }
+    }
+  }
+</div>
+
+<ng-template #statusBadges let-user>
+  <!-- the list API may not send "active" -->
+  @if (user.active === true) {
+    <span class="badge" i18n="@@HYT_admin_users_active">Active</span>
+  } @else if (user.active === false) {
+    <span class="badge badge-muted" i18n="@@HYT_admin_users_inactive">Inactive</span>
+  }
+  @if (user.admin) {
+    <span class="badge" i18n="@@HYT_admin_users_admin_badge">Administrator</span>
+  }
+</ng-template>

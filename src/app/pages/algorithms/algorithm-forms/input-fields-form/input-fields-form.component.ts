@@ -1,11 +1,14 @@
 import { Component, ViewChild, ElementRef, Injector, ViewEncapsulation, ChangeDetectorRef, Input, AfterViewInit, OnInit } from '@angular/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgClass } from '@angular/common';
 
 import { Observable, Subject, PartialObserver } from 'rxjs';
 
 import { AlgorithmService, Algorithm, AlgorithmIOField } from 'core';
 import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity';
 
-import { Option } from 'components';
+import { Option, ComponentsModule } from 'components';
 import { Node, HytTreeViewEditableComponent } from 'components';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
@@ -14,7 +17,7 @@ import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-
     templateUrl: './input-fields-form.component.html',
     styleUrls: ['./input-fields-form.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [NgClass, ReactiveFormsModule, MatProgressBarModule, ComponentsModule]
 })
 export class InputFieldsFormComponent extends AlgorithmFormEntity implements OnInit, AfterViewInit {
 
