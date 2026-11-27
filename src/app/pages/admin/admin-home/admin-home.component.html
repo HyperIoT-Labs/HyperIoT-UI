@@ -1,0 +1,29 @@
+<div class="admin-page">
+  <hyt-admin-page-header [items]="breadcrumb" />
+
+  <h1 class="admin-title" i18n="@@HYT_admin_area">Admin area</h1>
+
+  @for (category of categories; track category.id) {
+    <section class="admin-category" [attr.aria-labelledby]="'admin-category-' + category.id">
+      <h2 class="admin-category-title" [id]="'admin-category-' + category.id">{{ category.title }}</h2>
+
+      <ul class="admin-cards">
+        @for (card of category.cards; track card.id) {
+          <li>
+            <a class="admin-card-link" [routerLink]="card.link">
+              <mat-card appearance="outlined" class="admin-card" matRipple>
+                <mat-card-header>
+                  <span mat-card-avatar class="hyt-icon {{ card.icon }}" aria-hidden="true"></span>
+                  <mat-card-title>{{ card.title }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>{{ card.description }}</p>
+                </mat-card-content>
+              </mat-card>
+            </a>
+          </li>
+        }
+      </ul>
+    </section>
+  }
+</div>

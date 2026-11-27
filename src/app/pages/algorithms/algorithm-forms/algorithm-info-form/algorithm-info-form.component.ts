@@ -1,4 +1,8 @@
 import { Component, ViewChild, ElementRef, Injector, ChangeDetectorRef, ViewEncapsulation, Input, AfterViewInit, OnInit } from '@angular/core';
+import { ComponentsModule } from 'components';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgClass } from '@angular/common';
 
 import { Subject, PartialObserver } from 'rxjs';
 
@@ -11,7 +15,7 @@ import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity
     templateUrl: './algorithm-info-form.component.html',
     styleUrls: ['./algorithm-info-form.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [NgClass, ReactiveFormsModule, MatProgressBarModule, ComponentsModule]
 })
 export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements AfterViewInit,OnInit {
 

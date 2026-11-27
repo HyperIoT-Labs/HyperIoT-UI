@@ -1,18 +1,21 @@
 import { Component, ViewChild, ElementRef, Injector, ChangeDetectorRef, ViewEncapsulation, Input, AfterViewInit, OnInit } from '@angular/core';
+import { ComponentsModule } from 'components';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { NgClass } from '@angular/common';
 
 import { Subject, PartialObserver } from 'rxjs';
 
 import { AlgorithmService, Algorithm } from 'core';
 
 import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'hyt-algorithm-jar-form',
     templateUrl: './algorithm-jar-form.component.html',
     styleUrls: ['./algorithm-jar-form.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [NgClass, ReactiveFormsModule, MatProgressBarModule, ComponentsModule]
 })
 export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements OnInit {
 

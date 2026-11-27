@@ -3,7 +3,7 @@
     <div class="header d-flex flex-row justify-content-stretch">
   
       <div class="breadcrumb flex-grow-1">
-        <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']" i18n="@@HYT_home">Home</a> > <strong i18n="@@HYT_algorithms">Algorithms</strong>
+        <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']" i18n="@@HYT_home">Home</a> > <a [routerLink]="['/admin']" i18n="@@HYT_admin">Admin</a> > <strong i18n="@@HYT_algorithms">Algorithms</strong>
       </div>
   
       <!-- button on the right side -->
@@ -106,7 +106,7 @@
                 [title]="p.name"
                 [description]="p.description"
                 btnLabel="view projects"
-                valRouterLink="/algorithm-wizard/{{p.id}}"
+                valRouterLink="/admin/algorithms/wizard/{{p.id}}"
                 [paramEmittedOnClick]="p"
                 (deleteClick)="openDeleteDialog($event)"
               ></hyt-detailed-card>

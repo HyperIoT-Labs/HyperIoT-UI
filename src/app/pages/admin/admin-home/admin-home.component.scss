@@ -1,0 +1,71 @@
+.admin-page {
+  padding: 15px;
+}
+
+.admin-title {
+  font-size: 1.5em;
+  margin: 24px 0 16px;
+}
+
+.admin-category + .admin-category {
+  margin-top: 32px;
+}
+
+.admin-category-title {
+  font-size: 1.2em;
+  margin: 0 0 12px;
+}
+
+.admin-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (min-width: 576px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 992px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.admin-card-link {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+  // Focus outline follows the card corners.
+  border-radius: var(--mat-card-outlined-container-shape);
+
+  &:focus-visible {
+    outline: 2px solid var(--mat-sys-primary);
+    outline-offset: 2px;
+  }
+}
+
+.admin-card {
+  height: 100%;
+  cursor: pointer;
+  transition: border-color 150ms ease;
+
+  .admin-card-link:hover &,
+  .admin-card-link:focus-visible & {
+    border-color: var(--mat-sys-primary);
+  }
+}
+
+.hyt-icon[mat-card-avatar] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  color: var(--mat-sys-primary);
+}
+
+mat-card-content p {
+  margin: 8px 0 0;
+}

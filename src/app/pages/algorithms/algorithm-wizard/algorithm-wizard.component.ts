@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { DialogService } from 'components';
+import { MatIconModule } from '@angular/material/icon';
+import { NgClass } from '@angular/common';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { DialogService, ComponentsModule } from 'components';
 import { HytStepperComponent } from 'components';
 import { Algorithm, AlgorithmIOField, AlgorithmService } from 'core';
 import { Subject } from 'rxjs';
@@ -12,13 +14,21 @@ import { InputFieldsFormComponent } from '../algorithm-forms/input-fields-form/i
 import { OutputFieldsFormComponent } from '../algorithm-forms/output-fields-form/output-fields-form.component';
 import { AlgorithmWizardReportModalComponent } from './algorithm-wizard-report-modal/algorithm-wizard-report-modal.component';
 
-
 @Component({
     selector: 'hyt-algorithm-wizard',
     templateUrl: './algorithm-wizard.component.html',
     styleUrls: ['./algorithm-wizard.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [
+        NgClass,
+        RouterLink,
+        MatIconModule,
+        ComponentsModule,
+        AlgorithmInfoFormComponent,
+        AlgorithmJarFormComponent,
+        InputFieldsFormComponent,
+        OutputFieldsFormComponent
+    ]
 })
 export class AlgorithmWizardComponent implements OnInit {
 

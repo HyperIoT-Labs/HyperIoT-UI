@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from "@angular/core";
-import { Router } from "@angular/router";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { NgClass } from "@angular/common";
+import { Router, RouterLink } from "@angular/router";
 import { PageStatus } from "./models/pageStatus";
 import { Algorithm, AlgorithmService } from "core";
-import { UntypedFormGroup, UntypedFormBuilder } from "@angular/forms";
-import { CardEmittedValue, DialogService, SelectOption } from "components";
+import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from "@angular/forms";
+import { CardEmittedValue, DialogService, SelectOption, ComponentsModule } from "components";
 import { AlgorithmService as AlgorithmsService } from "src/app/services/algorithms/algorithm.service";
 import { DeleteConfirmDialogComponent } from "src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component";
 
@@ -11,7 +13,7 @@ import { DeleteConfirmDialogComponent } from "src/app/components/dialogs/delete-
     selector: "hyt-algorithms",
     templateUrl: "./algorithms.component.html",
     styleUrls: ["./algorithms.component.scss"],
-    standalone: false
+    imports: [NgClass, RouterLink, ReactiveFormsModule, MatProgressBarModule, ComponentsModule]
 })
 export class AlgorithmsComponent implements OnInit {
   PageStatus = PageStatus;
@@ -198,7 +200,7 @@ export class AlgorithmsComponent implements OnInit {
   }
 
   addAlgorithm() {
-    this.router.navigate(["/algorithm-wizard"]);
+    this.router.navigate(["/admin/algorithms/wizard"]);
   }
 
   openDeleteDialog(emit: CardEmittedValue) {

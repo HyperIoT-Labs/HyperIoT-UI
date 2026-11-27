@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewEncapsulation, HostListener, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, HostListener, AfterViewInit, OnDestroy, inject } from '@angular/core';
 import { ToggleSidebarService } from 'src/app/services/toggleSidebar/toggle-sidebar.service';
 import { DialogService } from 'components';
 import { Subscription } from 'rxjs';
 import { InfoComponent } from '../info/info.component';
+import { AdminAccessService } from 'src/app/pages/admin/admin-access.service';
 
 @Component({
     selector: 'hyt-sidebar',
@@ -26,16 +27,12 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private subscriptionToggleMenu: Subscription;
 
-  private algorithmResourceName: string;
-  private controlPanelAction: string;
+  private readonly adminAccess = inject(AdminAccessService);
 
   constructor(
     private toggleSidebarService: ToggleSidebarService,
     private dialogService: DialogService,
-  ) {
-    this.algorithmResourceName = 'it.acsoftware.hyperiot.algorithm.model.Algorithm';
-    this.controlPanelAction = 'control_panel';
-  }
+  ) { }
 
   ngOnInit(): void {
 
@@ -87,26 +84,10 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * This method return true if user is admin or has permission to access to control panel
+   * True if the user can use at least one section of the admin area
    */
-  hasControlPanelAuthorization(): boolean {
-    if (localStorage.getItem('userInfo')) {
-      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-      if (userInfo.authenticable.admin || this.hasControlPanelAccess(userInfo.profile)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private hasControlPanelAccess(profile: any): boolean {
-    if(profile.hasOwnProperty(this.algorithmResourceName)) {
-      const permissions: string[] = profile[this.algorithmResourceName].permissions;
-      if (permissions.includes(this.controlPanelAction)) {
-        return true;
-      }
-    }
-    return false;
+  canAccessAdminArea(): boolean {
+    return this.adminAccess.canAccessAdminArea();
   }
 
   showVersionPopUp() {

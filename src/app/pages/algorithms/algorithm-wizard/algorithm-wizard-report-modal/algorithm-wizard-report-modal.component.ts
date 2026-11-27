@@ -1,13 +1,13 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { DialogRef } from 'components';
+import { ComponentsModule, DialogRef } from 'components';
 
 @Component({
     selector: 'hyt-algorithm-wizard-report-modal',
     templateUrl: './algorithm-wizard-report-modal.component.html',
     styleUrls: ['./algorithm-wizard-report-modal.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [ComponentsModule]
 })
 export class AlgorithmWizardReportModalComponent {
 
@@ -17,7 +17,7 @@ export class AlgorithmWizardReportModalComponent {
   ) { }
 
   goToAlgorithmsWizard() {
-    this.router.navigate(['/algorithms']);
+    this.router.navigate(['/admin/algorithms']);
     this.dialogRef.close();
   }
 

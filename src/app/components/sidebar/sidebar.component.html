@@ -43,11 +43,11 @@
                 </a>
             </li>
 
-            @if (hasControlPanelAuthorization()) {
-            <li #algorithms class="has-subnav" routerLinkActive="selected">
-                <a routerLink="/algorithms">
-                    <span class="hyt-icon icon-hyt_statistics"></span>
-                    <span class="nav-text" i18n="@@HYT_algorithms">Algorithms</span>
+            @if (canAccessAdminArea()) {
+            <li #admin class="has-subnav" routerLinkActive="selected">
+                <a routerLink="/admin">
+                    <span class="hyt-icon icon-hyt_setting"></span>
+                    <span class="nav-text" i18n="@@HYT_admin">Admin</span>
                 </a>
             </li>
             }

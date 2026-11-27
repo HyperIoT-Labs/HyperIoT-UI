@@ -1,0 +1,68 @@
+.admin-page {
+  padding: 15px;
+}
+
+.admin-title {
+  font-size: 1.5em;
+  margin: 24px 0 16px;
+}
+
+fieldset {
+  margin: 0 0 16px;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+legend {
+  font-size: 1.1em;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 16px;
+  max-width: 960px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.general-errors {
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+
+  p {
+    margin: 4px 0;
+  }
+}
+
+.state-message {
+  margin: 24px 0;
+}
+
+.actions,
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.form-actions {
+  justify-content: flex-end;
+  margin-top: 8px;
+
+  a,
+  button {
+    min-height: 44px;
+  }
+}
